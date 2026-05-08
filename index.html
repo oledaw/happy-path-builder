@@ -985,7 +985,7 @@
 <!-- RESULT MODAL -->
 <div class="modal-overlay" id="result-modal">
   <div class="modal">
-    <div class="modal-title">Nowy rezultat</div>
+    <div class="modal-title" id="result-modal-title">Nowy rezultat</div>
     <div class="modal-field">
       <label>Nazwa rezultatu</label>
       <input type="text" id="result-name-input" placeholder="np. Zamówienie potwierdzone">
@@ -1005,7 +1005,7 @@
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal('result-modal')">Anuluj</button>
-      <button class="btn btn-primary" onclick="saveResult()">Dodaj rezultat</button>
+      <button class="btn btn-primary" id="result-modal-save-btn" onclick="saveResult()">Dodaj rezultat</button>
     </div>
   </div>
 </div>
@@ -1050,6 +1050,7 @@ let state = {
   currentView: 'steps',
   linkingStepId: null,
   editingActorId: null,
+  editingResultId: null,
   pendingActorColor: COLORS[0],
 };
 
@@ -1092,7 +1093,8 @@ function renderResults() {
       <div class="result-badge" style="background:${col}22;color:${col}">${RESULT_TYPE_LABELS[r.type]}</div>
       <div class="ri-title">${r.name}</div>
       <div class="ri-desc">${r.desc}</div>
-      <div style="display:flex;justify-content:flex-end;margin-top:6px">
+      <div style="display:flex;justify-content:flex-end;gap:4px;margin-top:6px">
+        <button class="btn-icon" onclick="editResult('${r.id}')" data-tip="Edytuj rezultat" style="width:22px;height:22px;font-size:11px">✎</button>
         <button class="btn-icon danger" onclick="removeResult('${r.id}')" data-tip="Usuń rezultat" style="width:22px;height:22px;font-size:12px">×</button>
       </div>
     </div>
@@ -1403,6 +1405,9 @@ function removeActor(id) {
 }
 
 function addResult() {
+  state.editingResultId = null;
+  document.getElementById('result-modal-title').textContent = 'Nowy rezultat';
+  document.getElementById('result-modal-save-btn').textContent = 'Dodaj rezultat';
   document.getElementById('result-name-input').value = '';
   document.getElementById('result-desc-input').value = '';
   document.getElementById('result-type-input').value = 'output';
@@ -1410,17 +1415,37 @@ function addResult() {
   setTimeout(() => document.getElementById('result-name-input').focus(), 100);
 }
 
+function editResult(id) {
+  const r = state.results.find(x => x.id === id);
+  if (!r) return;
+  state.editingResultId = id;
+  document.getElementById('result-modal-title').textContent = 'Edytuj rezultat';
+  document.getElementById('result-modal-save-btn').textContent = 'Zapisz zmiany';
+  document.getElementById('result-name-input').value = r.name;
+  document.getElementById('result-desc-input').value = r.desc;
+  document.getElementById('result-type-input').value = r.type;
+  openModal('result-modal');
+  setTimeout(() => document.getElementById('result-name-input').focus(), 100);
+}
+
 function saveResult() {
   const name = document.getElementById('result-name-input').value.trim();
   if (!name) return;
-  state.results.push({
-    id: uid(),
-    name,
-    desc: document.getElementById('result-desc-input').value.trim(),
-    type: document.getElementById('result-type-input').value
-  });
-  closeModal('result-modal');
-  render(); autoSave();
+  const desc = document.getElementById('result-desc-input').value.trim();
+  const type = document.getElementById('result-type-input').value;
+
+  if (state.editingResultId) {
+    const r = state.results.find(x => x.id === state.editingResultId);
+    if (r) { r.name = name; r.desc = desc; r.type = type; }
+    state.editingResultId = null;
+    closeModal('result-modal');
+    render(); autoSave();
+    showToast('Rezultat zaktualizowany', 'var(--accent)');
+  } else {
+    state.results.push({ id: uid(), name, desc, type });
+    closeModal('result-modal');
+    render(); autoSave();
+  }
 }
 
 function removeResult(id) {
