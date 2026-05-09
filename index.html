@@ -323,7 +323,11 @@
     border: 1px solid var(--border);
     border-radius: var(--r);
     padding: 10px 12px;
+    position: relative;
   }
+  .result-item.result-drag-over { border-color: var(--accent); border-style: dashed; }
+  .result-item .drag-handle { cursor: grab; color: var(--text3); font-size: 11px; padding: 0 2px; }
+  .result-item .drag-handle:active { cursor: grabbing; }
   .result-item .ri-title {
     font-size: 12px;
     font-weight: 500;
@@ -1120,6 +1124,7 @@ let state = {
   ],
   dragStepId: null,
   dragActorId: null,
+  dragResultId: null,
   afFilter: 'all',
   editingAfId: null,
   alternativeFlows: [],
@@ -1177,8 +1182,18 @@ function renderResults() {
   el.innerHTML = state.results.map(r => {
     const col = RESULT_TYPE_COLORS[r.type] || '#888';
     return `
-    <div class="result-item" style="border-left:3px solid ${col}">
-      <div class="result-badge" style="background:${col}22;color:${col}">${RESULT_TYPE_LABELS[r.type]}</div>
+    <div class="result-item" style="border-left:3px solid ${col}"
+      draggable="true"
+      data-rid="${r.id}"
+      ondragstart="onResultDragStart(event,'${r.id}')"
+      ondragover="onResultDragOver(event,'${r.id}')"
+      ondrop="onResultDrop(event,'${r.id}')"
+      ondragleave="onResultDragLeave(event)"
+      ondragend="onResultDragEnd(event)">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div class="result-badge" style="background:${col}22;color:${col}">${RESULT_TYPE_LABELS[r.type]}</div>
+        <span class="drag-handle" title="Przeciągnij by zmienić kolejność">⠿</span>
+      </div>
       <div class="ri-title">${r.name}</div>
       <div class="ri-desc">${r.desc}</div>
       <div style="display:flex;justify-content:flex-end;gap:4px;margin-top:6px">
@@ -1993,6 +2008,32 @@ function onActorDrop(e, id) {
 function renameActor(id, name) {
   const a = state.actors.find(x => x.id === id);
   if (a && name.trim()) { a.name = name.trim(); renderSteps(); autoSave(); }
+}
+
+// ——— RESULT DRAG & DROP ———
+
+function onResultDragStart(e, id) {
+  state.dragResultId = id;
+  e.dataTransfer.effectAllowed = 'move';
+}
+function onResultDragOver(e, id) {
+  e.preventDefault();
+  if (state.dragResultId === id) return;
+  e.currentTarget.classList.add('result-drag-over');
+}
+function onResultDragLeave(e) { e.currentTarget.classList.remove('result-drag-over'); }
+function onResultDragEnd(e) { e.currentTarget.classList.remove('result-drag-over'); state.dragResultId = null; }
+function onResultDrop(e, id) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('result-drag-over');
+  if (!state.dragResultId || state.dragResultId === id) return;
+  const from = state.results.findIndex(r => r.id === state.dragResultId);
+  const to   = state.results.findIndex(r => r.id === id);
+  if (from === -1 || to === -1) return;
+  const [removed] = state.results.splice(from, 1);
+  state.results.splice(to, 0, removed);
+  state.dragResultId = null;
+  renderResults(); autoSave();
 }
 
 // ——— ALTERNATE FLOWS ———
