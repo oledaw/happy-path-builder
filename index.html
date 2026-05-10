@@ -323,11 +323,7 @@
     border: 1px solid var(--border);
     border-radius: var(--r);
     padding: 10px 12px;
-    position: relative;
   }
-  .result-item.result-drag-over { border-color: var(--accent); border-style: dashed; }
-  .result-item .drag-handle { cursor: grab; color: var(--text3); font-size: 11px; padding: 0 2px; }
-  .result-item .drag-handle:active { cursor: grabbing; }
   .result-item .ri-title {
     font-size: 12px;
     font-weight: 500;
@@ -610,8 +606,10 @@
   /* TIMELINE VIEW */
   .timeline-view {
     padding: 28px;
-    overflow-y: auto;
+    overflow: hidden;
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
   .timeline-view::-webkit-scrollbar { width: 4px; }
   .timeline-view::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
@@ -619,9 +617,22 @@
   .timeline-header {
     display: flex;
     gap: 0;
-    margin-bottom: 16px;
-    overflow-x: auto;
+    flex-shrink: 0;
+    overflow-x: hidden;
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
   }
+  .timeline-body {
+    overflow-y: auto;
+    overflow-x: auto;
+    flex: 1;
+  }
+  .timeline-body::-webkit-scrollbar { width: 4px; height: 4px; }
+  .timeline-body::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
   .tl-actor-col {
     min-width: 160px;
     flex: 1;
@@ -1124,7 +1135,6 @@ let state = {
   ],
   dragStepId: null,
   dragActorId: null,
-  dragResultId: null,
   afFilter: 'all',
   editingAfId: null,
   alternativeFlows: [],
@@ -1179,20 +1189,23 @@ function renderResults() {
     el.innerHTML = '<div style="font-size:11px;color:var(--text3);text-align:center;padding:12px">Brak rezultatów. Dodaj oczekiwane rezultaty procesu.</div>';
     return;
   }
+  const assignedResultIds = new Set(state.steps.flatMap(s => s.results || []));
   el.innerHTML = state.results.map(r => {
     const col = RESULT_TYPE_COLORS[r.type] || '#888';
+    const assigned = assignedResultIds.has(r.id);
+    const stepsThatUse = state.steps.filter(s => (s.results||[]).includes(r.id));
+    const assignedTip = stepsThatUse.map(s => {
+      const idx = state.steps.indexOf(s);
+      return `k.${idx+1}`;
+    }).join(', ');
     return `
-    <div class="result-item" style="border-left:3px solid ${col}"
-      draggable="true"
-      data-rid="${r.id}"
-      ondragstart="onResultDragStart(event,'${r.id}')"
-      ondragover="onResultDragOver(event,'${r.id}')"
-      ondrop="onResultDrop(event,'${r.id}')"
-      ondragleave="onResultDragLeave(event)"
-      ondragend="onResultDragEnd(event)">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div class="result-badge" style="background:${col}22;color:${col}">${RESULT_TYPE_LABELS[r.type]}</div>
-        <span class="drag-handle" title="Przeciągnij by zmienić kolejność">⠿</span>
+    <div class="result-item" style="border-left:3px solid ${col};${assigned ? '' : 'opacity:.65'}">
+      <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;flex-wrap:wrap">
+        <div class="result-badge" style="background:${col}22;color:${col};margin-bottom:0">${RESULT_TYPE_LABELS[r.type]}</div>
+        ${assigned
+          ? `<span title="Użyty w: ${assignedTip}" style="font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:4px;background:rgba(90,212,176,0.12);color:var(--green);border:1px solid rgba(90,212,176,0.25)">✓ ${assignedTip}</span>`
+          : `<span style="font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:4px;background:rgba(90,90,120,0.15);color:var(--text3);border:1px solid var(--border)">nieprzypisany</span>`
+        }
       </div>
       <div class="ri-title">${r.name}</div>
       <div class="ri-desc">${r.desc}</div>
@@ -1306,34 +1319,32 @@ function renderTimeline() {
   if (!state.actors.length) { el.innerHTML = '<div class="empty-state"><div class="empty-title">Dodaj aktorów by zobaczyć Swim Lane</div></div>'; return; }
   if (!state.steps.length) { el.innerHTML = '<div class="empty-state"><div class="empty-title">Dodaj kroki</div></div>'; return; }
 
-  let html = `<div style="overflow-x:auto">
-    <div style="min-width:${state.actors.length * 160}px">
-      <div class="timeline-header">
-        ${state.actors.map(a => `
-          <div class="tl-actor-col" style="color:${a.color};border-bottom-color:${a.color}">
-            <div style="width:8px;height:8px;border-radius:50%;background:${a.color};display:inline-block;margin-right:6px"></div>${a.name}
-          </div>
-        `).join('')}
-      </div>
-      ${state.steps.map((step, i) => {
-        const stepActor = step.actor;
-        return `<div class="tl-row">
-          ${state.actors.map(a => {
-            if (a.id === stepActor) {
-              return `<div class="tl-cell">
-                <div class="tl-step-bubble" style="border-color:${a.color}44;border-left:3px solid ${a.color}">
-                  <div class="tl-step-num">krok ${i+1}</div>
-                  ${step.action}
-                </div>
-              </div>`;
-            }
-            return `<div class="tl-cell"></div>`;
-          }).join('')}
-        </div>`;
+  const minW = state.actors.length * 160;
+  const headerCols = state.actors.map(a => `
+    <div class="tl-actor-col" style="color:${a.color};border-bottom-color:${a.color}">
+      <div style="width:8px;height:8px;border-radius:50%;background:${a.color};display:inline-block;margin-right:6px"></div>${a.name}
+    </div>`).join('');
+  const rows = state.steps.map((step, i) => {
+    const stepActor = step.actor;
+    return `<div class="tl-row">
+      ${state.actors.map(a => {
+        if (a.id === stepActor) {
+          return `<div class="tl-cell">
+            <div class="tl-step-bubble" style="border-color:${a.color}44;border-left:3px solid ${a.color}">
+              <div class="tl-step-num">krok ${i+1}</div>
+              ${step.action}
+            </div>
+          </div>`;
+        }
+        return `<div class="tl-cell"></div>`;
       }).join('')}
-    </div>
-  </div>`;
-  el.innerHTML = html;
+    </div>`;
+  }).join('');
+  el.innerHTML = `
+    <div class="timeline-header" style="min-width:${minW}px">${headerCols}</div>
+    <div class="timeline-body">
+      <div style="min-width:${minW}px">${rows}</div>
+    </div>`;
 }
 
 function renderExport() {
@@ -2008,32 +2019,6 @@ function onActorDrop(e, id) {
 function renameActor(id, name) {
   const a = state.actors.find(x => x.id === id);
   if (a && name.trim()) { a.name = name.trim(); renderSteps(); autoSave(); }
-}
-
-// ——— RESULT DRAG & DROP ———
-
-function onResultDragStart(e, id) {
-  state.dragResultId = id;
-  e.dataTransfer.effectAllowed = 'move';
-}
-function onResultDragOver(e, id) {
-  e.preventDefault();
-  if (state.dragResultId === id) return;
-  e.currentTarget.classList.add('result-drag-over');
-}
-function onResultDragLeave(e) { e.currentTarget.classList.remove('result-drag-over'); }
-function onResultDragEnd(e) { e.currentTarget.classList.remove('result-drag-over'); state.dragResultId = null; }
-function onResultDrop(e, id) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('result-drag-over');
-  if (!state.dragResultId || state.dragResultId === id) return;
-  const from = state.results.findIndex(r => r.id === state.dragResultId);
-  const to   = state.results.findIndex(r => r.id === id);
-  if (from === -1 || to === -1) return;
-  const [removed] = state.results.splice(from, 1);
-  state.results.splice(to, 0, removed);
-  state.dragResultId = null;
-  renderResults(); autoSave();
 }
 
 // ——— ALTERNATE FLOWS ———
