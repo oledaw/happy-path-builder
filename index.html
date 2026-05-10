@@ -1329,9 +1329,9 @@ function renderTimeline() {
     </div>`;
   }).join('');
   el.innerHTML = `
-    <div style="min-width:${minW}px">
-      <div class="timeline-header">${headerCols}</div>
-      ${rows}
+    <div style="display:inline-block;min-width:${minW}px;width:100%">
+      <div class="timeline-header" style="min-width:${minW}px">${headerCols}</div>
+      <div style="min-width:${minW}px">${rows}</div>
     </div>`;
 }
 
