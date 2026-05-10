@@ -660,6 +660,90 @@
       border-color: var(--border2);
     }
 
+    /* COMPACT VIEW OVERRIDES */
+    .steps-list.compact .step-card {
+      padding: 6px 14px;
+      margin: 4px 0 4px 4px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .steps-list.compact .step-top {
+      display: contents;
+    }
+
+    .steps-list.compact .step-top>div:first-child {
+      order: 1;
+      flex-shrink: 0;
+    }
+
+    .steps-list.compact .step-action-input {
+      order: 2;
+      flex: 1;
+      margin: 0;
+      font-size: 13px;
+      min-width: 100px;
+    }
+
+    .steps-list.compact .step-results-chips {
+      order: 3;
+      margin: 0;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      overflow: hidden;
+      max-width: 250px;
+    }
+
+    .steps-list.compact .step-actions-row {
+      order: 4;
+      flex-shrink: 0;
+      opacity: 0.3;
+      transition: opacity 0.2s;
+    }
+
+    .steps-list.compact .step-card:hover .step-actions-row {
+      opacity: 1;
+    }
+
+    .steps-list.compact .step-desc-input,
+    .steps-list.compact .step-bottom {
+      display: none;
+    }
+
+    .steps-list.compact .step-num {
+      margin-top: 8px;
+    }
+
+    .compact-link-btn {
+      display: none;
+    }
+
+    .steps-list.compact .compact-link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1px dashed var(--border2);
+      background: transparent;
+      color: var(--text3);
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0;
+      margin-left: 4px;
+      transition: all .15s;
+    }
+
+    .steps-list.compact .compact-link-btn:hover {
+      border-color: var(--text2);
+      color: var(--text2);
+      background: var(--surface3);
+    }
+
     .step-card.dragging {
       opacity: 0.4;
       transform: scale(0.98);
@@ -1604,12 +1688,15 @@
         <div class="stat-item">Kroków: <span class="stat-val" id="stat-steps">0</span></div>
         <div class="stat-item">Aktorów: <span class="stat-val" id="stat-actors">0</span></div>
         <div class="stat-item">Rezultatów: <span class="stat-val" id="stat-results">0</span></div>
-        <div class="stat-item">Rezultatów: <span class="stat-val" id="stat-results">0</span></div>
         <div class="stat-item">Alt. Flows: <span class="stat-val" id="stat-af">0</span></div>
       </div>
 
       <!-- Steps view -->
       <div class="steps-canvas" id="view-steps">
+        <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
+          <button class="btn btn-ghost btn-sm" onclick="toggleStepsViewMode()" id="steps-view-mode-btn">Widok:
+            Pełny</button>
+        </div>
         <div class="steps-list" id="steps-list"></div>
         <button class="add-step-btn" onclick="addStep()">
           <div class="add-icon">+</div>
@@ -1749,6 +1836,7 @@
       dragStepId: null,
       dragActorId: null,
       dragResultId: null,
+      stepsViewMode: 'full',
       afFilter: 'all',
       editingAfId: null,
       alternativeFlows: [],
@@ -1840,8 +1928,24 @@
   `}).join('');
     }
 
+    function toggleStepsViewMode() {
+      state.stepsViewMode = state.stepsViewMode === 'full' ? 'compact' : 'full';
+      renderSteps(); autoSave();
+    }
+
     function renderSteps() {
       const el = document.getElementById('steps-list');
+      const viewModeBtn = document.getElementById('steps-view-mode-btn');
+      if (viewModeBtn) {
+        viewModeBtn.innerText = state.stepsViewMode === 'compact' ? 'Widok: Kompaktowy' : 'Widok: Pełny';
+      }
+
+      if (state.stepsViewMode === 'compact') {
+        el.classList.add('compact');
+      } else {
+        el.classList.remove('compact');
+      }
+
       if (!state.steps.length) {
         el.innerHTML = `<div class="empty-state">
       <div class="empty-icon">⟶</div>
@@ -1912,6 +2016,7 @@
 
         <div class="step-results-chips">
           ${stepResults}
+          ${(!step.results || !step.results.length) ? `<button class="compact-link-btn" onclick="openLinkModal('${step.id}')" title="Powiąż rezultat">+</button>` : ''}
           ${getStepAfBadge(step.id)}
         </div>
 
