@@ -2083,16 +2083,16 @@
       const trigger = (document.getElementById('proc-trigger') || {}).value || '';
 
       let md = `# Happy Path: ${name}\n\n`;
-      md += `**Cel procesu:** ${goal}\n`;
+      md += `**Cel procesu:** ${goal}\n\n`;
       md += `**Warunki wejścia:** ${trigger}\n\n`;
       md += `---\n\n`;
       md += `## Sekwencja kroków\n\n`;
 
       state.steps.forEach((step, i) => {
         const actor = getActor(step.actor);
-        md += `### Krok ${i + 1}: ${step.action}\n`;
-        md += `**Aktor:** ${actor ? actor.name : '—'}\n`;
-        if (step.desc) md += `**Opis:** ${step.desc}\n`;
+        md += `### Krok ${i + 1}: ${step.action}\n\n`;
+        md += `**Aktor:** ${actor ? actor.name : '—'}\n\n`;
+        if (step.desc) md += `**Opis:** ${step.desc}\n\n`;
         if (step.results && step.results.length) {
           md += `**Rezultaty:**\n`;
           step.results.forEach(rid => {
