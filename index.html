@@ -2119,10 +2119,10 @@
             const idx = state.steps.indexOf(s);
             return s ? `krok ${idx + 1}` : sid;
           }).join(', ');
-          md += `### ${af.id}: ${af.title}\n`;
-          md += `**Severity:** ${af.severity.toUpperCase()}${af.requiresManualReview ? ' · MANUAL REVIEW' : ''}\n`;
-          md += `**Trigger:** ${af.trigger}\n`;
-          md += `**Outcome:** ${af.outcome}\n`;
+          md += `### ${af.id}: ${af.title}\n\n`;
+          md += `**Severity:** ${af.severity.toUpperCase()}${af.requiresManualReview ? ' · MANUAL REVIEW' : ''}\n\n`;
+          md += `**Trigger:** ${af.trigger}\n\n`;
+          md += `**Outcome:** ${af.outcome}\n\n`;
           if (steps) md += `**Powiązane kroki:** ${steps}\n`;
           md += `\n`;
         });
