@@ -19,25 +19,26 @@
       --danger: #f25e8a; --green: #5ad4b0;
       --font: 'Sora', sans-serif; --mono: 'DM Mono', monospace;
       --r: 10px; --r2: 16px;
+      --panel-w: 300px;
+      --toggle-w: 16px;
+      --panel-transition: 320ms cubic-bezier(.4,0,.2,1);
     }
 
     body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
 
     /* ── HEADER ── */
-    .header { display: flex; align-items: center; justify-content: space-between; padding: 18px 32px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(15,15,19,0.95); backdrop-filter: blur(12px); z-index: 100; }
+    .header { display: flex; align-items: center; justify-content: space-between; padding: 18px 32px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(15,15,19,0.95); backdrop-filter: blur(12px); z-index: 100; flex-shrink: 0; }
     .logo { display: flex; align-items: center; gap: 10px; }
     .logo-icon { width: 32px; height: 32px; background: linear-gradient(135deg,var(--accent),var(--accent2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
     .logo-name { font-weight: 600; font-size: 15px; letter-spacing: -.3px; }
     .logo-tag { font-size: 10px; font-family: var(--mono); color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin-top: 1px; }
     .header-actions { display: flex; gap: 10px; align-items: center; }
-
     .save-indicator { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--mono); color: var(--text3); transition: all .3s; }
     .save-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); transition: background .3s; }
     .save-indicator.saved .save-dot { background: var(--green); }
     .save-indicator.saved { color: var(--green); }
     .save-indicator.unsaved .save-dot { background: var(--accent3); }
     .save-indicator.unsaved { color: var(--accent3); }
-
     .projects-menu { position: absolute; top: calc(100% + 8px); right: 0; background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--r2); width: 320px; box-shadow: 0 16px 48px rgba(0,0,0,.5); z-index: 200; overflow: hidden; }
     .pm-header { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 11px; font-family: var(--mono); color: var(--text3); text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: space-between; }
     .pm-list { max-height: 280px; overflow-y: auto; }
@@ -48,11 +49,9 @@
     .pm-item-meta { font-size: 10px; font-family: var(--mono); color: var(--text3); }
     .pm-item-active { color: var(--accent); font-size: 10px; font-family: var(--mono); }
     .pm-actions { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
-
     .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--r); padding: 10px 18px; font-size: 13px; font-family: var(--mono); color: var(--text); z-index: 9999; transition: transform .25s cubic-bezier(.34,1.56,.64,1); pointer-events: none; display: flex; align-items: center; gap: 8px; }
     .toast.show { transform: translateX(-50%) translateY(0); }
     .toast-dot { width: 6px; height: 6px; border-radius: 50%; }
-
     .btn { padding: 8px 16px; border-radius: var(--r); font-size: 13px; font-family: var(--font); font-weight: 500; cursor: pointer; border: none; transition: all .15s; }
     .btn-ghost { background: transparent; border: 1px solid var(--border2); color: var(--text2); }
     .btn-ghost:hover { border-color: var(--text3); color: var(--text); }
@@ -65,21 +64,125 @@
     .btn-icon:hover { border-color: var(--border2); color: var(--text2); }
     .btn-icon.danger:hover { border-color: var(--danger); color: var(--danger); }
 
-    /* ── LAYOUT ── */
-    .workspace { display: grid; grid-template-columns: 300px 1fr; flex: 1; overflow: hidden; height: calc(100vh - 65px); }
+    /* ══════════════════════════════════════════
+       WORKSPACE — 3 kolumny: panel | toggle | main
+    ══════════════════════════════════════════ */
+    .workspace {
+      display: grid;
+      grid-template-columns: var(--panel-w) var(--toggle-w) 1fr;
+      flex: 1;
+      overflow: hidden;
+      height: calc(100vh - 65px);
+      transition: grid-template-columns var(--panel-transition);
+    }
+    .workspace.panel-collapsed {
+      grid-template-columns: 0px var(--toggle-w) 1fr;
+    }
 
-    .panel { border-right: 1px solid var(--border); padding: 24px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 24px; }
-    .panel::-webkit-scrollbar { width: 4px; }
-    .panel::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
+    /* ── PANEL ── */
+    .panel {
+      overflow: hidden;           /* clips podczas animacji */
+      border-right: none;
+      transition: opacity var(--panel-transition), transform var(--panel-transition);
+    }
+    .workspace.panel-collapsed .panel {
+      opacity: 0;
+      transform: translateX(-12px);
+      pointer-events: none;
+    }
 
+    /* wewnętrzna zawartość panelu — stała szerokość */
+    .panel-inner {
+      width: 300px;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      border-right: 1px solid var(--border);
+      transition: border-color var(--panel-transition);
+    }
+    .workspace.panel-collapsed .panel-inner { border-right-color: transparent; }
+    .panel-inner::-webkit-scrollbar { width: 4px; }
+    .panel-inner::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
+
+    /* ══════════════════════════════════════════
+       TOGGLE COLUMN — wąska kolumna zawsze widoczna
+    ══════════════════════════════════════════ */
+    .panel-toggle-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+      /* delikatna pionowa linia oddzielająca od main */
+      border-right: 1px solid var(--border);
+      transition: border-color var(--panel-transition);
+      background: var(--bg);
+    }
+
+    /* ── TOGGLE BUTTON ── */
+    .panel-toggle {
+      width: 20px;
+      height: 52px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text3);
+      font-size: 12px;
+      transition: background .15s, color .15s, border-color .15s;
+      position: relative;
+      /* wyrównaj do lewej krawędzi kolumny */
+      margin-left: -1px;
+    }
+    .panel-toggle:hover { background: var(--surface3); color: var(--text); border-color: var(--accent); }
+    .workspace.panel-collapsed .panel-toggle { background: var(--surface3); border-color: var(--accent); color: var(--accent); }
+
+    .panel-toggle-arrow {
+      display: inline-block;
+      transition: transform var(--panel-transition);
+      line-height: 1;
+      font-style: normal;
+      pointer-events: none;
+    }
+    .workspace.panel-collapsed .panel-toggle-arrow { transform: rotate(180deg); }
+
+    /* tooltip */
+    .panel-toggle::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: calc(100% + 10px);
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--surface3);
+      color: var(--text);
+      font-size: 11px;
+      font-family: var(--mono);
+      padding: 4px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 200;
+      border: 1px solid var(--border2);
+      box-shadow: 0 4px 12px rgba(0,0,0,.4);
+      opacity: 0;
+      transition: opacity .15s;
+    }
+    .panel-toggle:hover::after { opacity: 1; }
+
+    /* ── panel inner styles ── */
     .section-label { font-size: 10px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3); margin-bottom: 10px; }
-
     .meta-field { margin-bottom: 12px; }
     .meta-field label { display: block; font-size: 11px; color: var(--text3); margin-bottom: 5px; font-family: var(--mono); }
     .meta-field input, .meta-field textarea, .meta-field select { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); padding: 8px 12px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; transition: border-color .15s; resize: none; }
     .meta-field input:focus, .meta-field textarea:focus, .meta-field select:focus { border-color: var(--accent); }
     .meta-field textarea { line-height: 1.5; }
-
     .actors-list { display: flex; flex-direction: column; gap: 6px; }
     .actor-chip { display: flex; align-items: center; gap: 8px; padding: 7px 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); cursor: grab; position: relative; }
     .actor-chip:active { cursor: grabbing; }
@@ -91,8 +194,6 @@
     .add-actor-form input:focus { border-color: var(--accent); }
     .actor-name-input { background: transparent; border: none; border-bottom: 1px solid transparent; color: var(--text); font-family: var(--font); font-size: 12px; outline: none; flex: 1; min-width: 0; padding: 0; transition: border-color .15s; }
     .actor-name-input:focus { border-bottom-color: var(--accent); }
-
-    /* Processes */
     .processes-list { display: flex; flex-direction: column; gap: 6px; }
     .process-chip { display: flex; align-items: center; gap: 8px; padding: 7px 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); transition: border-color .15s; }
     .process-chip:hover { border-color: var(--border2); }
@@ -103,7 +204,6 @@
     .add-process-form { display: flex; gap: 6px; margin-top: 8px; }
     .add-process-form input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); padding: 7px 10px; color: var(--text); font-family: var(--font); font-size: 12px; outline: none; }
     .add-process-form input:focus { border-color: var(--accent); }
-
     .results-list { display: flex; flex-direction: column; gap: 8px; }
     .result-item { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); padding: 10px 12px; cursor: grab; position: relative; }
     .result-item:active { cursor: grabbing; }
@@ -113,16 +213,16 @@
     .result-item .ri-desc { font-size: 11px; color: var(--text3); line-height: 1.4; }
 
     /* ── MAIN ── */
-    .main { display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
-
+    .main { display: flex; flex-direction: column; overflow: hidden; min-height: 0; min-width: 0; }
     .view-toggle { display: flex; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
     .view-btn { padding: 6px 14px; font-size: 12px; cursor: pointer; border: none; background: transparent; color: var(--text3); font-family: var(--font); transition: all .15s; }
     .view-btn.active { background: var(--surface3); color: var(--text); }
-
+    .stats-bar { display: flex; gap: 20px; padding: 10px 28px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 11px; font-family: var(--mono); color: var(--text3); flex-shrink: 0; flex-wrap: wrap; }
+    .stat-item { display: flex; gap: 6px; align-items: center; }
+    .stat-val { color: var(--text); font-weight: 500; }
     .steps-canvas { flex: 1; overflow-y: auto; padding: 28px; }
     .steps-canvas::-webkit-scrollbar { width: 4px; }
     .steps-canvas::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
-
     .steps-list { display: flex; flex-direction: column; gap: 0; position: relative; }
     .step-row { display: flex; align-items: stretch; gap: 0; position: relative; }
     .step-connector { display: flex; flex-direction: column; align-items: center; width: 48px; flex-shrink: 0; position: relative; }
@@ -135,10 +235,8 @@
     .step-card.dragging { opacity: .4; transform: scale(.98); }
     .step-card.drag-over { border-color: var(--accent); border-style: dashed; }
     .step-card:active { cursor: grabbing; }
-
     .step-process-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 9px; font-family: var(--mono); padding: 2px 7px; border-radius: 4px; margin-bottom: 8px; letter-spacing: .3px; text-transform: uppercase; cursor: pointer; border: 1px solid transparent; transition: opacity .15s; }
     .step-process-tag:hover { opacity: .8; }
-
     .steps-list.compact .step-card { padding: 6px 14px; margin: 4px 0 4px 4px; display: flex; align-items: center; gap: 12px; }
     .steps-list.compact .step-top { display: contents; }
     .steps-list.compact .step-top > div:first-child { order: 1; flex-shrink: 0; }
@@ -151,7 +249,6 @@
     .compact-link-btn { display: none; }
     .steps-list.compact .compact-link-btn { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; border: 1px dashed var(--border2); background: transparent; color: var(--text3); font-size: 14px; cursor: pointer; padding: 0; margin-left: 4px; transition: all .15s; }
     .steps-list.compact .compact-link-btn:hover { border-color: var(--text2); color: var(--text2); background: var(--surface3); }
-
     .step-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
     .step-actor-badge { display: flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--surface2); border-radius: 20px; font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid var(--border); transition: border-color .15s; }
     .step-actor-badge:hover { border-color: var(--border2); }
@@ -167,210 +264,22 @@
     .step-result-badge:hover { border-color: var(--accent); color: var(--accent); }
     .step-status { display: flex; gap: 6px; align-items: center; }
     .status-dot { width: 7px; height: 7px; border-radius: 50%; }
-
     .add-step-btn { display: flex; align-items: center; gap: 10px; padding: 14px 18px; margin: 4px 0 4px 52px; border: 2px dashed var(--border); border-radius: var(--r2); color: var(--text3); font-size: 13px; cursor: pointer; background: transparent; font-family: var(--font); transition: all .15s; text-align: left; }
     .add-step-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(124,111,247,.05); }
     .add-icon { width: 22px; height: 22px; border-radius: 50%; border: 2px dashed currentColor; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-
-    /* ── TIMELINE (embedded) ── */
+    .step-results-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .chip { font-size: 10px; font-family: var(--mono); padding: 2px 8px; border-radius: 5px; display: inline-flex; align-items: center; gap: 4px; }
+    .chip-remove { cursor: pointer; opacity: .6; font-size: 12px; line-height: 1; }
+    .chip-remove:hover { opacity: 1; }
+    .step-af-badge { font-size: 10px; font-family: var(--mono); padding: 2px 7px; border-radius: 5px; background: rgba(247,162,94,.12); color: var(--accent3); border: 1px solid rgba(247,162,94,.2); cursor: pointer; transition: all .15s; flex-shrink: 0; }
+    .step-af-badge:hover { background: rgba(247,162,94,.2); }
+    .actor-dropdown { position: absolute; top: 44px; left: 0; background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--r); overflow: hidden; z-index: 50; min-width: 160px; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+    .actor-option { display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer; font-size: 12px; transition: background .1s; }
+    .actor-option:hover { background: var(--surface3); }
     .timeline-view { padding: 0 28px 28px; overflow-y: auto; overflow-x: auto; flex: 1; }
     .timeline-view::-webkit-scrollbar { width: 4px; height: 4px; }
     .timeline-view::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
-
-    /* ── TIMELINE TOOLBAR ── */
-    .tl-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 0 14px; gap: 12px; position: sticky; left: 0; }
-    .tl-toolbar-left { display: flex; align-items: center; gap: 8px; }
-    .tl-toolbar-title { font-size: 12px; font-weight: 500; color: var(--text2); }
-    .tl-toolbar-sub { font-size: 10px; font-family: var(--mono); color: var(--text3); }
-
-    /* ═══════════════════════════════════════════
-       FULLSCREEN OVERLAY
-    ═══════════════════════════════════════════ */
-    .fs-overlay {
-      position: fixed; inset: 0; z-index: 2000;
-      background: var(--bg);
-      display: flex; flex-direction: column;
-      opacity: 0; pointer-events: none;
-      transition: opacity .2s;
-    }
-    .fs-overlay.open { opacity: 1; pointer-events: all; }
-
-    /* Fullscreen top bar */
-    .fs-bar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 20px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
-      flex-shrink: 0;
-      gap: 16px;
-    }
-    .fs-bar-left { display: flex; align-items: center; gap: 12px; }
-    .fs-title { font-size: 13px; font-weight: 600; }
-    .fs-subtitle { font-size: 10px; font-family: var(--mono); color: var(--text3); }
-
-    /* Zoom controls cluster */
-    .zoom-controls {
-      display: flex; align-items: center; gap: 4px;
-      background: var(--surface2);
-      border: 1px solid var(--border2);
-      border-radius: var(--r);
-      padding: 4px;
-    }
-    .zoom-btn {
-      width: 30px; height: 30px;
-      display: flex; align-items: center; justify-content: center;
-      background: transparent; border: none; border-radius: 6px;
-      color: var(--text2); cursor: pointer; font-size: 16px;
-      font-family: var(--mono); font-weight: 600;
-      transition: background .1s, color .1s;
-      line-height: 1;
-    }
-    .zoom-btn:hover { background: var(--surface3); color: var(--text); }
-    .zoom-btn:disabled { opacity: .3; cursor: default; }
-    .zoom-level {
-      min-width: 48px; text-align: center;
-      font-size: 11px; font-family: var(--mono); color: var(--text2);
-      user-select: none;
-    }
-    .zoom-divider { width: 1px; height: 20px; background: var(--border2); margin: 0 2px; }
-
-    /* Keyboard hints */
-    .kbd-hints { display: flex; gap: 10px; align-items: center; }
-    .kbd { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-family: var(--mono); color: var(--text3); }
-    .kbd kbd { background: var(--surface3); border: 1px solid var(--border2); border-radius: 4px; padding: 1px 5px; font-size: 9px; color: var(--text2); }
-
-    /* The panning viewport */
-    .fs-viewport {
-      flex: 1;
-      overflow: hidden;
-      position: relative;
-      cursor: grab;
-      background:
-        radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 28px 28px;
-    }
-    .fs-viewport.panning { cursor: grabbing; }
-    .fs-viewport.panning * { pointer-events: none; }
-
-    /* The canvas that gets transformed */
-    .fs-canvas {
-      position: absolute;
-      top: 0; left: 0;
-      transform-origin: 0 0;
-      transition: none; /* smooth only on fit/reset, set via JS */
-      will-change: transform;
-      padding: 40px;
-    }
-
-    /* ── SWIM LANE inside fullscreen ── */
-    .sl-wrap { display: inline-block; min-width: max-content; }
-
-    .sl-header {
-      display: flex;
-      position: sticky; top: 0; z-index: 10;
-      background: var(--bg);
-    }
-
-    .sl-actor-col {
-      min-width: 200px; flex: 1;
-      text-align: center; padding: 12px 16px;
-      font-size: 11px; font-family: var(--mono);
-      border-bottom: 2px solid;
-    }
-
-    .sl-row {
-      display: flex; min-height: 72px;
-      border-bottom: 1px solid var(--border);
-      position: relative; transition: background .2s;
-    }
-    .sl-row:last-child { border-bottom: none; }
-    .sl-row.process-first { border-top: 2px solid transparent; }
-
-    .sl-process-label {
-      position: absolute; left: 0; top: 50%;
-      transform: translateY(-50%);
-      width: 100%; display: flex; align-items: center; justify-content: center;
-      pointer-events: none; z-index: 0;
-    }
-    .sl-process-label-text {
-      font-size: 13px; font-family: var(--mono); font-weight: 600;
-      letter-spacing: 3px; text-transform: uppercase;
-      opacity: .1; white-space: nowrap; user-select: none;
-    }
-
-    .sl-cell {
-      min-width: 200px; flex: 1;
-      padding: 10px 12px;
-      border-right: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; z-index: 1;
-    }
-    .sl-cell:last-child { border-right: none; }
-
-    .sl-bubble {
-      background: var(--surface2);
-      border: 1px solid var(--border2);
-      border-radius: var(--r);
-      padding: 10px 14px;
-      font-size: 12px; font-weight: 500;
-      text-align: center; max-width: 170px; line-height: 1.4;
-      box-shadow: 0 2px 8px rgba(0,0,0,.3);
-      transition: box-shadow .15s, border-color .15s;
-    }
-    .sl-bubble:hover { border-color: var(--border2); box-shadow: 0 4px 16px rgba(0,0,0,.5); }
-    .sl-step-num { font-family: var(--mono); font-size: 9px; color: var(--text3); margin-bottom: 4px; }
-    .sl-step-actor { font-size: 9px; font-family: var(--mono); margin-top: 5px; opacity: .7; }
-
-    /* Result chips inside bubble */
-    .sl-result-chips { display: flex; gap: 3px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
-    .sl-result-chip { font-size: 8px; font-family: var(--mono); padding: 1px 5px; border-radius: 3px; }
-
-    /* Process legend strip */
-    .sl-legend {
-      display: flex; align-items: center; gap: 16px;
-      padding: 10px 16px;
-      border-top: 1px solid var(--border);
-      background: var(--surface);
-      flex-shrink: 0; flex-wrap: wrap;
-    }
-    .sl-legend-label { font-size: 10px; font-family: var(--mono); color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
-    .sl-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--mono); }
-    .sl-legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-
-    /* ── MINI-MAP ── */
-    .fs-minimap {
-      position: absolute; bottom: 16px; right: 16px;
-      width: 180px; height: 110px;
-      background: var(--surface2);
-      border: 1px solid var(--border2);
-      border-radius: 8px;
-      overflow: hidden;
-      z-index: 20;
-      box-shadow: 0 4px 20px rgba(0,0,0,.5);
-    }
-    .fs-minimap-canvas {
-      width: 100%; height: 100%;
-      position: relative;
-    }
-    /* viewport indicator inside minimap */
-    .fs-minimap-viewport {
-      position: absolute;
-      border: 1.5px solid var(--accent);
-      background: rgba(124,111,247,.1);
-      border-radius: 2px;
-      pointer-events: none;
-      transition: left .05s, top .05s, width .05s, height .05s;
-    }
-    .fs-minimap-label {
-      position: absolute; bottom: 4px; left: 6px;
-      font-size: 8px; font-family: var(--mono); color: var(--text3);
-      pointer-events: none;
-    }
-    /* minimap actor cols preview */
-    .mm-actor { position: absolute; top: 0; bottom: 0; opacity: .15; }
-    .mm-step { position: absolute; border-radius: 2px; }
-
-    /* ── Embedded timeline (non-fullscreen) ── */
+    .tl-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 0 14px; gap: 12px; }
     .tl-actor-col { min-width: 160px; flex: 1; text-align: center; padding: 10px; font-size: 11px; font-family: var(--mono); border-bottom: 2px solid; }
     .tl-row { display: flex; min-height: 60px; border-bottom: 1px solid var(--border); position: relative; transition: background .2s; }
     .tl-row:last-child { border-bottom: none; }
@@ -381,8 +290,45 @@
     .tl-cell:last-child { border-right: none; }
     .tl-step-bubble { background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--r); padding: 8px 12px; font-size: 11px; font-weight: 500; text-align: center; max-width: 130px; line-height: 1.3; }
     .tl-step-num { font-family: var(--mono); font-size: 9px; color: var(--text3); margin-bottom: 3px; }
-
-    /* ── MODALS ── */
+    .fs-overlay { position: fixed; inset: 0; z-index: 2000; background: var(--bg); display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .fs-overlay.open { opacity: 1; pointer-events: all; }
+    .fs-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0; gap: 16px; }
+    .fs-bar-left { display: flex; align-items: center; gap: 12px; }
+    .fs-title { font-size: 13px; font-weight: 600; }
+    .fs-subtitle { font-size: 10px; font-family: var(--mono); color: var(--text3); }
+    .zoom-controls { display: flex; align-items: center; gap: 4px; background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--r); padding: 4px; }
+    .zoom-btn { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; border-radius: 6px; color: var(--text2); cursor: pointer; font-size: 16px; font-family: var(--mono); font-weight: 600; transition: background .1s, color .1s; line-height: 1; }
+    .zoom-btn:hover { background: var(--surface3); color: var(--text); }
+    .zoom-level { min-width: 48px; text-align: center; font-size: 11px; font-family: var(--mono); color: var(--text2); user-select: none; }
+    .zoom-divider { width: 1px; height: 20px; background: var(--border2); margin: 0 2px; }
+    .kbd-hints { display: flex; gap: 10px; align-items: center; }
+    .kbd { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-family: var(--mono); color: var(--text3); }
+    .kbd kbd { background: var(--surface3); border: 1px solid var(--border2); border-radius: 4px; padding: 1px 5px; font-size: 9px; color: var(--text2); }
+    .fs-viewport { flex: 1; overflow: hidden; position: relative; cursor: grab; background: radial-gradient(circle,rgba(255,255,255,0.03) 1px,transparent 1px); background-size: 28px 28px; }
+    .fs-viewport.panning { cursor: grabbing; }
+    .fs-viewport.panning * { pointer-events: none; }
+    .fs-canvas { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; padding: 40px; }
+    .sl-wrap { display: inline-block; min-width: max-content; }
+    .sl-header { display: flex; position: sticky; top: 0; z-index: 10; background: var(--bg); }
+    .sl-actor-col { min-width: 200px; flex: 1; text-align: center; padding: 12px 16px; font-size: 11px; font-family: var(--mono); border-bottom: 2px solid; }
+    .sl-row { display: flex; min-height: 72px; border-bottom: 1px solid var(--border); position: relative; transition: background .2s; }
+    .sl-row:last-child { border-bottom: none; }
+    .sl-row.process-first { border-top: 2px solid transparent; }
+    .sl-process-label { position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 100%; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 0; }
+    .sl-process-label-text { font-size: 13px; font-family: var(--mono); font-weight: 600; letter-spacing: 3px; text-transform: uppercase; opacity: .1; white-space: nowrap; user-select: none; }
+    .sl-cell { min-width: 200px; flex: 1; padding: 10px 12px; border-right: 1px solid var(--border); display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+    .sl-cell:last-child { border-right: none; }
+    .sl-bubble { background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--r); padding: 10px 14px; font-size: 12px; font-weight: 500; text-align: center; max-width: 170px; line-height: 1.4; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+    .sl-step-num { font-family: var(--mono); font-size: 9px; color: var(--text3); margin-bottom: 4px; }
+    .sl-result-chips { display: flex; gap: 3px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+    .sl-result-chip { font-size: 8px; font-family: var(--mono); padding: 1px 5px; border-radius: 3px; }
+    .sl-legend { display: flex; align-items: center; gap: 16px; padding: 10px 16px; border-top: 1px solid var(--border); background: var(--surface); flex-shrink: 0; flex-wrap: wrap; }
+    .sl-legend-label { font-size: 10px; font-family: var(--mono); color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
+    .sl-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--mono); }
+    .sl-legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .fs-minimap { position: absolute; bottom: 16px; right: 16px; width: 180px; height: 110px; background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px; overflow: hidden; z-index: 20; box-shadow: 0 4px 20px rgba(0,0,0,.5); }
+    .fs-minimap-viewport { position: absolute; border: 1.5px solid var(--accent); background: rgba(124,111,247,.1); border-radius: 2px; pointer-events: none; }
+    .fs-minimap-label { position: absolute; bottom: 4px; left: 6px; font-size: 8px; font-family: var(--mono); color: var(--text3); pointer-events: none; }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); display: flex; align-items: center; justify-content: center; z-index: 3000; opacity: 0; pointer-events: none; transition: opacity .2s; }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
     .modal { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--r2); padding: 24px; width: 420px; max-width: 90vw; transform: translateY(8px); transition: transform .2s; }
@@ -404,20 +350,6 @@
     .process-step-toggle .pst-num { font-family: var(--mono); font-size: 10px; color: var(--text3); flex-shrink: 0; }
     .process-step-toggle .pst-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .process-step-toggle .pst-actor { font-size: 9px; font-family: var(--mono); color: var(--text3); flex-shrink: 0; }
-    .actor-dropdown { position: absolute; top: 44px; left: 0; background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--r); overflow: hidden; z-index: 50; min-width: 160px; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
-    .actor-option { display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer; font-size: 12px; transition: background .1s; }
-    .actor-option:hover { background: var(--surface3); }
-
-    /* ── STATS BAR ── */
-    .stats-bar { display: flex; gap: 20px; padding: 10px 28px; background: var(--surface); border-bottom: 1px solid var(--border); font-size: 11px; font-family: var(--mono); color: var(--text3); }
-    .stat-item { display: flex; gap: 6px; align-items: center; }
-    .stat-val { color: var(--text); font-weight: 500; }
-
-    /* ── EXPORT ── */
-    .export-view { padding: 28px; overflow-y: auto; flex: 1; }
-    .export-pre { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r2); padding: 20px; font-family: var(--mono); font-size: 12px; color: var(--text2); line-height: 1.8; white-space: pre; overflow-x: auto; }
-
-    /* ── AF VIEW ── */
     .af-view { padding: 28px; overflow-y: auto; flex: 1; }
     .af-view::-webkit-scrollbar { width: 4px; }
     .af-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; gap: 12px; }
@@ -450,19 +382,11 @@
     .af-step-chip { font-size: 10px; font-family: var(--mono); padding: 2px 8px; border-radius: 5px; background: var(--surface2); border: 1px solid var(--border2); color: var(--text2); cursor: pointer; transition: border-color .1s; }
     .af-step-chip:hover { border-color: var(--accent); color: var(--accent); }
     .af-step-chip.unlinked { border-style: dashed; color: var(--text3); }
-    .step-af-badge { font-size: 10px; font-family: var(--mono); padding: 2px 7px; border-radius: 5px; background: rgba(247,162,94,.12); color: var(--accent3); border: 1px solid rgba(247,162,94,.2); cursor: pointer; transition: all .15s; flex-shrink: 0; }
-    .step-af-badge:hover { background: rgba(247,162,94,.2); }
-    .step-results-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
-    .chip { font-size: 10px; font-family: var(--mono); padding: 2px 8px; border-radius: 5px; display: inline-flex; align-items: center; gap: 4px; }
-    .chip-remove { cursor: pointer; opacity: .6; font-size: 12px; line-height: 1; }
-    .chip-remove:hover { opacity: 1; }
-
-    /* Shared */
+    .export-view { padding: 28px; overflow-y: auto; flex: 1; }
+    .export-pre { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r2); padding: 20px; font-family: var(--mono); font-size: 12px; color: var(--text2); line-height: 1.8; white-space: pre; overflow-x: auto; }
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
-    [data-tip] { position: relative; }
-    [data-tip]:hover::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: var(--surface3); color: var(--text); font-size: 11px; padding: 4px 8px; border-radius: 6px; white-space: nowrap; pointer-events: none; z-index: 200; }
     .hidden { display: none !important; }
     .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 60px 20px; color: var(--text3); text-align: center; }
     .empty-icon { font-size: 36px; opacity: .4; }
@@ -472,60 +396,37 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════
-     FULLSCREEN SWIM LANE OVERLAY
-═══════════════════════════════════════════════════ -->
+<!-- FULLSCREEN -->
 <div class="fs-overlay" id="fs-overlay">
-  <!-- Top bar -->
   <div class="fs-bar">
     <div class="fs-bar-left">
-      <button class="btn btn-ghost btn-sm" onclick="closeFullscreen()" data-tip="Zamknij (Esc)" style="font-size:16px;padding:4px 10px">✕</button>
-      <div>
-        <div class="fs-title" id="fs-title">Swim Lane</div>
-        <div class="fs-subtitle" id="fs-subtitle">0 kroków · 0 aktorów</div>
-      </div>
+      <button class="btn btn-ghost btn-sm" onclick="closeFullscreen()" style="font-size:16px;padding:4px 10px">✕</button>
+      <div><div class="fs-title" id="fs-title">Swim Lane</div><div class="fs-subtitle" id="fs-subtitle"></div></div>
     </div>
-
-    <!-- Zoom controls -->
     <div style="display:flex;align-items:center;gap:10px">
       <div class="zoom-controls">
-        <button class="zoom-btn" onclick="zoomBy(-0.15)" data-tip="Oddal (−)">−</button>
+        <button class="zoom-btn" onclick="zoomBy(-0.15)">−</button>
         <span class="zoom-level" id="zoom-level-display">100%</span>
-        <button class="zoom-btn" onclick="zoomBy(+0.15)" data-tip="Przybliż (+)">+</button>
+        <button class="zoom-btn" onclick="zoomBy(+0.15)">+</button>
         <div class="zoom-divider"></div>
-        <button class="zoom-btn" onclick="fitToScreen()" data-tip="Dopasuj do ekranu (0)" style="font-size:11px;width:36px">FIT</button>
-        <button class="zoom-btn" onclick="resetZoom()" data-tip="Zoom 100% (1)" style="font-size:10px;width:36px">1:1</button>
+        <button class="zoom-btn" onclick="fitToScreen()" style="font-size:11px;width:36px">FIT</button>
+        <button class="zoom-btn" onclick="resetZoom()" style="font-size:10px;width:36px">1:1</button>
       </div>
-
-      <!-- Keyboard hints -->
       <div class="kbd-hints">
         <span class="kbd"><kbd>scroll</kbd> zoom</span>
         <span class="kbd"><kbd>drag</kbd> pan</span>
         <span class="kbd"><kbd>Esc</kbd> zamknij</span>
+        <span class="kbd"><kbd>[</kbd> panel</span>
       </div>
     </div>
   </div>
-
-  <!-- Panning viewport -->
   <div class="fs-viewport" id="fs-viewport"
-    onmousedown="onPanStart(event)"
-    onmousemove="onPanMove(event)"
-    onmouseup="onPanEnd(event)"
-    onmouseleave="onPanEnd(event)"
+    onmousedown="onPanStart(event)" onmousemove="onPanMove(event)"
+    onmouseup="onPanEnd(event)" onmouseleave="onPanEnd(event)"
     onwheel="onWheelZoom(event)">
-
-    <!-- Transformable canvas -->
-    <div class="fs-canvas" id="fs-canvas">
-      <div class="sl-wrap" id="sl-wrap">
-        <!-- filled by renderFullscreenTimeline() -->
-      </div>
-    </div>
+    <div class="fs-canvas" id="fs-canvas"><div class="sl-wrap" id="sl-wrap"></div></div>
   </div>
-
-  <!-- Process legend -->
   <div class="sl-legend" id="sl-legend"></div>
-
-  <!-- Mini-map -->
   <div class="fs-minimap" id="fs-minimap">
     <canvas id="mm-canvas" style="width:100%;height:100%;display:block"></canvas>
     <div class="fs-minimap-viewport" id="mm-viewport"></div>
@@ -537,10 +438,7 @@
 <header class="header">
   <div class="logo">
     <div class="logo-icon">⟶</div>
-    <div>
-      <div class="logo-name">Happy Path Builder</div>
-      <div class="logo-tag">PM Tool · v1.0</div>
-    </div>
+    <div><div class="logo-name">Happy Path Builder</div><div class="logo-tag">PM Tool · v1.0</div></div>
   </div>
   <div class="header-actions">
     <div class="save-indicator" id="save-indicator"><div class="save-dot"></div><span id="save-label">–</span></div>
@@ -568,38 +466,51 @@
   </div>
 </header>
 
-<div class="workspace">
-  <!-- LEFT PANEL -->
-  <aside class="panel">
-    <div>
-      <div class="section-label">Projekt</div>
-      <div class="meta-field"><label>Nazwa procesu</label><input type="text" id="proc-name" value="Obsługa zamówienia klienta"></div>
-      <div class="meta-field"><label>Cel procesu</label><textarea id="proc-goal" rows="2">Klient składa zamówienie, które zostaje zrealizowane i dostarczone w terminie.</textarea></div>
-      <div class="meta-field"><label>Warunki wejścia</label><input type="text" id="proc-trigger" value="Klient wybiera produkt w sklepie"></div>
-    </div>
-    <div>
-      <div class="section-label">Aktorzy</div>
-      <div class="actors-list" id="actors-list"></div>
-      <div class="add-actor-form">
-        <input type="text" id="new-actor-input" placeholder="Dodaj aktora..." onkeydown="if(event.key==='Enter')addActor()">
-        <button class="btn btn-ghost btn-sm" onclick="addActor()">+</button>
-      </div>
-    </div>
-    <div>
-      <div class="section-label">Procesy</div>
-      <div class="processes-list" id="processes-list"></div>
-      <div class="add-process-form">
-        <input type="text" id="new-process-input" placeholder="Nazwa procesu..." onkeydown="if(event.key==='Enter')addProcess()">
-        <button class="btn btn-ghost btn-sm" onclick="addProcess()">+</button>
-      </div>
-    </div>
-    <div>
-      <div class="section-label">Oczekiwane rezultaty</div>
-      <div class="results-list" id="results-list"></div>
-    </div>
-  </aside>
+<!-- WORKSPACE: panel | toggle-col | main -->
+<div class="workspace" id="workspace">
 
-  <!-- MAIN -->
+  <!-- 1. PANEL -->
+  <div class="panel" id="panel">
+    <div class="panel-inner" id="panel-inner">
+      <div>
+        <div class="section-label">Projekt</div>
+        <div class="meta-field"><label>Nazwa procesu</label><input type="text" id="proc-name" value="Obsługa zamówienia klienta"></div>
+        <div class="meta-field"><label>Cel procesu</label><textarea id="proc-goal" rows="2">Klient składa zamówienie, które zostaje zrealizowane i dostarczone w terminie.</textarea></div>
+        <div class="meta-field"><label>Warunki wejścia</label><input type="text" id="proc-trigger" value="Klient wybiera produkt w sklepie"></div>
+      </div>
+      <div>
+        <div class="section-label">Aktorzy</div>
+        <div class="actors-list" id="actors-list"></div>
+        <div class="add-actor-form">
+          <input type="text" id="new-actor-input" placeholder="Dodaj aktora..." onkeydown="if(event.key==='Enter')addActor()">
+          <button class="btn btn-ghost btn-sm" onclick="addActor()">+</button>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Procesy</div>
+        <div class="processes-list" id="processes-list"></div>
+        <div class="add-process-form">
+          <input type="text" id="new-process-input" placeholder="Nazwa procesu..." onkeydown="if(event.key==='Enter')addProcess()">
+          <button class="btn btn-ghost btn-sm" onclick="addProcess()">+</button>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">Oczekiwane rezultaty</div>
+        <div class="results-list" id="results-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. TOGGLE COLUMN — zawsze widoczna, niezależna od panelu -->
+  <div class="panel-toggle-col">
+    <button class="panel-toggle" id="panel-toggle"
+      onclick="togglePanel()"
+      data-tip="Ukryj panel  [ ]">
+      <i class="panel-toggle-arrow">‹</i>
+    </button>
+  </div>
+
+  <!-- 3. MAIN -->
   <main class="main">
     <div class="stats-bar">
       <div class="stat-item">Kroków: <span class="stat-val" id="stat-steps">0</span></div>
@@ -608,8 +519,6 @@
       <div class="stat-item">Rezultatów: <span class="stat-val" id="stat-results">0</span></div>
       <div class="stat-item">Alt. Flows: <span class="stat-val" id="stat-af">0</span></div>
     </div>
-
-    <!-- Steps -->
     <div class="steps-canvas" id="view-steps">
       <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
         <button class="btn btn-ghost btn-sm" onclick="toggleStepsViewMode()" id="steps-view-mode-btn">Widok: Pełny</button>
@@ -617,25 +526,13 @@
       <div class="steps-list" id="steps-list"></div>
       <button class="add-step-btn" onclick="addStep()"><div class="add-icon">+</div>Dodaj krok do procesu</button>
     </div>
-
-    <!-- Timeline (embedded, simple) -->
     <div class="timeline-view hidden" id="view-timeline">
-      <!-- toolbar with fullscreen button -->
       <div class="tl-toolbar">
-        <div class="tl-toolbar-left">
-          <div>
-            <div class="tl-toolbar-title">Swim Lane</div>
-            <div class="tl-toolbar-sub" id="tl-toolbar-sub">0 kroków · 0 aktorów</div>
-          </div>
-        </div>
-        <button class="btn btn-ghost btn-sm" onclick="openFullscreen()" style="display:flex;align-items:center;gap:6px">
-          <span style="font-size:14px">⛶</span> Pełny ekran
-        </button>
+        <div style="font-size:12px;font-weight:500;color:var(--text2)">Swim Lane <span id="tl-toolbar-sub" style="font-size:10px;font-family:var(--mono);color:var(--text3);margin-left:8px"></span></div>
+        <button class="btn btn-ghost btn-sm" onclick="openFullscreen()" style="display:flex;align-items:center;gap:6px"><span style="font-size:14px">⛶</span> Pełny ekran</button>
       </div>
       <div id="timeline-content"></div>
     </div>
-
-    <!-- Export -->
     <div class="export-view hidden" id="view-export">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
         <div><div style="font-size:15px;font-weight:600">Eksport procesu</div><div style="font-size:11px;color:var(--text3);font-family:var(--mono);margin-top:2px">Markdown / Dokumentacja</div></div>
@@ -643,8 +540,6 @@
       </div>
       <pre class="export-pre" id="export-content"></pre>
     </div>
-
-    <!-- Alt Flows -->
     <div class="af-view hidden" id="view-af">
       <div class="af-toolbar" style="flex-direction:column;align-items:stretch;gap:8px">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
@@ -669,173 +564,125 @@
 </div>
 
 <!-- MODALS -->
-<div class="modal-overlay" id="actor-modal">
-  <div class="modal">
-    <div class="modal-title">Nowy aktor</div>
-    <div class="modal-field"><label>Nazwa roli</label><input type="text" id="actor-name-input" placeholder="np. Klient, System"></div>
-    <div class="modal-field"><label>Kolor</label><div class="color-row" id="actor-color-row"></div></div>
-    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('actor-modal')">Anuluj</button><button class="btn btn-primary" onclick="saveActor()">Dodaj aktora</button></div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="result-modal">
-  <div class="modal">
-    <div class="modal-title" id="result-modal-title">Nowy rezultat</div>
-    <div class="modal-field"><label>Nazwa rezultatu</label><input type="text" id="result-name-input" placeholder="np. Zamówienie potwierdzone"></div>
-    <div class="modal-field"><label>Opis / Kryterium akceptacji</label><textarea id="result-desc-input" rows="3"></textarea></div>
-    <div class="modal-field"><label>Typ</label><select id="result-type-input"><option value="output">Output — artefakt/dokument</option><option value="state">Stan — zmiana statusu</option><option value="action">Akcja — wykonanie czynności</option><option value="notification">Powiadomienie — komunikat</option></select></div>
-    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('result-modal')">Anuluj</button><button class="btn btn-primary" id="result-modal-save-btn" onclick="saveResult()">Dodaj rezultat</button></div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="link-modal">
-  <div class="modal">
-    <div class="modal-title">Powiąż rezultat z krokiem</div>
-    <div id="link-results-list" style="display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto"></div>
-    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('link-modal')">Zamknij</button></div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="process-modal">
-  <div class="modal">
-    <div class="modal-title" id="process-modal-title">Nowy Proces</div>
-    <div class="modal-field"><label>Nazwa procesu</label><input type="text" id="process-name-input" placeholder="np. Obsługa płatności"></div>
-    <div class="modal-field"><label>Kolor</label><div class="color-row" id="process-color-row"></div></div>
-    <div class="modal-field"><label>Przypisz kroki do tego procesu</label><div class="process-step-grid" id="process-step-grid"></div></div>
-    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('process-modal')">Anuluj</button><button class="btn btn-primary" id="process-modal-save-btn" onclick="saveProcess()">Dodaj proces</button></div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="af-modal">
-  <div class="modal wide">
-    <div class="modal-title" id="af-modal-title">Nowy Alternate Flow</div>
-    <div class="modal-field"><label>Tytuł</label><input type="text" id="af-title-input"></div>
-    <div class="modal-field"><label>Trigger</label><input type="text" id="af-trigger-input"></div>
-    <div class="modal-field"><label>Outcome</label><textarea id="af-outcome-input" rows="2"></textarea></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div class="modal-field" style="margin-bottom:0"><label>Severity</label><select id="af-severity-input"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option><option value="critical">Critical</option></select></div>
-      <div class="modal-field" style="margin-bottom:0;display:flex;align-items:flex-end"><label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;color:var(--text3);font-family:var(--mono)"><input type="checkbox" id="af-manual-input" style="width:14px;height:14px;accent-color:var(--accent3)">Manual review</label></div>
-    </div>
-    <div class="modal-field" style="margin-top:14px"><label>Powiąż z krokami</label><div id="af-steps-selector" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"></div></div>
-    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('af-modal')">Anuluj</button><button class="btn btn-primary" id="af-modal-save-btn" onclick="saveAf()">Dodaj</button></div>
-  </div>
-</div>
+<div class="modal-overlay" id="actor-modal"><div class="modal"><div class="modal-title">Nowy aktor</div><div class="modal-field"><label>Nazwa roli</label><input type="text" id="actor-name-input" placeholder="np. Klient, System"></div><div class="modal-field"><label>Kolor</label><div class="color-row" id="actor-color-row"></div></div><div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('actor-modal')">Anuluj</button><button class="btn btn-primary" onclick="saveActor()">Dodaj aktora</button></div></div></div>
+<div class="modal-overlay" id="result-modal"><div class="modal"><div class="modal-title" id="result-modal-title">Nowy rezultat</div><div class="modal-field"><label>Nazwa rezultatu</label><input type="text" id="result-name-input"></div><div class="modal-field"><label>Opis</label><textarea id="result-desc-input" rows="3"></textarea></div><div class="modal-field"><label>Typ</label><select id="result-type-input"><option value="output">Output</option><option value="state">Stan</option><option value="action">Akcja</option><option value="notification">Powiadomienie</option></select></div><div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('result-modal')">Anuluj</button><button class="btn btn-primary" id="result-modal-save-btn" onclick="saveResult()">Dodaj rezultat</button></div></div></div>
+<div class="modal-overlay" id="link-modal"><div class="modal"><div class="modal-title">Powiąż rezultat z krokiem</div><div id="link-results-list" style="display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto"></div><div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('link-modal')">Zamknij</button></div></div></div>
+<div class="modal-overlay" id="process-modal"><div class="modal"><div class="modal-title" id="process-modal-title">Nowy Proces</div><div class="modal-field"><label>Nazwa procesu</label><input type="text" id="process-name-input"></div><div class="modal-field"><label>Kolor</label><div class="color-row" id="process-color-row"></div></div><div class="modal-field"><label>Przypisz kroki</label><div class="process-step-grid" id="process-step-grid"></div></div><div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('process-modal')">Anuluj</button><button class="btn btn-primary" id="process-modal-save-btn" onclick="saveProcess()">Dodaj proces</button></div></div></div>
+<div class="modal-overlay" id="af-modal"><div class="modal wide"><div class="modal-title" id="af-modal-title">Nowy Alternate Flow</div><div class="modal-field"><label>Tytuł</label><input type="text" id="af-title-input"></div><div class="modal-field"><label>Trigger</label><input type="text" id="af-trigger-input"></div><div class="modal-field"><label>Outcome</label><textarea id="af-outcome-input" rows="2"></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div class="modal-field" style="margin-bottom:0"><label>Severity</label><select id="af-severity-input"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option><option value="critical">Critical</option></select></div><div class="modal-field" style="margin-bottom:0;display:flex;align-items:flex-end"><label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;color:var(--text3);font-family:var(--mono)"><input type="checkbox" id="af-manual-input" style="width:14px;height:14px;accent-color:var(--accent3)">Manual review</label></div></div><div class="modal-field" style="margin-top:14px"><label>Powiąż z krokami</label><div id="af-steps-selector" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"></div></div><div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('af-modal')">Anuluj</button><button class="btn btn-primary" id="af-modal-save-btn" onclick="saveAf()">Dodaj</button></div></div></div>
 
 <input type="file" id="json-file-input" accept=".json" style="display:none" onchange="handleJSONImport(event)">
 <div class="toast" id="toast"><div class="toast-dot" id="toast-dot"></div><span id="toast-msg"></span></div>
 
 <script>
-// ═══════════════════════════════════════════════════
-//  CONSTANTS
-// ═══════════════════════════════════════════════════
-const COLORS = ['#7c6ff7','#5ad4b0','#f7a25e','#f25e8a','#4db8f5','#c77dff','#ffd166','#ff6b6b'];
-const RESULT_TYPE_COLORS = { output:'#5ad4b0', state:'#7c6ff7', action:'#f7a25e', notification:'#4db8f5' };
-const RESULT_TYPE_LABELS = { output:'OUTPUT', state:'STAN', action:'AKCJA', notification:'NOTIF' };
-const ZOOM_MIN = 0.15, ZOOM_MAX = 3.0, ZOOM_STEP = 0.15;
+const COLORS=['#7c6ff7','#5ad4b0','#f7a25e','#f25e8a','#4db8f5','#c77dff','#ffd166','#ff6b6b'];
+const RESULT_TYPE_COLORS={output:'#5ad4b0',state:'#7c6ff7',action:'#f7a25e',notification:'#4db8f5'};
+const RESULT_TYPE_LABELS={output:'OUTPUT',state:'STAN',action:'AKCJA',notification:'NOTIF'};
+const ZOOM_MIN=0.15,ZOOM_MAX=3.0,ZOOM_STEP=0.15;
 
-// ═══════════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════════
+// ── PANEL TOGGLE ──
+let panelVisible = localStorage.getItem('hpb_panel') !== 'hidden';
+
+function togglePanel() {
+  panelVisible = !panelVisible;
+  applyPanelState(true);
+}
+
+function applyPanelState(save=false) {
+  const ws     = document.getElementById('workspace');
+  const toggle = document.getElementById('panel-toggle');
+  const arrow  = toggle.querySelector('.panel-toggle-arrow');
+  if (panelVisible) {
+    ws.classList.remove('panel-collapsed');
+    toggle.setAttribute('data-tip','Ukryj panel  [ ]');
+    arrow.textContent = '‹';
+  } else {
+    ws.classList.add('panel-collapsed');
+    toggle.setAttribute('data-tip','Pokaż panel  [ ]');
+    arrow.textContent = '›';
+  }
+  if (save) localStorage.setItem('hpb_panel', panelVisible ? 'visible' : 'hidden');
+}
+
+// ── STATE ──
 let state = {
-  actors: [
-    { id:'a1', name:'Klient',     color:'#f25e8a' },
-    { id:'a2', name:'Sprzedawca', color:'#7c6ff7' },
-    { id:'a3', name:'System',     color:'#5ad4b0' },
+  actors:[{id:'a1',name:'Klient',color:'#f25e8a'},{id:'a2',name:'Sprzedawca',color:'#7c6ff7'},{id:'a3',name:'System',color:'#5ad4b0'}],
+  processes:[{id:'p1',name:'Zamawianie',color:'#7c6ff7',stepIds:['s1','s2','s3']},{id:'p2',name:'Fulfillment',color:'#f7a25e',stepIds:['s4','s5']}],
+  results:[
+    {id:'r1',name:'Zamówienie złożone',desc:'Klient potwierdził koszyk i wybrał metodę płatności',type:'state'},
+    {id:'r2',name:'Potwierdzenie email',desc:'System wysyła email z podsumowaniem zamówienia',type:'notification'},
+    {id:'r3',name:'Płatność zaksięgowana',desc:'Transakcja zakończona sukcesem po stronie bramki',type:'output'},
+    {id:'r4',name:'Zamówienie spakowane',desc:'Fizyczny pakiet gotowy do wysyłki z etykietą',type:'output'},
+    {id:'r5',name:'Przesyłka nadana',desc:'Numer trackingowy wygenerowany i przekazany klientowi',type:'notification'},
   ],
-  processes: [
-    { id:'p1', name:'Zamawianie',  color:'#7c6ff7', stepIds:['s1','s2','s3'] },
-    { id:'p2', name:'Fulfillment', color:'#f7a25e', stepIds:['s4','s5'] },
+  steps:[
+    {id:'s1',actor:'a1',action:'Wybiera produkty i składa zamówienie',desc:'Klient przegląda katalog, dodaje do koszyka i klika "Zamów"',results:['r1'],status:'done'},
+    {id:'s2',actor:'a3',action:'Generuje potwierdzenie zamówienia',desc:'System waliduje dostępność produktów i wysyła email z numerem zamówienia',results:['r2'],status:'done'},
+    {id:'s3',actor:'a1',action:'Realizuje płatność online',desc:'Klient zostaje przekierowany do bramki płatniczej i finalizuje transakcję',results:['r3'],status:'done'},
+    {id:'s4',actor:'a2',action:'Kompletuje i pakuje zamówienie',desc:'Magazynier zbiera produkty z półek, pakuje i drukuje etykietę',results:['r4'],status:'in-progress'},
+    {id:'s5',actor:'a2',action:'Nadaje przesyłkę do kuriera',desc:'Przekazanie paczki kurierowi i wygenerowanie numeru trackingowego',results:['r5'],status:'todo'},
   ],
-  results: [
-    { id:'r1', name:'Zamówienie złożone',    desc:'Klient potwierdził koszyk',                    type:'state' },
-    { id:'r2', name:'Potwierdzenie email',   desc:'System wysyła email z podsumowaniem',           type:'notification' },
-    { id:'r3', name:'Płatność zaksięgowana', desc:'Transakcja zakończona sukcesem',                type:'output' },
-    { id:'r4', name:'Zamówienie spakowane',  desc:'Fizyczny pakiet gotowy do wysyłki',             type:'output' },
-    { id:'r5', name:'Przesyłka nadana',      desc:'Numer trackingowy przekazany klientowi',        type:'notification' },
-  ],
-  steps: [
-    { id:'s1', actor:'a1', action:'Wybiera produkty i składa zamówienie',  desc:'Klient przegląda katalog i klika "Zamów"',                   results:['r1'], status:'done' },
-    { id:'s2', actor:'a3', action:'Generuje potwierdzenie zamówienia',      desc:'System waliduje dostępność i wysyła email',                   results:['r2'], status:'done' },
-    { id:'s3', actor:'a1', action:'Realizuje płatność online',              desc:'Klient zostaje przekierowany do bramki płatniczej',           results:['r3'], status:'done' },
-    { id:'s4', actor:'a2', action:'Kompletuje i pakuje zamówienie',         desc:'Magazynier zbiera produkty i drukuje etykietę',              results:['r4'], status:'in-progress' },
-    { id:'s5', actor:'a2', action:'Nadaje przesyłkę do kuriera',            desc:'Przekazanie paczki i wygenerowanie numeru trackingowego',     results:['r5'], status:'todo' },
-  ],
-  dragStepId: null, dragActorId: null, dragResultId: null,
-  stepsViewMode: 'full', afFilter: 'all', editingAfId: null,
-  alternativeFlows: [],
-  currentView: 'steps', linkingStepId: null,
-  editingActorId: null, editingResultId: null, editingProcessId: null,
-  pendingActorColor: COLORS[0], pendingProcessColor: COLORS[0],
+  dragStepId:null,dragActorId:null,dragResultId:null,
+  stepsViewMode:'full',editingAfId:null,
+  alternativeFlows:[],
+  currentView:'steps',linkingStepId:null,
+  editingResultId:null,editingProcessId:null,
+  pendingActorColor:COLORS[0],pendingProcessColor:COLORS[0],
 };
 
-// ═══════════════════════════════════════════════════
-//  FULLSCREEN / PAN / ZOOM STATE
-// ═══════════════════════════════════════════════════
-const fs = {
-  open: false,
-  zoom: 1,
-  panX: 0, panY: 0,
-  isPanning: false,
-  panStartX: 0, panStartY: 0,
-  panOriginX: 0, panOriginY: 0,
-};
+const fs={open:false,zoom:1,panX:0,panY:0,isPanning:false,panStartX:0,panStartY:0,panOriginX:0,panOriginY:0};
 
-// ═══════════════════════════════════════════════════
-//  HELPERS
-// ═══════════════════════════════════════════════════
-function uid()        { return 'id' + Math.random().toString(36).slice(2,8); }
-function getActor(id) { return state.actors.find(a => a.id === id); }
-function getResult(id){ return state.results.find(r => r.id === id); }
-function getProcessForStep(sid){ return state.processes.find(p => p.stepIds.includes(sid)) || null; }
-function hexAlpha(hex, a) {
-  const r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
-  return `rgba(${r},${g},${b},${a})`;
-}
-function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function autoResize(el){ el.style.height='auto'; el.style.height=el.scrollHeight+'px'; }
+function uid(){return 'id'+Math.random().toString(36).slice(2,8);}
+function getActor(id){return state.actors.find(a=>a.id===id);}
+function getResult(id){return state.results.find(r=>r.id===id);}
+function getProcessForStep(sid){return state.processes.find(p=>p.stepIds.includes(sid))||null;}
+function hexAlpha(hex,a){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return `rgba(${r},${g},${b},${a})`;}
+function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function autoResize(el){el.style.height='auto';el.style.height=el.scrollHeight+'px';}
 
-// ═══════════════════════════════════════════════════
-//  RENDER ORCHESTRATOR
-// ═══════════════════════════════════════════════════
-function render() {
-  renderActors(); renderProcesses(); renderResults(); renderSteps(); renderStats();
-  if (state.currentView==='af')       renderAf();
-  if (state.currentView==='timeline') renderTimeline();
-  if (state.currentView==='export')   renderExport();
-  if (fs.open) renderFullscreenTimeline();
+document.addEventListener('keydown',e=>{
+  const inInput=e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA';
+  if(e.key==='['&&!inInput){togglePanel();return;}
+  if(!fs.open)return;
+  if(inInput)return;
+  if(e.key==='Escape')closeFullscreen();
+  else if(e.key==='+'||e.key==='='){e.preventDefault();zoomBy(ZOOM_STEP);}
+  else if(e.key==='-'){e.preventDefault();zoomBy(-ZOOM_STEP);}
+  else if(e.key==='0'){e.preventDefault();fitToScreen();}
+  else if(e.key==='1'){e.preventDefault();resetZoom();}
+  else if(e.key==='ArrowLeft'){fs.panX+=40;applyTransform(false);updateMinimapViewport();}
+  else if(e.key==='ArrowRight'){fs.panX-=40;applyTransform(false);updateMinimapViewport();}
+  else if(e.key==='ArrowUp'){fs.panY+=40;applyTransform(false);updateMinimapViewport();}
+  else if(e.key==='ArrowDown'){fs.panY-=40;applyTransform(false);updateMinimapViewport();}
+});
+
+function render(){
+  renderActors();renderProcesses();renderResults();renderSteps();renderStats();
+  if(state.currentView==='af')renderAf();
+  if(state.currentView==='timeline')renderTimeline();
+  if(state.currentView==='export')renderExport();
+  if(fs.open)renderFullscreenTimeline();
 }
 
-// ═══════════════════════════════════════════════════
-//  RENDER — ACTORS
-// ═══════════════════════════════════════════════════
-function renderActors() {
-  document.getElementById('actors-list').innerHTML = state.actors.map(a => `
+function renderActors(){
+  document.getElementById('actors-list').innerHTML=state.actors.map(a=>`
     <div class="actor-chip" draggable="true" data-aid="${a.id}"
       ondragstart="onActorDragStart(event,'${a.id}')" ondragover="onActorDragOver(event,'${a.id}')"
       ondrop="onActorDrop(event,'${a.id}')" ondragleave="onActorDragLeave(event)" ondragend="onActorDragEnd(event)">
       <span class="drag-handle">⠿</span>
       <div class="actor-dot" style="background:${a.color}"></div>
-      <input class="actor-name-input" value="${escHtml(a.name)}"
-        onchange="renameActor('${a.id}',this.value)" onkeydown="if(event.key==='Enter')this.blur()">
+      <input class="actor-name-input" value="${escHtml(a.name)}" onchange="renameActor('${a.id}',this.value)" onkeydown="if(event.key==='Enter')this.blur()">
       <button class="btn-icon danger" onclick="removeActor('${a.id}')" style="width:22px;height:22px;font-size:12px">×</button>
     </div>`).join('');
 }
 
-// ═══════════════════════════════════════════════════
-//  RENDER — PROCESSES
-// ═══════════════════════════════════════════════════
-function renderProcesses() {
-  const el = document.getElementById('processes-list');
-  if (!state.processes.length) {
-    el.innerHTML = '<div style="font-size:11px;color:var(--text3);text-align:center;padding:10px 0">Brak procesów.</div>';
-    return;
-  }
-  el.innerHTML = state.processes.map(p => {
-    const count = p.stepIds.filter(sid => state.steps.find(s => s.id===sid)).length;
+function renderProcesses(){
+  const el=document.getElementById('processes-list');
+  if(!state.processes.length){el.innerHTML='<div style="font-size:11px;color:var(--text3);text-align:center;padding:10px 0">Brak procesów.</div>';return;}
+  el.innerHTML=state.processes.map(p=>{
+    const count=p.stepIds.filter(sid=>state.steps.find(s=>s.id===sid)).length;
     return `<div class="process-chip" style="border-left:3px solid ${p.color}">
       <div class="process-swatch" style="background:${p.color}"></div>
-      <input class="process-name-input" value="${escHtml(p.name)}"
-        onchange="renameProcess('${p.id}',this.value)" onkeydown="if(event.key==='Enter')this.blur()">
+      <input class="process-name-input" value="${escHtml(p.name)}" onchange="renameProcess('${p.id}',this.value)" onkeydown="if(event.key==='Enter')this.blur()">
       <span class="process-step-count">${count}k</span>
       <button class="btn-icon" onclick="editProcess('${p.id}')" style="width:22px;height:22px;font-size:11px">✎</button>
       <button class="btn-icon danger" onclick="removeProcess('${p.id}')" style="width:22px;height:22px;font-size:12px">×</button>
@@ -843,18 +690,14 @@ function renderProcesses() {
   }).join('');
 }
 
-// ═══════════════════════════════════════════════════
-//  RENDER — RESULTS
-// ═══════════════════════════════════════════════════
-function renderResults() {
-  const el = document.getElementById('results-list');
-  if (!state.results.length) { el.innerHTML='<div style="font-size:11px;color:var(--text3);text-align:center;padding:12px">Brak rezultatów.</div>'; return; }
-  el.innerHTML = state.results.map(r => {
-    const col = RESULT_TYPE_COLORS[r.type]||'#888';
-    const uses = state.steps.filter(s=>(s.results||[]).includes(r.id));
-    const labels = uses.map(s=>`k.${state.steps.indexOf(s)+1}`).join(', ');
-    return `<div class="result-item" style="border-left:3px solid ${col}"
-      draggable="true" data-rid="${r.id}"
+function renderResults(){
+  const el=document.getElementById('results-list');
+  if(!state.results.length){el.innerHTML='<div style="font-size:11px;color:var(--text3);text-align:center;padding:12px">Brak rezultatów.</div>';return;}
+  el.innerHTML=state.results.map(r=>{
+    const col=RESULT_TYPE_COLORS[r.type]||'#888';
+    const uses=state.steps.filter(s=>(s.results||[]).includes(r.id));
+    const labels=uses.map(s=>`k.${state.steps.indexOf(s)+1}`).join(', ');
+    return `<div class="result-item" style="border-left:3px solid ${col}" draggable="true" data-rid="${r.id}"
       ondragstart="onResultDragStart(event,'${r.id}')" ondragover="onResultDragOver(event,'${r.id}')"
       ondrop="onResultDrop(event,'${r.id}')" ondragleave="onResultDragLeave(event)" ondragend="onResultDragEnd(event)">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;gap:4px">
@@ -862,8 +705,8 @@ function renderResults() {
           <span class="drag-handle">⠿</span>
           <span style="font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:4px;background:${col}22;color:${col}">${RESULT_TYPE_LABELS[r.type]}</span>
         </div>
-        ${uses.length ? `<span style="font-size:9px;font-family:var(--mono);padding:2px 7px;border-radius:4px;background:rgba(90,212,176,0.1);color:var(--green);border:1px solid rgba(90,212,176,0.25)">✓ ${labels}</span>`
-          : `<span style="font-size:9px;font-family:var(--mono);padding:2px 7px;border-radius:4px;background:rgba(90,90,120,0.1);color:var(--text3);border:1px dashed var(--border2)">nieprzypisany</span>`}
+        ${uses.length?`<span style="font-size:9px;font-family:var(--mono);padding:2px 7px;border-radius:4px;background:rgba(90,212,176,0.1);color:var(--green);border:1px solid rgba(90,212,176,0.25)">✓ ${labels}</span>`
+          :`<span style="font-size:9px;font-family:var(--mono);padding:2px 7px;border-radius:4px;background:rgba(90,90,120,0.1);color:var(--text3);border:1px dashed var(--border2)">nieprzypisany</span>`}
       </div>
       <div class="ri-title">${escHtml(r.name)}</div>
       <div class="ri-desc">${escHtml(r.desc)}</div>
@@ -876,45 +719,36 @@ function renderResults() {
   }).join('');
 }
 
-// ═══════════════════════════════════════════════════
-//  RENDER — STEPS
-// ═══════════════════════════════════════════════════
-function toggleStepsViewMode() {
-  state.stepsViewMode = state.stepsViewMode==='full' ? 'compact' : 'full';
-  renderSteps(); autoSave();
-}
+function toggleStepsViewMode(){state.stepsViewMode=state.stepsViewMode==='full'?'compact':'full';renderSteps();autoSave();}
 
-function renderSteps() {
-  const el = document.getElementById('steps-list');
-  const btn = document.getElementById('steps-view-mode-btn');
-  if (btn) btn.innerText = state.stepsViewMode==='compact' ? 'Widok: Kompaktowy' : 'Widok: Pełny';
-  el.classList.toggle('compact', state.stepsViewMode==='compact');
-  if (!state.steps.length) {
-    el.innerHTML=`<div class="empty-state"><div class="empty-icon">⟶</div><div class="empty-title">Brak kroków</div><div class="empty-sub">Dodaj pierwszy krok klikając "Dodaj krok".</div></div>`;
-    return;
-  }
-  el.innerHTML = state.steps.map((step,i) => {
-    const actor=getActor(step.actor), actorColor=actor?actor.color:'#888', actorName=actor?actor.name:'Nieprzypisany';
-    const statusColors={done:'#5ad4b0','in-progress':'#f7a25e',todo:'#5a5a78'};
-    const stepResults=(step.results||[]).map(rid=>{const r=getResult(rid);if(!r)return'';const col=RESULT_TYPE_COLORS[r.type]||'#888';return`<span class="chip" style="background:${col}22;color:${col}">${escHtml(r.name)}<span class="chip-remove" onclick="unlinkResult('${step.id}','${rid}')">×</span></span>`;}).join('');
+function renderSteps(){
+  const el=document.getElementById('steps-list');
+  const btn=document.getElementById('steps-view-mode-btn');
+  if(btn)btn.innerText=state.stepsViewMode==='compact'?'Widok: Kompaktowy':'Widok: Pełny';
+  el.classList.toggle('compact',state.stepsViewMode==='compact');
+  if(!state.steps.length){el.innerHTML=`<div class="empty-state"><div class="empty-icon">⟶</div><div class="empty-title">Brak kroków</div><div class="empty-sub">Dodaj pierwszy krok.</div></div>`;return;}
+  el.innerHTML=state.steps.map((step,i)=>{
+    const actor=getActor(step.actor),ac=actor?actor.color:'#888',an=actor?actor.name:'Nieprzypisany';
+    const sc={done:'#5ad4b0','in-progress':'#f7a25e',todo:'#5a5a78'};
+    const rchips=(step.results||[]).map(rid=>{const r=getResult(rid);if(!r)return'';const col=RESULT_TYPE_COLORS[r.type]||'#888';return`<span class="chip" style="background:${col}22;color:${col}">${escHtml(r.name)}<span class="chip-remove" onclick="unlinkResult('${step.id}','${rid}')">×</span></span>`;}).join('');
     const proc=getProcessForStep(step.id);
-    const procTag=proc
+    const ptag=proc
       ?`<div class="step-process-tag" style="background:${hexAlpha(proc.color,0.12)};color:${proc.color};border-color:${hexAlpha(proc.color,0.25)}" onclick="editProcess('${proc.id}')"><span style="display:inline-block;width:6px;height:6px;border-radius:2px;background:${proc.color};flex-shrink:0"></span>${escHtml(proc.name)}</div>`
       :`<div class="step-process-tag" style="background:var(--surface2);color:var(--text3);border-color:var(--border);border-style:dashed" onclick="openProcessAssignForStep('${step.id}')">+ Proces</div>`;
-    const cardBg=proc?hexAlpha(proc.color,0.04):'var(--surface)';
+    const cbg=proc?hexAlpha(proc.color,0.04):'var(--surface)';
     return `<div class="step-row">
       <div class="step-connector">
-        <div class="step-num" style="background:${actorColor}22;color:${actorColor};border:2px solid ${actorColor}44">${i+1}</div>
+        <div class="step-num" style="background:${ac}22;color:${ac};border:2px solid ${ac}44">${i+1}</div>
         <div class="step-line"></div>
       </div>
-      <div class="step-card" draggable="true" data-id="${step.id}" style="background:${cardBg}"
+      <div class="step-card" draggable="true" data-id="${step.id}" style="background:${cbg}"
         ondragstart="onDragStart(event,'${step.id}')" ondragover="onDragOver(event,'${step.id}')"
         ondrop="onDrop(event,'${step.id}')" ondragleave="onDragLeave(event)" ondragend="onDragEnd(event)">
-        ${procTag}
+        ${ptag}
         <div class="step-top">
           <div style="position:relative">
-            <div class="step-actor-badge" onclick="toggleActorDropdown(event,'${step.id}')" style="border-color:${actorColor}44">
-              <div class="step-actor-dot" style="background:${actorColor}"></div>${actorName}<span style="font-size:10px;color:var(--text3)">▾</span>
+            <div class="step-actor-badge" onclick="toggleActorDropdown(event,'${step.id}')" style="border-color:${ac}44">
+              <div class="step-actor-dot" style="background:${ac}"></div>${an}<span style="font-size:10px;color:var(--text3)">▾</span>
             </div>
             <div class="actor-dropdown hidden" id="dd-${step.id}">
               ${state.actors.map(a=>`<div class="actor-option" onclick="setStepActor('${step.id}','${a.id}')"><div class="actor-dot" style="background:${a.color}"></div>${escHtml(a.name)}</div>`).join('')}
@@ -930,7 +764,7 @@ function renderSteps() {
         <input class="step-action-input" value="${escHtml(step.action)}" placeholder="Opisz akcję aktora..." onchange="updateStep('${step.id}','action',this.value)">
         <textarea class="step-desc-input" rows="2" placeholder="Szczegóły..." onchange="updateStep('${step.id}','desc',this.value)" oninput="autoResize(this)">${escHtml(step.desc)}</textarea>
         <div class="step-results-chips">
-          ${stepResults}
+          ${rchips}
           ${(!step.results||!step.results.length)?`<button class="compact-link-btn" onclick="openLinkModal('${step.id}')">+</button>`:''}
           ${getStepAfBadge(step.id)}
         </div>
@@ -939,7 +773,7 @@ function renderSteps() {
             ${(step.results&&step.results.length)?'+ Powiąż kolejny rezultat':'+ Powiąż rezultat'}
           </button>
           <div class="step-status">
-            <div class="status-dot" style="background:${statusColors[step.status]}"></div>
+            <div class="status-dot" style="background:${sc[step.status]}"></div>
             <select style="background:transparent;border:none;color:var(--text3);font-size:10px;font-family:var(--mono);outline:none;cursor:pointer" onchange="updateStep('${step.id}','status',this.value)">
               <option value="todo" ${step.status==='todo'?'selected':''}>do zrobienia</option>
               <option value="in-progress" ${step.status==='in-progress'?'selected':''}>w toku</option>
@@ -952,27 +786,23 @@ function renderSteps() {
   }).join('');
 }
 
-// ═══════════════════════════════════════════════════
-//  RENDER — EMBEDDED TIMELINE
-// ═══════════════════════════════════════════════════
-function renderTimeline() {
-  const el = document.getElementById('timeline-content');
-  const sub = document.getElementById('tl-toolbar-sub');
-  if (sub) sub.textContent = `${state.steps.length} kroków · ${state.actors.length} aktorów`;
-  if (!state.actors.length||!state.steps.length) { el.innerHTML='<div class="empty-state"><div class="empty-title">Dodaj aktorów i kroki</div></div>'; return; }
-  const minW = state.actors.length*160;
-  const seenP = new Set();
-  const rows = state.steps.map((step,i)=>{
-    const proc=getProcessForStep(step.id), procColor=proc?proc.color:null;
-    const rowBg=procColor?hexAlpha(procColor,0.07):'transparent';
-    const isFirst=proc&&!seenP.has(proc.id); if(proc)seenP.add(proc.id);
-    const borderTop=isFirst?`border-top:2px solid ${hexAlpha(procColor,0.5)};`:'';
-    const watermark=proc?`<div class="tl-process-label"><span class="tl-process-label-text" style="color:${procColor}">${escHtml(proc.name)}</span></div>`:'';
+function renderTimeline(){
+  const el=document.getElementById('timeline-content');
+  const sub=document.getElementById('tl-toolbar-sub');
+  if(sub)sub.textContent=`${state.steps.length} kroków · ${state.actors.length} aktorów`;
+  if(!state.actors.length||!state.steps.length){el.innerHTML='<div class="empty-state"><div class="empty-title">Dodaj aktorów i kroki</div></div>';return;}
+  const minW=state.actors.length*160,seenP=new Set();
+  const rows=state.steps.map((step,i)=>{
+    const proc=getProcessForStep(step.id),pc=proc?proc.color:null;
+    const rowBg=pc?hexAlpha(pc,0.07):'transparent';
+    const isFirst=proc&&!seenP.has(proc.id);if(proc)seenP.add(proc.id);
+    const bTop=isFirst?`border-top:2px solid ${hexAlpha(pc,0.5)};`:'';
+    const wm=proc?`<div class="tl-process-label"><span class="tl-process-label-text" style="color:${pc}">${escHtml(proc.name)}</span></div>`:'';
     const cells=state.actors.map(a=>{
-      if(a.id===step.actor) return `<div class="tl-cell"><div class="tl-step-bubble" style="border-color:${a.color}55;border-left:3px solid ${a.color}"><div class="tl-step-num">krok ${i+1}</div>${escHtml(step.action)}</div></div>`;
-      return `<div class="tl-cell"></div>`;
+      if(a.id===step.actor)return`<div class="tl-cell"><div class="tl-step-bubble" style="border-color:${a.color}55;border-left:3px solid ${a.color}"><div class="tl-step-num">krok ${i+1}</div>${escHtml(step.action)}</div></div>`;
+      return`<div class="tl-cell"></div>`;
     }).join('');
-    return `<div class="tl-row ${isFirst?'process-first':''}" style="background:${rowBg};${borderTop}">${watermark}${cells}</div>`;
+    return`<div class="tl-row ${isFirst?'process-first':''}" style="background:${rowBg};${bTop}">${wm}${cells}</div>`;
   }).join('');
   el.innerHTML=`<div style="display:inline-block;min-width:${minW}px;width:100%">
     <div style="display:flex;position:sticky;top:0;z-index:10;background:var(--bg)">${state.actors.map(a=>`<div class="tl-actor-col" style="color:${a.color};border-bottom-color:${a.color}"><div style="width:8px;height:8px;border-radius:50%;background:${a.color};display:inline-block;margin-right:6px"></div>${escHtml(a.name)}</div>`).join('')}</div>
@@ -980,368 +810,125 @@ function renderTimeline() {
   </div>`;
 }
 
-// ═══════════════════════════════════════════════════
-//  FULLSCREEN SWIM LANE
-// ═══════════════════════════════════════════════════
-function openFullscreen() {
-  fs.open = true;
-  fs.zoom = 1; fs.panX = 0; fs.panY = 0;
-  document.getElementById('fs-overlay').classList.add('open');
-  renderFullscreenTimeline();
-  // Fit after DOM settles
-  requestAnimationFrame(() => requestAnimationFrame(() => fitToScreen()));
-  document.body.style.overflow = 'hidden';
-}
-
-function closeFullscreen() {
-  fs.open = false;
-  document.getElementById('fs-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function renderFullscreenTimeline() {
-  const wrap = document.getElementById('sl-wrap');
-  const legend = document.getElementById('sl-legend');
-  const fsTitle = document.getElementById('fs-title');
-  const fsSub = document.getElementById('fs-subtitle');
-
-  const procName = document.getElementById('proc-name').value || 'Swim Lane';
-  if (fsTitle) fsTitle.textContent = procName;
-  if (fsSub) fsSub.textContent = `${state.steps.length} kroków · ${state.actors.length} aktorów`;
-
-  if (!state.actors.length||!state.steps.length) {
-    wrap.innerHTML='<div class="empty-state"><div class="empty-title">Brak danych do wyświetlenia</div></div>';
-    legend.innerHTML='';
-    return;
-  }
-
-  // Header
-  const header = `<div class="sl-header">${state.actors.map(a=>`<div class="sl-actor-col" style="color:${a.color};border-bottom-color:${a.color}"><div style="width:9px;height:9px;border-radius:50%;background:${a.color};display:inline-block;margin-right:7px;vertical-align:middle"></div>${escHtml(a.name)}</div>`).join('')}</div>`;
-
-  const seenP = new Set();
-  const rows = state.steps.map((step,i)=>{
-    const proc=getProcessForStep(step.id), procColor=proc?proc.color:null;
-    const rowBg=procColor?hexAlpha(procColor,0.07):'transparent';
-    const isFirst=proc&&!seenP.has(proc.id); if(proc)seenP.add(proc.id);
-    const borderTop=isFirst?`border-top:2px solid ${hexAlpha(procColor,0.45)};`:'';
-    const watermark=proc?`<div class="sl-process-label"><span class="sl-process-label-text" style="color:${procColor}">${escHtml(proc.name)}</span></div>`:'';
-
+function openFullscreen(){fs.open=true;fs.zoom=1;fs.panX=0;fs.panY=0;document.getElementById('fs-overlay').classList.add('open');renderFullscreenTimeline();requestAnimationFrame(()=>requestAnimationFrame(()=>fitToScreen()));document.body.style.overflow='hidden';}
+function closeFullscreen(){fs.open=false;document.getElementById('fs-overlay').classList.remove('open');document.body.style.overflow='';}
+function renderFullscreenTimeline(){
+  const wrap=document.getElementById('sl-wrap'),legend=document.getElementById('sl-legend');
+  const pn=document.getElementById('proc-name').value||'Swim Lane';
+  const ft=document.getElementById('fs-title'),fsub=document.getElementById('fs-subtitle');
+  if(ft)ft.textContent=pn;if(fsub)fsub.textContent=`${state.steps.length} kroków · ${state.actors.length} aktorów`;
+  if(!state.actors.length||!state.steps.length){wrap.innerHTML='<div class="empty-state"><div class="empty-title">Brak danych</div></div>';legend.innerHTML='';return;}
+  const header=`<div class="sl-header">${state.actors.map(a=>`<div class="sl-actor-col" style="color:${a.color};border-bottom-color:${a.color}"><div style="width:9px;height:9px;border-radius:50%;background:${a.color};display:inline-block;margin-right:7px;vertical-align:middle"></div>${escHtml(a.name)}</div>`).join('')}</div>`;
+  const seenP=new Set();
+  const rows=state.steps.map((step,i)=>{
+    const proc=getProcessForStep(step.id),pc=proc?proc.color:null;
+    const rowBg=pc?hexAlpha(pc,0.07):'transparent';
+    const isFirst=proc&&!seenP.has(proc.id);if(proc)seenP.add(proc.id);
+    const bTop=isFirst?`border-top:2px solid ${hexAlpha(pc,0.45)};`:'';
+    const wm=proc?`<div class="sl-process-label"><span class="sl-process-label-text" style="color:${pc}">${escHtml(proc.name)}</span></div>`:'';
     const cells=state.actors.map(a=>{
-      if(a.id!==step.actor) return `<div class="sl-cell"></div>`;
-      const resultChips=(step.results||[]).map(rid=>{const r=getResult(rid);if(!r)return'';const col=RESULT_TYPE_COLORS[r.type]||'#888';return`<span class="sl-result-chip" style="background:${col}22;color:${col}">${escHtml(r.name)}</span>`;}).join('');
-      return `<div class="sl-cell">
-        <div class="sl-bubble" style="border-color:${a.color}55;border-left:3px solid ${a.color}">
-          <div class="sl-step-num">krok ${i+1}</div>
-          <div>${escHtml(step.action)}</div>
-          ${resultChips?`<div class="sl-result-chips">${resultChips}</div>`:''}
-        </div>
-      </div>`;
+      if(a.id!==step.actor)return`<div class="sl-cell"></div>`;
+      const rc=(step.results||[]).map(rid=>{const r=getResult(rid);if(!r)return'';const col=RESULT_TYPE_COLORS[r.type]||'#888';return`<span class="sl-result-chip" style="background:${col}22;color:${col}">${escHtml(r.name)}</span>`;}).join('');
+      return`<div class="sl-cell"><div class="sl-bubble" style="border-color:${a.color}55;border-left:3px solid ${a.color}"><div class="sl-step-num">krok ${i+1}</div><div>${escHtml(step.action)}</div>${rc?`<div class="sl-result-chips">${rc}</div>`:''}</div></div>`;
     }).join('');
-    return `<div class="sl-row ${isFirst?'process-first':''}" style="background:${rowBg};${borderTop}">${watermark}${cells}</div>`;
+    return`<div class="sl-row ${isFirst?'process-first':''}" style="background:${rowBg};${bTop}">${wm}${cells}</div>`;
   }).join('');
-
-  wrap.innerHTML = header + rows;
-
-  // Legend
-  const usedProcs = state.processes.filter(p=>p.stepIds.some(sid=>state.steps.find(s=>s.id===sid)));
-  legend.innerHTML = usedProcs.length
-    ? `<span class="sl-legend-label">Procesy:</span>${usedProcs.map(p=>`<span class="sl-legend-item"><span class="sl-legend-swatch" style="background:${p.color}"></span>${escHtml(p.name)} <span style="color:var(--text3);font-size:9px">(${p.stepIds.filter(sid=>state.steps.find(s=>s.id===sid)).length}k)</span></span>`).join('')}`
-    : '';
-
-  applyTransform(true);
-  updateMinimap();
+  wrap.innerHTML=header+rows;
+  const up=state.processes.filter(p=>p.stepIds.some(sid=>state.steps.find(s=>s.id===sid)));
+  legend.innerHTML=up.length?`<span class="sl-legend-label">Procesy:</span>${up.map(p=>`<span class="sl-legend-item"><span class="sl-legend-swatch" style="background:${p.color}"></span>${escHtml(p.name)} <span style="color:var(--text3);font-size:9px">(${p.stepIds.filter(sid=>state.steps.find(s=>s.id===sid)).length}k)</span></span>`).join('')}`:'';
+  applyTransform(true);updateMinimap();
 }
-
-// ═══════════════════════════════════════════════════
-//  TRANSFORM HELPERS
-// ═══════════════════════════════════════════════════
-function applyTransform(animate=false) {
-  const canvas = document.getElementById('fs-canvas');
-  canvas.style.transition = animate ? 'transform .35s cubic-bezier(.4,0,.2,1)' : 'none';
-  canvas.style.transform = `translate(${fs.panX}px,${fs.panY}px) scale(${fs.zoom})`;
-  document.getElementById('zoom-level-display').textContent = Math.round(fs.zoom*100)+'%';
+function applyTransform(animate=false){
+  const c=document.getElementById('fs-canvas');
+  c.style.transition=animate?'transform .35s cubic-bezier(.4,0,.2,1)':'none';
+  c.style.transform=`translate(${fs.panX}px,${fs.panY}px) scale(${fs.zoom})`;
+  document.getElementById('zoom-level-display').textContent=Math.round(fs.zoom*100)+'%';
   updateMinimapViewport();
 }
-
-function zoomBy(delta, pivotX, pivotY) {
-  const viewport = document.getElementById('fs-viewport');
-  const vw = viewport.clientWidth, vh = viewport.clientHeight;
-  // pivot defaults to viewport center
-  const cx = (pivotX !== undefined) ? pivotX : vw/2;
-  const cy = (pivotY !== undefined) ? pivotY : vh/2;
-  const newZoom = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, fs.zoom+delta));
-  if (newZoom === fs.zoom) return;
-  // Adjust pan so zoom centers on pivot point
-  const ratio = newZoom / fs.zoom;
-  fs.panX = cx - ratio*(cx - fs.panX);
-  fs.panY = cy - ratio*(cy - fs.panY);
-  fs.zoom = newZoom;
-  applyTransform(Math.abs(delta)>ZOOM_STEP); // animate only for button clicks
-  updateMinimap();
+function zoomBy(delta,px,py){
+  const vp=document.getElementById('fs-viewport'),vw=vp.clientWidth,vh=vp.clientHeight;
+  const cx=px!==undefined?px:vw/2,cy=py!==undefined?py:vh/2;
+  const nz=Math.min(ZOOM_MAX,Math.max(ZOOM_MIN,fs.zoom+delta));
+  if(nz===fs.zoom)return;
+  const r=nz/fs.zoom;fs.panX=cx-r*(cx-fs.panX);fs.panY=cy-r*(cy-fs.panY);fs.zoom=nz;
+  applyTransform(Math.abs(delta)>ZOOM_STEP);updateMinimap();
 }
-
-function fitToScreen() {
-  const viewport = document.getElementById('fs-viewport');
-  const canvas   = document.getElementById('fs-canvas');
-  const vw = viewport.clientWidth, vh = viewport.clientHeight;
-  const cw = canvas.scrollWidth,  ch = canvas.scrollHeight;
-  if (!cw || !ch) return;
-  const scaleX = (vw-80)/cw, scaleY = (vh-80)/ch;
-  fs.zoom = Math.min(Math.min(scaleX,scaleY), ZOOM_MAX);
-  fs.panX = (vw - cw*fs.zoom)/2;
-  fs.panY = (vh - ch*fs.zoom)/2;
-  applyTransform(true);
-  updateMinimap();
+function fitToScreen(){
+  const vp=document.getElementById('fs-viewport'),c=document.getElementById('fs-canvas');
+  const vw=vp.clientWidth,vh=vp.clientHeight,cw=c.scrollWidth,ch=c.scrollHeight;
+  if(!cw||!ch)return;
+  fs.zoom=Math.min(Math.min((vw-80)/cw,(vh-80)/ch),ZOOM_MAX);
+  fs.panX=(vw-cw*fs.zoom)/2;fs.panY=(vh-ch*fs.zoom)/2;
+  applyTransform(true);updateMinimap();
 }
-
-function resetZoom() {
-  const viewport = document.getElementById('fs-viewport');
-  const vw=viewport.clientWidth, vh=viewport.clientHeight;
-  fs.zoom=1; fs.panX=vw/2-document.getElementById('fs-canvas').scrollWidth/2; fs.panY=40;
-  applyTransform(true); updateMinimap();
+function resetZoom(){
+  const vp=document.getElementById('fs-viewport');
+  fs.zoom=1;fs.panX=vp.clientWidth/2-document.getElementById('fs-canvas').scrollWidth/2;fs.panY=40;
+  applyTransform(true);updateMinimap();
 }
-
-// ═══════════════════════════════════════════════════
-//  PAN
-// ═══════════════════════════════════════════════════
-function onPanStart(e) {
-  if (e.button!==0) return;
-  fs.isPanning=true; fs.panStartX=e.clientX; fs.panStartY=e.clientY;
-  fs.panOriginX=fs.panX; fs.panOriginY=fs.panY;
-  document.getElementById('fs-viewport').classList.add('panning');
-}
-function onPanMove(e) {
-  if (!fs.isPanning) return;
-  fs.panX=fs.panOriginX+(e.clientX-fs.panStartX);
-  fs.panY=fs.panOriginY+(e.clientY-fs.panStartY);
-  applyTransform(false);
-  updateMinimapViewport();
-}
-function onPanEnd() {
-  fs.isPanning=false;
-  document.getElementById('fs-viewport').classList.remove('panning');
-}
-
-// ═══════════════════════════════════════════════════
-//  WHEEL ZOOM (zoom toward cursor)
-// ═══════════════════════════════════════════════════
-function onWheelZoom(e) {
-  e.preventDefault();
-  const viewport = document.getElementById('fs-viewport');
-  const rect = viewport.getBoundingClientRect();
-  const cursorX = e.clientX - rect.left;
-  const cursorY = e.clientY - rect.top;
-  const delta = e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP;
-  zoomBy(delta, cursorX, cursorY);
-}
-
-// ═══════════════════════════════════════════════════
-//  MINIMAP
-// ═══════════════════════════════════════════════════
-function updateMinimap() {
-  const mmCanvas = document.getElementById('mm-canvas');
-  if (!mmCanvas || !fs.open) return;
-  const dpr = window.devicePixelRatio || 1;
-  const mw = mmCanvas.offsetWidth, mh = mmCanvas.offsetHeight;
-  mmCanvas.width  = mw * dpr;
-  mmCanvas.height = mh * dpr;
-  const ctx = mmCanvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-  ctx.clearRect(0,0,mw,mh);
-
-  const canvas = document.getElementById('fs-canvas');
-  const cw = canvas.scrollWidth || 800, ch = canvas.scrollHeight || 600;
-  const scaleX = mw/cw, scaleY = mh/ch;
-
-  // Draw actor columns as faint bands
-  state.actors.forEach((a,i) => {
-    const colW = cw / state.actors.length;
-    ctx.fillStyle = hexAlpha(a.color, 0.15);
-    ctx.fillRect(i*colW*scaleX, 0, colW*scaleX, mh);
-  });
-
-  // Draw process blocks
-  const seenP = new Set();
+function onPanStart(e){if(e.button!==0)return;fs.isPanning=true;fs.panStartX=e.clientX;fs.panStartY=e.clientY;fs.panOriginX=fs.panX;fs.panOriginY=fs.panY;document.getElementById('fs-viewport').classList.add('panning');}
+function onPanMove(e){if(!fs.isPanning)return;fs.panX=fs.panOriginX+(e.clientX-fs.panStartX);fs.panY=fs.panOriginY+(e.clientY-fs.panStartY);applyTransform(false);updateMinimapViewport();}
+function onPanEnd(){fs.isPanning=false;document.getElementById('fs-viewport').classList.remove('panning');}
+function onWheelZoom(e){e.preventDefault();const vp=document.getElementById('fs-viewport'),rect=vp.getBoundingClientRect();zoomBy(e.deltaY<0?ZOOM_STEP:-ZOOM_STEP,e.clientX-rect.left,e.clientY-rect.top);}
+function updateMinimap(){
+  const mc=document.getElementById('mm-canvas');if(!mc||!fs.open)return;
+  const dpr=window.devicePixelRatio||1,mw=mc.offsetWidth,mh=mc.offsetHeight;
+  mc.width=mw*dpr;mc.height=mh*dpr;
+  const ctx=mc.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,mw,mh);
+  const c=document.getElementById('fs-canvas'),cw=c.scrollWidth||800,ch=c.scrollHeight||600;
+  state.actors.forEach((a,i)=>{const cW=cw/state.actors.length;ctx.fillStyle=hexAlpha(a.color,0.15);ctx.fillRect(i*cW*(mw/cw),0,cW*(mw/cw),mh);});
   state.steps.forEach((step,i)=>{
-    const proc = getProcessForStep(step.id);
-    const rowH = (ch-80) / state.steps.length; // rough estimate
-    const y = (40 + i*rowH)*scaleY;
-    const h = rowH*scaleY;
-    if (proc) {
-      ctx.fillStyle = hexAlpha(proc.color, 0.18);
-      ctx.fillRect(0, y, mw, h);
-    }
-    // Step dot
-    const actorIdx = state.actors.findIndex(a=>a.id===step.actor);
-    if (actorIdx>=0) {
-      const colW = mw/state.actors.length;
-      const actor = state.actors[actorIdx];
-      ctx.fillStyle = actor.color;
-      ctx.beginPath();
-      ctx.roundRect(actorIdx*colW+colW*0.2, y+h*0.25, colW*0.6, h*0.5, 2);
-      ctx.fill();
-    }
+    const proc=getProcessForStep(step.id);
+    const rH=(ch-80)/state.steps.length,y=(40+i*rH)*(mh/ch),h=rH*(mh/ch);
+    if(proc){ctx.fillStyle=hexAlpha(proc.color,0.18);ctx.fillRect(0,y,mw,h);}
+    const ai=state.actors.findIndex(a=>a.id===step.actor);
+    if(ai>=0){const cW=mw/state.actors.length,actor=state.actors[ai];ctx.fillStyle=actor.color;ctx.beginPath();ctx.roundRect(ai*cW+cW*0.2,y+h*0.25,cW*0.6,h*0.5,2);ctx.fill();}
   });
-
   updateMinimapViewport();
 }
-
-function updateMinimapViewport() {
-  const mmViewport = document.getElementById('mm-viewport');
-  const mmCanvas   = document.getElementById('mm-canvas');
-  const viewport   = document.getElementById('fs-viewport');
-  const canvas     = document.getElementById('fs-canvas');
-  if (!mmViewport||!mmCanvas||!viewport||!canvas) return;
-
-  const mw = mmCanvas.offsetWidth, mh = mmCanvas.offsetHeight;
-  const cw = canvas.scrollWidth || 800, ch = canvas.scrollHeight || 600;
-  const vw = viewport.clientWidth, vh = viewport.clientHeight;
-
-  // Viewport rect in canvas-space
-  const left   = (-fs.panX/fs.zoom)/cw*mw;
-  const top    = (-fs.panY/fs.zoom)/ch*mh;
-  const width  = (vw/fs.zoom)/cw*mw;
-  const height = (vh/fs.zoom)/ch*mh;
-
-  mmViewport.style.left   = Math.max(0,left)+'px';
-  mmViewport.style.top    = Math.max(0,top)+'px';
-  mmViewport.style.width  = Math.min(mw,width)+'px';
-  mmViewport.style.height = Math.min(mh,height)+'px';
+function updateMinimapViewport(){
+  const mv=document.getElementById('mm-viewport'),mc=document.getElementById('mm-canvas'),vp=document.getElementById('fs-viewport'),c=document.getElementById('fs-canvas');
+  if(!mv||!mc||!vp||!c)return;
+  const mw=mc.offsetWidth,mh=mc.offsetHeight,cw=c.scrollWidth||800,ch=c.scrollHeight||600,vw=vp.clientWidth,vh=vp.clientHeight;
+  mv.style.left=Math.max(0,(-fs.panX/fs.zoom)/cw*mw)+'px';mv.style.top=Math.max(0,(-fs.panY/fs.zoom)/ch*mh)+'px';
+  mv.style.width=Math.min(mw,(vw/fs.zoom)/cw*mw)+'px';mv.style.height=Math.min(mh,(vh/fs.zoom)/ch*mh)+'px';
 }
 
-// ═══════════════════════════════════════════════════
-//  KEYBOARD SHORTCUTS
-// ═══════════════════════════════════════════════════
-document.addEventListener('keydown', e => {
-  if (!fs.open) return;
-  // Don't intercept inside inputs
-  if (e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
-  if (e.key==='Escape')         closeFullscreen();
-  else if (e.key==='+'||e.key==='=') { e.preventDefault(); zoomBy(ZOOM_STEP); }
-  else if (e.key==='-')         { e.preventDefault(); zoomBy(-ZOOM_STEP); }
-  else if (e.key==='0')         { e.preventDefault(); fitToScreen(); }
-  else if (e.key==='1')         { e.preventDefault(); resetZoom(); }
-  // Arrow key panning
-  else if (e.key==='ArrowLeft') { fs.panX+=40; applyTransform(false); updateMinimapViewport(); }
-  else if (e.key==='ArrowRight'){ fs.panX-=40; applyTransform(false); updateMinimapViewport(); }
-  else if (e.key==='ArrowUp')   { fs.panY+=40; applyTransform(false); updateMinimapViewport(); }
-  else if (e.key==='ArrowDown') { fs.panY-=40; applyTransform(false); updateMinimapViewport(); }
-});
-
-// ═══════════════════════════════════════════════════
-//  EXPORT
-// ═══════════════════════════════════════════════════
-function renderExport() {
-  const el=document.getElementById('export-content'); if(!el)return;
-  const name=(document.getElementById('proc-name')||{}).value||'Proces';
-  const goal=(document.getElementById('proc-goal')||{}).value||'';
-  const trigger=(document.getElementById('proc-trigger')||{}).value||'';
-  let md=`# Happy Path: ${name}\n\n**Cel:** ${goal}\n\n**Wejście:** ${trigger}\n\n---\n\n`;
-  if (state.processes&&state.processes.length) {
-    md+=`## Procesy\n\n`;
-    const assigned=new Set(state.processes.flatMap(p=>p.stepIds));
-    state.processes.forEach(proc=>{
-      const ps=proc.stepIds.map(sid=>state.steps.find(s=>s.id===sid)).filter(Boolean);
-      md+=`### 📦 ${proc.name}\n\n`;
-      ps.forEach(step=>{const idx=state.steps.indexOf(step);const actor=getActor(step.actor);md+=`#### Krok ${idx+1}: ${step.action}\n**Aktor:** ${actor?actor.name:'—'}\n\n`;});
-    });
-    const un=state.steps.filter(s=>!assigned.has(s.id));
-    if(un.length){md+=`### Kroki bez procesu\n\n`;un.forEach(s=>{const idx=state.steps.indexOf(s);md+=`#### Krok ${idx+1}: ${s.action}\n\n`;});}
-  } else {
-    md+=`## Sekwencja kroków\n\n`;
-    state.steps.forEach((s,i)=>{const actor=getActor(s.actor);md+=`### Krok ${i+1}: ${s.action}\n**Aktor:** ${actor?actor.name:'—'}\n\n`;});
-  }
-  md+=`---\n\n## Rezultaty\n\n`;
-  state.results.forEach(r=>{md+=`- **[${RESULT_TYPE_LABELS[r.type]}] ${r.name}** — ${r.desc}\n`;});
-  el.textContent=md;
-}
-
-// ═══════════════════════════════════════════════════
-//  STATS
-// ═══════════════════════════════════════════════════
 function setText(id,v){const el=document.getElementById(id);if(el)el.textContent=v;}
-function renderStats(){
-  setText('stat-steps',state.steps.length);setText('stat-actors',state.actors.length);
-  setText('stat-processes',state.processes.length);setText('stat-results',state.results.length);
-  setText('stat-af',(state.alternativeFlows||[]).length);
-}
+function renderStats(){setText('stat-steps',state.steps.length);setText('stat-actors',state.actors.length);setText('stat-processes',state.processes.length);setText('stat-results',state.results.length);setText('stat-af',(state.alternativeFlows||[]).length);}
 
-// ═══════════════════════════════════════════════════
-//  DRAG & DROP — STEPS
-// ═══════════════════════════════════════════════════
 function onDragStart(e,id){state.dragStepId=id;e.currentTarget.classList.add('dragging');e.dataTransfer.effectAllowed='move';}
 function onDragOver(e,id){e.preventDefault();if(state.dragStepId===id)return;e.currentTarget.classList.add('drag-over');}
 function onDragLeave(e){e.currentTarget.classList.remove('drag-over');}
-function onDrop(e,id){
-  e.preventDefault();e.currentTarget.classList.remove('drag-over');if(state.dragStepId===id)return;
-  const from=state.steps.findIndex(s=>s.id===state.dragStepId),to=state.steps.findIndex(s=>s.id===id);
-  if(from===-1||to===-1)return;const[r]=state.steps.splice(from,1);state.steps.splice(to,0,r);
-  state.dragStepId=null;render();autoSave();
-}
+function onDrop(e,id){e.preventDefault();e.currentTarget.classList.remove('drag-over');if(state.dragStepId===id)return;const f=state.steps.findIndex(s=>s.id===state.dragStepId),t=state.steps.findIndex(s=>s.id===id);if(f===-1||t===-1)return;const[r]=state.steps.splice(f,1);state.steps.splice(t,0,r);state.dragStepId=null;render();autoSave();}
 function onDragEnd(e){e.currentTarget.classList.remove('dragging','drag-over');state.dragStepId=null;}
 
-// ═══════════════════════════════════════════════════
-//  STEPS CRUD
-// ═══════════════════════════════════════════════════
-function addStep(){
-  const actorId=state.actors.length?state.actors[0].id:null;
-  state.steps.push({id:uid(),actor:actorId,action:'',desc:'',results:[],status:'todo'});
-  render();autoSave();
-  setTimeout(()=>{const inputs=document.querySelectorAll('.step-action-input');if(inputs.length)inputs[inputs.length-1].focus();},50);
-}
+function addStep(){const aid=state.actors.length?state.actors[0].id:null;state.steps.push({id:uid(),actor:aid,action:'',desc:'',results:[],status:'todo'});render();autoSave();setTimeout(()=>{const ins=document.querySelectorAll('.step-action-input');if(ins.length)ins[ins.length-1].focus();},50);}
 function removeStep(id){state.processes.forEach(p=>{p.stepIds=p.stepIds.filter(s=>s!==id);});state.steps=state.steps.filter(s=>s.id!==id);render();autoSave();}
-function duplicateStep(id){const step=state.steps.find(s=>s.id===id);if(!step)return;const idx=state.steps.indexOf(step);const copy={...step,id:uid(),results:[...(step.results||[])]};state.steps.splice(idx+1,0,copy);render();autoSave();}
+function duplicateStep(id){const s=state.steps.find(x=>x.id===id);if(!s)return;const idx=state.steps.indexOf(s);const c={...s,id:uid(),results:[...(s.results||[])]};state.steps.splice(idx+1,0,c);render();autoSave();}
 function moveStep(id,dir){const idx=state.steps.findIndex(s=>s.id===id),ni=idx+dir;if(ni<0||ni>=state.steps.length)return;[state.steps[idx],state.steps[ni]]=[state.steps[ni],state.steps[idx]];render();autoSave();}
 function updateStep(id,field,val){const s=state.steps.find(x=>x.id===id);if(s)s[field]=val;renderStats();autoSave();if(state.currentView==='timeline')renderTimeline();if(state.currentView==='export')renderExport();}
-function unlinkResult(stepId,resultId){const s=state.steps.find(x=>x.id===stepId);if(s)s.results=s.results.filter(r=>r!==resultId);render();autoSave();}
-function setStepActor(stepId,actorId){const s=state.steps.find(x=>x.id===stepId);if(s)s.actor=actorId;closeAllDropdowns();render();autoSave();}
-function toggleActorDropdown(e,stepId){e.stopPropagation();closeAllDropdowns();const dd=document.getElementById('dd-'+stepId);if(dd)dd.classList.remove('hidden');}
+function unlinkResult(sid,rid){const s=state.steps.find(x=>x.id===sid);if(s)s.results=s.results.filter(r=>r!==rid);render();autoSave();}
+function setStepActor(sid,aid){const s=state.steps.find(x=>x.id===sid);if(s)s.actor=aid;closeAllDropdowns();render();autoSave();}
+function toggleActorDropdown(e,sid){e.stopPropagation();closeAllDropdowns();const dd=document.getElementById('dd-'+sid);if(dd)dd.classList.remove('hidden');}
 function closeAllDropdowns(){document.querySelectorAll('.actor-dropdown').forEach(d=>d.classList.add('hidden'));}
 document.addEventListener('click',closeAllDropdowns);
 
-// ═══════════════════════════════════════════════════
-//  ACTORS CRUD
-// ═══════════════════════════════════════════════════
-function addActor(){const input=document.getElementById('new-actor-input'),name=input.value.trim();if(!name)return;state.actors.push({id:uid(),name,color:COLORS[state.actors.length%COLORS.length]});input.value='';render();autoSave();}
+function addActor(){const inp=document.getElementById('new-actor-input'),n=inp.value.trim();if(!n)return;state.actors.push({id:uid(),name:n,color:COLORS[state.actors.length%COLORS.length]});inp.value='';render();autoSave();}
 function removeActor(id){state.actors=state.actors.filter(a=>a.id!==id);state.steps.forEach(s=>{if(s.actor===id)s.actor=state.actors[0]?.id||null;});render();autoSave();}
 function renameActor(id,name){const a=state.actors.find(x=>x.id===id);if(a&&name.trim()){a.name=name.trim();renderSteps();autoSave();}}
-function saveActor(){const name=document.getElementById('actor-name-input').value.trim();if(!name)return;state.actors.push({id:uid(),name,color:state.pendingActorColor});closeModal('actor-modal');render();autoSave();}
+function saveActor(){const n=document.getElementById('actor-name-input').value.trim();if(!n)return;state.actors.push({id:uid(),name:n,color:state.pendingActorColor});closeModal('actor-modal');render();autoSave();}
 function onActorDragStart(e,id){state.dragActorId=id;e.dataTransfer.effectAllowed='move';}
 function onActorDragOver(e,id){e.preventDefault();if(state.dragActorId===id)return;e.currentTarget.classList.add('actor-drag-over');}
 function onActorDragLeave(e){e.currentTarget.classList.remove('actor-drag-over');}
 function onActorDragEnd(e){e.currentTarget.classList.remove('actor-drag-over');state.dragActorId=null;}
-function onActorDrop(e,id){
-  e.preventDefault();e.currentTarget.classList.remove('actor-drag-over');
-  if(!state.dragActorId||state.dragActorId===id)return;
-  const from=state.actors.findIndex(a=>a.id===state.dragActorId),to=state.actors.findIndex(a=>a.id===id);
-  if(from===-1||to===-1)return;const[r]=state.actors.splice(from,1);state.actors.splice(to,0,r);
-  state.dragActorId=null;renderActors();autoSave();
-}
+function onActorDrop(e,id){e.preventDefault();e.currentTarget.classList.remove('actor-drag-over');if(!state.dragActorId||state.dragActorId===id)return;const f=state.actors.findIndex(a=>a.id===state.dragActorId),t=state.actors.findIndex(a=>a.id===id);if(f===-1||t===-1)return;const[r]=state.actors.splice(f,1);state.actors.splice(t,0,r);state.dragActorId=null;renderActors();autoSave();}
 
-// ═══════════════════════════════════════════════════
-//  PROCESSES CRUD
-// ═══════════════════════════════════════════════════
-function addProcess(){const input=document.getElementById('new-process-input'),name=input.value.trim();if(!name)return;state.processes.push({id:uid(),name,color:COLORS[state.processes.length%COLORS.length],stepIds:[]});input.value='';render();autoSave();showToast('Proces dodany — przypisz kroki przez ✎','var(--accent)');}
+function addProcess(){const inp=document.getElementById('new-process-input'),n=inp.value.trim();if(!n)return;state.processes.push({id:uid(),name:n,color:COLORS[state.processes.length%COLORS.length],stepIds:[]});inp.value='';render();autoSave();showToast('Proces dodany — przypisz kroki przez ✎','var(--accent)');}
 function removeProcess(id){state.processes=state.processes.filter(p=>p.id!==id);render();autoSave();}
 function renameProcess(id,name){const p=state.processes.find(x=>x.id===id);if(p&&name.trim()){p.name=name.trim();render();autoSave();}}
-function editProcess(id){
-  const p=state.processes.find(x=>x.id===id);if(!p)return;
-  state.editingProcessId=id;
-  document.getElementById('process-modal-title').textContent='Edytuj Proces';
-  document.getElementById('process-modal-save-btn').textContent='Zapisz zmiany';
-  document.getElementById('process-name-input').value=p.name;
-  state.pendingProcessColor=p.color;
-  renderProcessColorSwatches();renderProcessStepGrid(p.stepIds);openModal('process-modal');
-}
-function openProcessAssignForStep(stepId){
-  if(!state.processes.length){showToast('Najpierw dodaj proces w panelu bocznym','var(--accent3)');return;}
-  state.editingProcessId=null;
-  document.getElementById('process-modal-title').textContent='Nowy Proces';
-  document.getElementById('process-modal-save-btn').textContent='Dodaj proces';
-  document.getElementById('process-name-input').value='';
-  state.pendingProcessColor=COLORS[state.processes.length%COLORS.length];
-  renderProcessColorSwatches();renderProcessStepGrid([stepId]);openModal('process-modal');
-}
+function editProcess(id){const p=state.processes.find(x=>x.id===id);if(!p)return;state.editingProcessId=id;document.getElementById('process-modal-title').textContent='Edytuj Proces';document.getElementById('process-modal-save-btn').textContent='Zapisz zmiany';document.getElementById('process-name-input').value=p.name;state.pendingProcessColor=p.color;renderProcessColorSwatches();renderProcessStepGrid(p.stepIds);openModal('process-modal');}
+function openProcessAssignForStep(sid){if(!state.processes.length){showToast('Najpierw dodaj proces w panelu bocznym','var(--accent3)');return;}state.editingProcessId=null;document.getElementById('process-modal-title').textContent='Nowy Proces';document.getElementById('process-modal-save-btn').textContent='Dodaj proces';document.getElementById('process-name-input').value='';state.pendingProcessColor=COLORS[state.processes.length%COLORS.length];renderProcessColorSwatches();renderProcessStepGrid([sid]);openModal('process-modal');}
 function saveProcess(){
   const name=document.getElementById('process-name-input').value.trim();if(!name)return;
   const checked=[...document.querySelectorAll('#process-step-grid .process-step-toggle input[type=checkbox]:checked')];
@@ -1358,12 +945,11 @@ function saveProcess(){
   }
   state.editingProcessId=null;closeModal('process-modal');render();autoSave();
 }
-function renderProcessColorSwatches(){
-  document.getElementById('process-color-row').innerHTML=COLORS.map(c=>`<div class="color-swatch ${c===state.pendingProcessColor?'selected':''}" style="background:${c}" onclick="selectProcessColor('${c}',this)"></div>`).join('');
-}
+function renderProcessColorSwatches(){document.getElementById('process-color-row').innerHTML=COLORS.map(c=>`<div class="color-swatch ${c===state.pendingProcessColor?'selected':''}" style="background:${c}" onclick="selectProcessColor('${c}',this)"></div>`).join('');}
 function selectProcessColor(c,el){state.pendingProcessColor=c;document.querySelectorAll('#process-color-row .color-swatch').forEach(s=>s.classList.remove('selected'));el.classList.add('selected');}
 function renderProcessStepGrid(selectedIds=[]){
-  const el=document.getElementById('process-step-grid');if(!state.steps.length){el.innerHTML='<div style="font-size:11px;color:var(--text3);padding:8px 0">Brak kroków.</div>';return;}
+  const el=document.getElementById('process-step-grid');
+  if(!state.steps.length){el.innerHTML='<div style="font-size:11px;color:var(--text3);padding:8px 0">Brak kroków.</div>';return;}
   const col=state.pendingProcessColor;
   el.innerHTML=state.steps.map((s,i)=>{
     const actor=getActor(s.actor),ac=actor?actor.color:'#888',isOn=selectedIds.includes(s.id);
@@ -1372,52 +958,34 @@ function renderProcessStepGrid(selectedIds=[]){
     return `<label class="process-step-toggle ${isOn?'selected':''}" style="${isOn?`border-color:${hexAlpha(col,.4)};background:${hexAlpha(col,.08)}`:''}">
       <input type="checkbox" data-stepid="${s.id}" ${isOn?'checked':''} onchange="onProcessStepToggle(this)">
       <span class="pst-num">${i+1}</span>
-      <span class="pst-name">${escHtml(s.action)||(s.action?escHtml(s.action):'(brak tytułu)')}</span>
+      <span class="pst-name">${escHtml(s.action)||'(brak tytułu)'}</span>
       ${note}<span class="pst-actor" style="color:${ac}">${actor?actor.name:'—'}</span>
     </label>`;
   }).join('');
 }
-function onProcessStepToggle(cb){
-  const label=cb.closest('.process-step-toggle'),col=state.pendingProcessColor;
-  if(cb.checked){label.classList.add('selected');label.style.borderColor=hexAlpha(col,.4);label.style.background=hexAlpha(col,.08);}
-  else{label.classList.remove('selected');label.style.borderColor='';label.style.background='';}
-}
+function onProcessStepToggle(cb){const l=cb.closest('.process-step-toggle'),col=state.pendingProcessColor;if(cb.checked){l.classList.add('selected');l.style.borderColor=hexAlpha(col,.4);l.style.background=hexAlpha(col,.08);}else{l.classList.remove('selected');l.style.borderColor='';l.style.background='';}}
 
-// ═══════════════════════════════════════════════════
-//  RESULTS CRUD
-// ═══════════════════════════════════════════════════
 function addResult(){state.editingResultId=null;document.getElementById('result-modal-title').textContent='Nowy rezultat';document.getElementById('result-modal-save-btn').textContent='Dodaj rezultat';document.getElementById('result-name-input').value='';document.getElementById('result-desc-input').value='';document.getElementById('result-type-input').value='output';openModal('result-modal');setTimeout(()=>document.getElementById('result-name-input').focus(),100);}
 function editResult(id){const r=state.results.find(x=>x.id===id);if(!r)return;state.editingResultId=id;document.getElementById('result-modal-title').textContent='Edytuj rezultat';document.getElementById('result-modal-save-btn').textContent='Zapisz zmiany';document.getElementById('result-name-input').value=r.name;document.getElementById('result-desc-input').value=r.desc;document.getElementById('result-type-input').value=r.type;openModal('result-modal');setTimeout(()=>document.getElementById('result-name-input').focus(),100);}
-function saveResult(){
-  const name=document.getElementById('result-name-input').value.trim();if(!name)return;
-  const desc=document.getElementById('result-desc-input').value.trim(),type=document.getElementById('result-type-input').value;
-  if(state.editingResultId){const r=state.results.find(x=>x.id===state.editingResultId);if(r){r.name=name;r.desc=desc;r.type=type;}state.editingResultId=null;closeModal('result-modal');render();autoSave();showToast('Rezultat zaktualizowany','var(--accent)');}
-  else{state.results.push({id:uid(),name,desc,type});closeModal('result-modal');render();autoSave();}
-}
+function saveResult(){const name=document.getElementById('result-name-input').value.trim();if(!name)return;const desc=document.getElementById('result-desc-input').value.trim(),type=document.getElementById('result-type-input').value;if(state.editingResultId){const r=state.results.find(x=>x.id===state.editingResultId);if(r){r.name=name;r.desc=desc;r.type=type;}state.editingResultId=null;closeModal('result-modal');render();autoSave();showToast('Rezultat zaktualizowany','var(--accent)');}else{state.results.push({id:uid(),name,desc,type});closeModal('result-modal');render();autoSave();}}
 function removeResult(id){state.results=state.results.filter(r=>r.id!==id);state.steps.forEach(s=>{s.results=(s.results||[]).filter(r=>r!==id);});render();autoSave();}
-function duplicateResult(id){const r=state.results.find(x=>x.id===id);if(!r)return;const idx=state.results.indexOf(r);const copy={...r,id:uid(),name:r.name+' (Kopia)'};state.results.splice(idx+1,0,copy);renderResults();renderStats();autoSave();showToast('Rezultat zduplikowany','var(--accent)');}
+function duplicateResult(id){const r=state.results.find(x=>x.id===id);if(!r)return;const idx=state.results.indexOf(r);const c={...r,id:uid(),name:r.name+' (Kopia)'};state.results.splice(idx+1,0,c);renderResults();renderStats();autoSave();showToast('Rezultat zduplikowany','var(--accent)');}
 function onResultDragStart(e,id){state.dragResultId=id;e.dataTransfer.effectAllowed='move';}
 function onResultDragOver(e,id){e.preventDefault();if(state.dragResultId===id)return;e.currentTarget.classList.add('result-drag-over');}
 function onResultDragLeave(e){e.currentTarget.classList.remove('result-drag-over');}
 function onResultDragEnd(e){e.currentTarget.classList.remove('result-drag-over');state.dragResultId=null;}
-function onResultDrop(e,id){e.preventDefault();e.currentTarget.classList.remove('result-drag-over');if(!state.dragResultId||state.dragResultId===id)return;const from=state.results.findIndex(r=>r.id===state.dragResultId),to=state.results.findIndex(r=>r.id===id);if(from===-1||to===-1)return;const[r]=state.results.splice(from,1);state.results.splice(to,0,r);state.dragResultId=null;renderResults();autoSave();}
+function onResultDrop(e,id){e.preventDefault();e.currentTarget.classList.remove('result-drag-over');if(!state.dragResultId||state.dragResultId===id)return;const f=state.results.findIndex(r=>r.id===state.dragResultId),t=state.results.findIndex(r=>r.id===id);if(f===-1||t===-1)return;const[r]=state.results.splice(f,1);state.results.splice(t,0,r);state.dragResultId=null;renderResults();autoSave();}
 
-// ═══════════════════════════════════════════════════
-//  LINK MODAL
-// ═══════════════════════════════════════════════════
 function openLinkModal(stepId){
   state.linkingStepId=stepId;const step=state.steps.find(s=>s.id===stepId),linked=step?(step.results||[]):[];
   const el=document.getElementById('link-results-list');
   if(!state.results.length){el.innerHTML='<div style="font-size:12px;color:var(--text3);text-align:center;padding:16px">Brak rezultatów.</div>';}
-  else{el.innerHTML=state.results.map(r=>{const col=RESULT_TYPE_COLORS[r.type],isLinked=linked.includes(r.id);return`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface2);border:1px solid ${isLinked?col:'var(--border)'};border-radius:var(--r);gap:10px"><div><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><span style="font-size:9px;background:${col}22;color:${col};padding:2px 6px;border-radius:4px;font-family:var(--mono)">${RESULT_TYPE_LABELS[r.type]}</span><span style="font-size:12px;font-weight:500">${escHtml(r.name)}</span></div><div style="font-size:11px;color:var(--text3)">${escHtml(r.desc)}</div></div><button class="btn btn-sm ${isLinked?'btn-ghost':'btn-success'}" onclick="${isLinked?`unlinkResultFromModal('${r.id}')`:`linkResult('${r.id}')`}">${isLinked?'Odepnij':'Powiąż'}</button></div>`;}).join('');}
+  else{el.innerHTML=state.results.map(r=>{const col=RESULT_TYPE_COLORS[r.type],il=linked.includes(r.id);return`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface2);border:1px solid ${il?col:'var(--border)'};border-radius:var(--r);gap:10px"><div><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><span style="font-size:9px;background:${col}22;color:${col};padding:2px 6px;border-radius:4px;font-family:var(--mono)">${RESULT_TYPE_LABELS[r.type]}</span><span style="font-size:12px;font-weight:500">${escHtml(r.name)}</span></div><div style="font-size:11px;color:var(--text3)">${escHtml(r.desc)}</div></div><button class="btn btn-sm ${il?'btn-ghost':'btn-success'}" onclick="${il?`unlinkResultFromModal('${r.id}')`:`linkResult('${r.id}')`}">${il?'Odepnij':'Powiąż'}</button></div>`;}).join('');}
   openModal('link-modal');
 }
 function linkResult(rid){const s=state.steps.find(x=>x.id===state.linkingStepId);if(s&&!s.results.includes(rid)){s.results.push(rid);openLinkModal(state.linkingStepId);renderSteps();renderStats();autoSave();}}
 function unlinkResultFromModal(rid){const s=state.steps.find(x=>x.id===state.linkingStepId);if(s)s.results=s.results.filter(r=>r!==rid);openLinkModal(state.linkingStepId);renderSteps();renderStats();autoSave();}
 
-// ═══════════════════════════════════════════════════
-//  VIEW
-// ═══════════════════════════════════════════════════
 function setView(view){
   state.currentView=view;
   document.querySelectorAll('.view-btn').forEach((b,i)=>b.classList.toggle('active',['steps','timeline','af','export'][i]===view));
@@ -1427,16 +995,10 @@ function setView(view){
   if(view==='export')renderExport();
 }
 
-// ═══════════════════════════════════════════════════
-//  MODALS
-// ═══════════════════════════════════════════════════
 function openModal(id){document.getElementById(id)?.classList.add('open');}
 function closeModal(id){document.getElementById(id)?.classList.remove('open');}
 document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
 
-// ═══════════════════════════════════════════════════
-//  STORAGE & PROJECTS
-// ═══════════════════════════════════════════════════
 const LS_KEY='hpb_projects',LS_CURRENT='hpb_current_project';
 let saveTimeout=null,currentProjectId=null;
 function getAllProjects(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'{}');}catch{return{};}}
@@ -1451,35 +1013,23 @@ function deleteCurrentProject(){if(!currentProjectId)return;const projects=getAl
 function initStorage(){const projects=getAllProjects(),savedId=localStorage.getItem(LS_CURRENT);if(savedId&&projects[savedId]){currentProjectId=savedId;loadProjectData(projects[savedId].data);setSaveState('saved');}else{const ids=Object.keys(projects);if(ids.length>0){const lid=ids[ids.length-1];currentProjectId=lid;loadProjectData(projects[lid].data);setSaveState('saved');}else{currentProjectId=uid();setSaveState('unsaved');}}}
 function setSaveState(s){const el=document.getElementById('save-indicator'),label=document.getElementById('save-label');if(!el||!label)return;el.className='save-indicator '+s;label.textContent=s==='saved'?'zapisano':s==='unsaved'?'niezapisane':'–';}
 function hookMetaInputs(){['proc-name','proc-goal','proc-trigger'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('input',autoSave);});}
-
 function toggleProjectsMenu(e){e.stopPropagation();const menu=document.getElementById('projects-menu');if(menu.classList.contains('hidden')){renderProjectsMenu();menu.classList.remove('hidden');}else menu.classList.add('hidden');}
 function closeProjectsMenu(){document.getElementById('projects-menu').classList.add('hidden');}
 document.addEventListener('click',e=>{if(!e.target.closest('#projects-btn')&&!e.target.closest('#projects-menu'))closeProjectsMenu();});
 function renderProjectsMenu(){const projects=getAllProjects(),ids=Object.keys(projects).sort((a,b)=>(projects[b].updatedAt||'').localeCompare(projects[a].updatedAt||'')),el=document.getElementById('pm-list');if(!ids.length){el.innerHTML='<div style="padding:16px;font-size:12px;color:var(--text3);text-align:center">Brak zapisanych projektów</div>';return;}el.innerHTML=ids.map(id=>{const p=projects[id],isActive=id===currentProjectId,date=p.updatedAt?new Date(p.updatedAt).toLocaleDateString('pl-PL',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';return`<div class="pm-item" onclick="loadProject('${id}')"><div><div class="pm-item-name" style="${isActive?'color:var(--accent)':''}">${p.name||'Bez nazwy'}</div><div class="pm-item-meta">${date} · ${p.data?.steps?.length||0} kroków</div></div>${isActive?'<span class="pm-item-active">aktywny</span>':''}</div>`;}).join('');}
-
-// ═══════════════════════════════════════════════════
-//  JSON IMPORT/EXPORT
-// ═══════════════════════════════════════════════════
 function exportJSON(){const data={version:'1.2',exportedAt:new Date().toISOString(),meta:{name:document.getElementById('proc-name').value,goal:document.getElementById('proc-goal').value,trigger:document.getElementById('proc-trigger').value},actors:state.actors,processes:state.processes,results:state.results,steps:state.steps,alternativeFlows:state.alternativeFlows||[]};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`${(data.meta.name||'happy-path').replace(/[^a-z0-9]/gi,'_').toLowerCase()}_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);showToast('Plik JSON pobrany','var(--green)');}
 function importJSON(){document.getElementById('json-file-input').value='';document.getElementById('json-file-input').click();}
 function handleJSONImport(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=e=>{try{const data=JSON.parse(e.target.result);if(!data.actors||!data.steps)throw new Error('Nieprawidłowy format');if(!Array.isArray(data.alternativeFlows))data.alternativeFlows=[];if(!Array.isArray(data.processes))data.processes=[];if(state.steps.length>0)saveCurrentProject(true);currentProjectId=uid();loadProjectData(data);render();saveCurrentProject(true);showToast(`Zaimportowano: ${data.meta?.name||file.name}`,'var(--accent)');}catch(err){showToast('Błąd importu: '+err.message,'var(--danger)');}};reader.readAsText(file);}
 
-// ═══════════════════════════════════════════════════
-//  TOAST
-// ═══════════════════════════════════════════════════
 let toastTimeout=null;
-function showToast(msg,color='var(--green)'){const toast=document.getElementById('toast'),msg_el=document.getElementById('toast-msg'),dot=document.getElementById('toast-dot');if(!toast||!msg_el||!dot)return;msg_el.textContent=msg;dot.style.background=color;toast.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>toast.classList.remove('show'),2500);}
+function showToast(msg,color='var(--green)'){const toast=document.getElementById('toast'),msgEl=document.getElementById('toast-msg'),dot=document.getElementById('toast-dot');if(!toast||!msgEl||!dot)return;msgEl.textContent=msg;dot.style.background=color;toast.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>toast.classList.remove('show'),2500);}
 
-// ═══════════════════════════════════════════════════
-//  ALTERNATE FLOWS
-// ═══════════════════════════════════════════════════
-const SEV_COLORS={critical:'var(--danger)',high:'var(--accent3)',medium:'var(--accent)',low:'var(--green)'};
 const SEV_LABELS={critical:'CRITICAL',high:'HIGH',medium:'MEDIUM',low:'LOW'};
 let afFilter='all',afStepFilter='all';
 function setAfSeverity(f,btn){afFilter=f;document.querySelectorAll('#af-filters .af-filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderAf();}
 function setAfStep(sid,btn){afStepFilter=afStepFilter===sid?'all':sid;document.querySelectorAll('#af-step-filters .af-step-filter-btn').forEach(b=>b.classList.remove('active'));if(afStepFilter!=='all')btn.classList.add('active');renderAf();}
 function renderAfStepFilters(){const el=document.getElementById('af-step-filters');if(!el)return;if(!state.steps.length){el.innerHTML='<span style="font-size:11px;color:var(--text3)">brak kroków</span>';return;}el.innerHTML=state.steps.map((s,i)=>{const actor=state.actors.find(a=>a.id===s.actor),col=actor?actor.color:'#888',isActive=afStepFilter===s.id,count=(state.alternativeFlows||[]).filter(af=>(af.relatedSteps||[]).includes(s.id)).length;if(!count)return'';return`<button class="af-step-filter-btn af-filter-btn${isActive?' active':''}" onclick="setAfStep('${s.id}',this)" style="${isActive?`background:${col}22;color:${col};border-color:${col}66`:`border-color:${col}44;color:var(--text3)`}"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${col};margin-right:4px;vertical-align:middle"></span>k.${i+1} <span style="opacity:.6">${count}</span></button>`;}).join('');if(!el.innerHTML.trim())el.innerHTML='<span style="font-size:11px;color:var(--text3)">żaden krok nie ma AF</span>';}
-function renderAf(){renderAfStepFilters();const afs=state.alternativeFlows||[],el=document.getElementById('af-list');if(!el)return;const filtered=afs.filter(af=>{const sevOk=afFilter==='all'?true:afFilter==='manual'?af.requiresManualReview:af.severity===afFilter;const stepOk=afStepFilter==='all'?true:(af.relatedSteps||[]).includes(afStepFilter);return sevOk&&stepOk;});if(!filtered.length){el.innerHTML=`<div class="empty-state"><div class="empty-icon">↝</div><div class="empty-title">${afs.length?'Brak wyników dla tego filtra':'Brak Alternate Flows'}</div></div>`;return;}el.innerHTML=filtered.map(af=>{const stepChips=(af.relatedSteps||[]).map(sid=>{const s=state.steps.find(x=>x.id===sid),idx=state.steps.indexOf(s);return s?`<span class="af-step-chip" onclick="setView('steps')">k.${idx+1} ${escHtml(s.action.slice(0,20))}${s.action.length>20?'…':''}</span>`:`<span class="af-step-chip unlinked">${sid}</span>`;}).join('');return`<div class="af-card ${af.requiresManualReview?'manual':''}"><div class="af-card-top"><div class="af-title-row"><span class="af-id">${af.id}</span><span class="af-title">${escHtml(af.title)}</span><span class="sev-badge sev-${af.severity}">${SEV_LABELS[af.severity]||af.severity}</span>${af.requiresManualReview?'<span class="manual-badge">MANUAL</span>':''}</div><div style="display:flex;gap:4px;flex-shrink:0"><button class="btn-icon" onclick="editAf('${af.id}')" style="width:22px;height:22px;font-size:11px">✎</button><button class="btn-icon danger" onclick="removeAf('${af.id}')" style="width:22px;height:22px;font-size:12px">×</button></div></div><div class="af-trigger"><strong>Trigger:</strong> ${escHtml(af.trigger)}</div><div class="af-body">${escHtml(af.outcome)}</div>${(af.relatedSteps||[]).length?`<div class="af-steps-row"><span class="af-steps-label">Powiązane kroki:</span>${stepChips}</div>`:''}</div>`;}).join('');}
+function renderAf(){renderAfStepFilters();const afs=state.alternativeFlows||[],el=document.getElementById('af-list');if(!el)return;const filtered=afs.filter(af=>{const sevOk=afFilter==='all'?true:afFilter==='manual'?af.requiresManualReview:af.severity===afFilter;const stepOk=afStepFilter==='all'?true:(af.relatedSteps||[]).includes(afStepFilter);return sevOk&&stepOk;});if(!filtered.length){el.innerHTML=`<div class="empty-state"><div class="empty-icon">↝</div><div class="empty-title">${afs.length?'Brak wyników dla tego filtra':'Brak Alternate Flows'}</div></div>`;return;}el.innerHTML=filtered.map(af=>{const sc=(af.relatedSteps||[]).map(sid=>{const s=state.steps.find(x=>x.id===sid),idx=state.steps.indexOf(s);return s?`<span class="af-step-chip" onclick="setView('steps')">k.${idx+1} ${escHtml(s.action.slice(0,20))}${s.action.length>20?'…':''}</span>`:`<span class="af-step-chip unlinked">${sid}</span>`;}).join('');return`<div class="af-card ${af.requiresManualReview?'manual':''}"><div class="af-card-top"><div class="af-title-row"><span class="af-id">${af.id}</span><span class="af-title">${escHtml(af.title)}</span><span class="sev-badge sev-${af.severity}">${SEV_LABELS[af.severity]||af.severity}</span>${af.requiresManualReview?'<span class="manual-badge">MANUAL</span>':''}</div><div style="display:flex;gap:4px;flex-shrink:0"><button class="btn-icon" onclick="editAf('${af.id}')" style="width:22px;height:22px;font-size:11px">✎</button><button class="btn-icon danger" onclick="removeAf('${af.id}')" style="width:22px;height:22px;font-size:12px">×</button></div></div><div class="af-trigger"><strong>Trigger:</strong> ${escHtml(af.trigger)}</div><div class="af-body">${escHtml(af.outcome)}</div>${(af.relatedSteps||[]).length?`<div class="af-steps-row"><span class="af-steps-label">Powiązane kroki:</span>${sc}</div>`:''}</div>`;}).join('');}
 function openAfModal(editId){state.editingAfId=editId||null;const af=editId?(state.alternativeFlows||[]).find(x=>x.id===editId):null;document.getElementById('af-modal-title').textContent=af?'Edytuj Alternate Flow':'Nowy Alternate Flow';document.getElementById('af-modal-save-btn').textContent=af?'Zapisz zmiany':'Dodaj';document.getElementById('af-title-input').value=af?af.title:'';document.getElementById('af-trigger-input').value=af?af.trigger:'';document.getElementById('af-outcome-input').value=af?af.outcome:'';document.getElementById('af-severity-input').value=af?af.severity:'medium';document.getElementById('af-manual-input').checked=af?!!af.requiresManualReview:false;const sel=document.getElementById('af-steps-selector');if(!sel)return;const linked=af?(af.relatedSteps||[]):[];sel.innerHTML=state.steps.map((s,i)=>{const on=linked.includes(s.id);return`<span class="af-step-chip ${on?'':'unlinked'}" style="${on?'border-color:var(--accent);color:var(--accent)':''}" onclick="toggleAfStep('${s.id}',this)">k.${i+1} ${escHtml(s.action.slice(0,22))}${s.action.length>22?'…':''}</span>`;}).join('');openModal('af-modal');}
 function toggleAfStep(sid,el){el.classList.toggle('unlinked');if(el.classList.contains('unlinked')){el.style.borderColor='';el.style.color='';}else{el.style.borderColor='var(--accent)';el.style.color='var(--accent)';}}
 function saveAf(){const title=document.getElementById('af-title-input').value.trim();if(!title)return;const relatedSteps=[...document.querySelectorAll('#af-steps-selector .af-step-chip:not(.unlinked)')].map(el=>el.getAttribute('onclick').match(/'([^']+)'/)?.[1]).filter(Boolean);const data={id:state.editingAfId||('af'+uid()),title,trigger:document.getElementById('af-trigger-input').value.trim(),outcome:document.getElementById('af-outcome-input').value.trim(),severity:document.getElementById('af-severity-input').value,requiresManualReview:document.getElementById('af-manual-input').checked,relatedSteps};if(!state.alternativeFlows)state.alternativeFlows=[];if(state.editingAfId){const idx=state.alternativeFlows.findIndex(x=>x.id===state.editingAfId);if(idx!==-1)state.alternativeFlows[idx]=data;showToast('AF zaktualizowany','var(--accent)');}else{state.alternativeFlows.push(data);showToast('AF dodany','var(--accent3)');}closeModal('af-modal');renderAf();renderStats();autoSave();}
@@ -1488,19 +1038,62 @@ function removeAf(id){state.alternativeFlows=(state.alternativeFlows||[]).filter
 function getStepAfBadge(stepId){const count=(state.alternativeFlows||[]).filter(af=>(af.relatedSteps||[]).includes(stepId)).length;if(!count)return'';return`<span class="step-af-badge" onclick="goToStepAfs('${stepId}')">${count} alt</span>`;}
 function goToStepAfs(stepId){afFilter='all';afStepFilter=stepId;setView('af');document.querySelectorAll('#af-filters .af-filter-btn').forEach((b,i)=>b.classList.toggle('active',i===0));}
 
-// ═══════════════════════════════════════════════════
-//  COLOR SWATCHES (actor modal)
-// ═══════════════════════════════════════════════════
-function initColorSwatches(){document.getElementById('actor-color-row').innerHTML=COLORS.map(c=>`<div class="color-swatch ${c===state.pendingActorColor?'selected':''}" style="background:${c}" onclick="selectColor('${c}',this)"></div>`).join('');}
-function selectColor(c,el){state.pendingActorColor=c;document.querySelectorAll('#actor-color-row .color-swatch').forEach(s=>s.classList.remove('selected'));el.classList.add('selected');}
+function renderExport(){
+  const el=document.getElementById('export-content');if(!el)return;
+  const name=document.getElementById('proc-name').value||'Proces';
+  const goal=document.getElementById('proc-goal').value||'';
+  const trigger=document.getElementById('proc-trigger').value||'';
+  let md=`# Happy Path: ${name}\n\n**Cel procesu:** ${goal}\n\n**Warunki wejścia:** ${trigger}\n\n---\n\n`;
+  if(state.processes&&state.processes.length){
+    md+=`## Procesy\n\n`;
+    const assigned=new Set(state.processes.flatMap(p=>p.stepIds));
+    state.processes.forEach(proc=>{
+      const ps=proc.stepIds.map(sid=>state.steps.find(s=>s.id===sid)).filter(Boolean);
+      md+=`### 📦 Proces: ${proc.name}\n\n`;
+      ps.forEach(step=>{
+        const idx=state.steps.indexOf(step),actor=getActor(step.actor);
+        md+=`#### Krok ${idx+1}: ${step.action}\n\n`;
+        md+=`**Aktor:** ${actor?actor.name:'—'}\n\n`;
+        if(step.desc)md+=`**Opis:** ${step.desc}\n\n`;
+        if(step.results&&step.results.length){md+=`**Rezultaty:**\n`;step.results.forEach(rid=>{const r=getResult(rid);if(r)md+=`  - [${RESULT_TYPE_LABELS[r.type]}] ${r.name}: ${r.desc}\n`;});md+=`\n`;}
+      });
+    });
+    const un=state.steps.filter(s=>!assigned.has(s.id));
+    if(un.length){md+=`### Kroki bez przypisanego procesu\n\n`;un.forEach(step=>{const idx=state.steps.indexOf(step),actor=getActor(step.actor);md+=`#### Krok ${idx+1}: ${step.action}\n\n**Aktor:** ${actor?actor.name:'—'}\n\n`;if(step.desc)md+=`**Opis:** ${step.desc}\n\n`;});}
+  } else {
+    md+=`## Sekwencja kroków\n\n`;
+    state.steps.forEach((step,i)=>{
+      const actor=getActor(step.actor);
+      md+=`### Krok ${i+1}: ${step.action}\n\n**Aktor:** ${actor?actor.name:'—'}\n\n`;
+      if(step.desc)md+=`**Opis:** ${step.desc}\n\n`;
+      if(step.results&&step.results.length){md+=`**Rezultaty:**\n`;step.results.forEach(rid=>{const r=getResult(rid);if(r)md+=`  - [${RESULT_TYPE_LABELS[r.type]}] ${r.name}: ${r.desc}\n`;});md+=`\n`;}
+    });
+  }
+  md+=`---\n\n## Oczekiwane rezultaty\n\n`;
+  state.results.forEach(r=>{md+=`- **[${RESULT_TYPE_LABELS[r.type]}] ${r.name}** — ${r.desc}\n`;});
+  if(state.alternativeFlows&&state.alternativeFlows.length){
+    md+=`\n---\n\n## Alternate Flows\n\n`;
+    state.alternativeFlows.forEach(af=>{
+      md+=`### ${af.title}\n\n`;
+      md+=`**Severity:** ${(af.severity||'').toUpperCase()}${af.requiresManualReview?' · MANUAL REVIEW':''}\n\n`;
+      md+=`**Trigger:** ${af.trigger}\n\n**Outcome:** ${af.outcome}\n\n`;
+      if(af.relatedSteps&&af.relatedSteps.length){
+        const refs=af.relatedSteps.map(sid=>{const s=state.steps.find(x=>x.id===sid),actor=s?getActor(s.actor):null,idx=s?state.steps.indexOf(s)+1:'?';return s?`krok ${idx} (${actor?actor.name:'—'}): ${s.action}`:`${sid} (nieznany)`;}).join('\n  - ');
+        md+=`**Powiązane kroki:**\n  - ${refs}\n\n`;
+      }
+    });
+  }
+  el.textContent=md;
+}
 function copyExport(){const text=document.getElementById('export-content').textContent;navigator.clipboard.writeText(text).then(()=>{const btn=event.target;btn.textContent='Skopiowano!';setTimeout(()=>btn.textContent='Kopiuj',1500);});}
 
-// ═══════════════════════════════════════════════════
-//  BOOT
-// ═══════════════════════════════════════════════════
+function initColorSwatches(){document.getElementById('actor-color-row').innerHTML=COLORS.map(c=>`<div class="color-swatch ${c===state.pendingActorColor?'selected':''}" style="background:${c}" onclick="selectColor('${c}',this)"></div>`).join('');}
+function selectColor(c,el){state.pendingActorColor=c;document.querySelectorAll('#actor-color-row .color-swatch').forEach(s=>s.classList.remove('selected'));el.classList.add('selected');}
+
 initColorSwatches();
 initStorage();
 hookMetaInputs();
+applyPanelState();
 render();
 </script>
 </body>
