@@ -124,21 +124,10 @@
       transition: background .3s;
     }
 
-    .save-indicator.saved .save-dot {
-      background: var(--green);
-    }
-
-    .save-indicator.saved {
-      color: var(--green);
-    }
-
-    .save-indicator.unsaved .save-dot {
-      background: var(--accent3);
-    }
-
-    .save-indicator.unsaved {
-      color: var(--accent3);
-    }
+    .save-indicator.saved .save-dot { background: var(--green); }
+    .save-indicator.saved { color: var(--green); }
+    .save-indicator.unsaved .save-dot { background: var(--accent3); }
+    .save-indicator.unsaved { color: var(--accent3); }
 
     /* PROJECTS DROPDOWN */
     .projects-menu {
@@ -167,10 +156,7 @@
       justify-content: space-between;
     }
 
-    .pm-list {
-      max-height: 280px;
-      overflow-y: auto;
-    }
+    .pm-list { max-height: 280px; overflow-y: auto; }
 
     .pm-item {
       display: flex;
@@ -183,31 +169,11 @@
       gap: 10px;
     }
 
-    .pm-item:hover {
-      background: var(--surface3);
-    }
-
-    .pm-item:last-child {
-      border-bottom: none;
-    }
-
-    .pm-item-name {
-      font-size: 13px;
-      font-weight: 500;
-      flex: 1;
-    }
-
-    .pm-item-meta {
-      font-size: 10px;
-      font-family: var(--mono);
-      color: var(--text3);
-    }
-
-    .pm-item-active {
-      color: var(--accent);
-      font-size: 10px;
-      font-family: var(--mono);
-    }
+    .pm-item:hover { background: var(--surface3); }
+    .pm-item:last-child { border-bottom: none; }
+    .pm-item-name { font-size: 13px; font-weight: 500; flex: 1; }
+    .pm-item-meta { font-size: 10px; font-family: var(--mono); color: var(--text3); }
+    .pm-item-active { color: var(--accent); font-size: 10px; font-family: var(--mono); }
 
     .pm-actions {
       padding: 10px 16px;
@@ -237,15 +203,8 @@
       gap: 8px;
     }
 
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-    }
-
-    .toast-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast-dot { width: 6px; height: 6px; border-radius: 50%; }
 
     .btn {
       padding: 8px 16px;
@@ -264,19 +223,10 @@
       color: var(--text2);
     }
 
-    .btn-ghost:hover {
-      border-color: var(--text3);
-      color: var(--text);
-    }
+    .btn-ghost:hover { border-color: var(--text3); color: var(--text); }
 
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      background: #6b5fe0;
-    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #6b5fe0; }
 
     .btn-success {
       background: rgba(90, 212, 176, 0.15);
@@ -284,14 +234,9 @@
       border: 1px solid rgba(90, 212, 176, 0.2);
     }
 
-    .btn-success:hover {
-      background: rgba(90, 212, 176, 0.25);
-    }
+    .btn-success:hover { background: rgba(90, 212, 176, 0.25); }
 
-    .btn-sm {
-      padding: 5px 11px;
-      font-size: 12px;
-    }
+    .btn-sm { padding: 5px 11px; font-size: 12px; }
 
     .btn-icon {
       width: 30px;
@@ -309,15 +254,8 @@
       transition: all .15s;
     }
 
-    .btn-icon:hover {
-      border-color: var(--border2);
-      color: var(--text2);
-    }
-
-    .btn-icon.danger:hover {
-      border-color: var(--danger);
-      color: var(--danger);
-    }
+    .btn-icon:hover { border-color: var(--border2); color: var(--text2); }
+    .btn-icon.danger:hover { border-color: var(--danger); color: var(--danger); }
 
     /* LAYOUT */
     .workspace {
@@ -338,14 +276,8 @@
       gap: 24px;
     }
 
-    .panel::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .panel::-webkit-scrollbar-thumb {
-      background: var(--surface3);
-      border-radius: 4px;
-    }
+    .panel::-webkit-scrollbar { width: 4px; }
+    .panel::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
 
     .section-label {
       font-size: 10px;
@@ -357,9 +289,7 @@
     }
 
     /* Project meta */
-    .meta-field {
-      margin-bottom: 12px;
-    }
+    .meta-field { margin-bottom: 12px; }
 
     .meta-field label {
       display: block;
@@ -387,20 +317,11 @@
 
     .meta-field input:focus,
     .meta-field textarea:focus,
-    .meta-field select:focus {
-      border-color: var(--accent);
-    }
-
-    .meta-field textarea {
-      line-height: 1.5;
-    }
+    .meta-field select:focus { border-color: var(--accent); }
+    .meta-field textarea { line-height: 1.5; }
 
     /* Actors */
-    .actors-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .actors-list { display: flex; flex-direction: column; gap: 6px; }
 
     .actor-chip {
       display: flex;
@@ -413,33 +334,12 @@
       cursor: grab;
     }
 
-    .actor-chip:active {
-      cursor: grabbing;
-    }
+    .actor-chip:active { cursor: grabbing; }
+    .actor-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .actor-name { font-size: 12px; flex: 1; }
+    .actor-handle { font-size: 10px; color: var(--text3); font-family: var(--mono); }
 
-    .actor-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .actor-name {
-      font-size: 12px;
-      flex: 1;
-    }
-
-    .actor-handle {
-      font-size: 10px;
-      color: var(--text3);
-      font-family: var(--mono);
-    }
-
-    .add-actor-form {
-      display: flex;
-      gap: 6px;
-      margin-top: 8px;
-    }
+    .add-actor-form { display: flex; gap: 6px; margin-top: 8px; }
 
     .add-actor-form input {
       flex: 1;
@@ -453,16 +353,10 @@
       outline: none;
     }
 
-    .add-actor-form input:focus {
-      border-color: var(--accent);
-    }
+    .add-actor-form input:focus { border-color: var(--accent); }
 
     /* Results panel */
-    .results-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .results-list { display: flex; flex-direction: column; gap: 8px; }
 
     .result-item {
       background: var(--surface2);
@@ -473,38 +367,12 @@
       position: relative;
     }
 
-    .result-item:active {
-      cursor: grabbing;
-    }
-
-    .result-item.result-drag-over {
-      border-color: var(--accent);
-      border-style: dashed;
-    }
-
-    .result-item .drag-handle {
-      cursor: grab;
-      color: var(--text3);
-      font-size: 11px;
-      padding: 0 4px 0 0;
-      flex-shrink: 0;
-    }
-
-    .result-item .drag-handle:active {
-      cursor: grabbing;
-    }
-
-    .result-item .ri-title {
-      font-size: 12px;
-      font-weight: 500;
-      margin-bottom: 3px;
-    }
-
-    .result-item .ri-desc {
-      font-size: 11px;
-      color: var(--text3);
-      line-height: 1.4;
-    }
+    .result-item:active { cursor: grabbing; }
+    .result-item.result-drag-over { border-color: var(--accent); border-style: dashed; }
+    .result-item .drag-handle { cursor: grab; color: var(--text3); font-size: 11px; padding: 0 4px 0 0; flex-shrink: 0; }
+    .result-item .drag-handle:active { cursor: grabbing; }
+    .result-item .ri-title { font-size: 12px; font-weight: 500; margin-bottom: 3px; }
+    .result-item .ri-desc { font-size: 11px; color: var(--text3); line-height: 1.4; }
 
     .result-badge {
       display: inline-block;
@@ -515,13 +383,74 @@
       margin-bottom: 5px;
     }
 
-    /* MAIN AREA */
-    .main {
+    /* ═══════════════════════════════════════
+       PROCESSES — panel section
+    ═══════════════════════════════════════ */
+    .processes-list { display: flex; flex-direction: column; gap: 6px; }
+
+    .process-chip {
       display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      min-height: 0;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      position: relative;
+      transition: border-color .15s;
     }
+
+    .process-chip:hover { border-color: var(--border2); }
+
+    .process-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    .process-name-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid transparent;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 12px;
+      outline: none;
+      flex: 1;
+      min-width: 0;
+      cursor: text;
+      padding: 0;
+      transition: border-color .15s;
+    }
+
+    .process-name-input:focus { border-bottom-color: var(--accent); }
+
+    .process-step-count {
+      font-size: 10px;
+      font-family: var(--mono);
+      color: var(--text3);
+      flex-shrink: 0;
+    }
+
+    .add-process-form { display: flex; gap: 6px; margin-top: 8px; }
+
+    .add-process-form input {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 7px 10px;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 12px;
+      outline: none;
+    }
+
+    .add-process-form input:focus { border-color: var(--accent); }
+
+    /* MAIN AREA */
+    .main { display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
 
     .canvas-header {
       display: flex;
@@ -532,16 +461,8 @@
       gap: 16px;
     }
 
-    .canvas-title {
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .canvas-subtitle {
-      font-size: 11px;
-      color: var(--text3);
-      font-family: var(--mono);
-    }
+    .canvas-title { font-size: 13px; font-weight: 500; }
+    .canvas-subtitle { font-size: 11px; color: var(--text3); font-family: var(--mono); }
 
     .view-toggle {
       display: flex;
@@ -562,41 +483,18 @@
       transition: all .15s;
     }
 
-    .view-btn.active {
-      background: var(--surface3);
-      color: var(--text);
-    }
+    .view-btn.active { background: var(--surface3); color: var(--text); }
 
     /* STEPS CANVAS */
-    .steps-canvas {
-      flex: 1;
-      overflow-y: auto;
-      padding: 28px;
-    }
+    .steps-canvas { flex: 1; overflow-y: auto; padding: 28px; }
 
-    .steps-canvas::-webkit-scrollbar {
-      width: 4px;
-    }
+    .steps-canvas::-webkit-scrollbar { width: 4px; }
+    .steps-canvas::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
 
-    .steps-canvas::-webkit-scrollbar-thumb {
-      background: var(--surface3);
-      border-radius: 4px;
-    }
-
-    .steps-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      position: relative;
-    }
+    .steps-list { display: flex; flex-direction: column; gap: 0; position: relative; }
 
     /* Step card */
-    .step-row {
-      display: flex;
-      align-items: stretch;
-      gap: 0;
-      position: relative;
-    }
+    .step-row { display: flex; align-items: stretch; gap: 0; position: relative; }
 
     .step-connector {
       display: flex;
@@ -643,9 +541,7 @@
       transform: rotate(45deg);
     }
 
-    .step-row:last-child .step-line {
-      display: none;
-    }
+    .step-row:last-child .step-line { display: none; }
 
     .step-card {
       flex: 1;
@@ -659,9 +555,28 @@
       position: relative;
     }
 
-    .step-card:hover {
-      border-color: var(--border2);
+    .step-card:hover { border-color: var(--border2); }
+
+    /* ═══════════════════════════════════════
+       PROCESS BADGE on step card (sequence view)
+    ═══════════════════════════════════════ */
+    .step-process-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 9px;
+      font-family: var(--mono);
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: opacity .15s;
     }
+
+    .step-process-tag:hover { opacity: 0.8; }
 
     /* COMPACT VIEW OVERRIDES */
     .steps-list.compact .step-card {
@@ -672,14 +587,8 @@
       gap: 12px;
     }
 
-    .steps-list.compact .step-top {
-      display: contents;
-    }
-
-    .steps-list.compact .step-top>div:first-child {
-      order: 1;
-      flex-shrink: 0;
-    }
+    .steps-list.compact .step-top { display: contents; }
+    .steps-list.compact .step-top > div:first-child { order: 1; flex-shrink: 0; }
 
     .steps-list.compact .step-action-input {
       order: 2;
@@ -707,22 +616,15 @@
       transition: opacity 0.2s;
     }
 
-    .steps-list.compact .step-card:hover .step-actions-row {
-      opacity: 1;
-    }
+    .steps-list.compact .step-card:hover .step-actions-row { opacity: 1; }
 
     .steps-list.compact .step-desc-input,
-    .steps-list.compact .step-bottom {
-      display: none;
-    }
+    .steps-list.compact .step-bottom { display: none; }
 
-    .steps-list.compact .step-num {
-      margin-top: 8px;
-    }
+    .steps-list.compact .step-num { margin-top: 8px; }
+    .steps-list.compact .step-process-tag { display: none; }
 
-    .compact-link-btn {
-      display: none;
-    }
+    .compact-link-btn { display: none; }
 
     .steps-list.compact .compact-link-btn {
       display: flex;
@@ -747,19 +649,9 @@
       background: var(--surface3);
     }
 
-    .step-card.dragging {
-      opacity: 0.4;
-      transform: scale(0.98);
-    }
-
-    .step-card.drag-over {
-      border-color: var(--accent);
-      border-style: dashed;
-    }
-
-    .step-card:active {
-      cursor: grabbing;
-    }
+    .step-card.dragging { opacity: 0.4; transform: scale(0.98); }
+    .step-card.drag-over { border-color: var(--accent); border-style: dashed; }
+    .step-card:active { cursor: grabbing; }
 
     .step-top {
       display: flex;
@@ -783,20 +675,11 @@
       transition: border-color .15s;
     }
 
-    .step-actor-badge:hover {
-      border-color: var(--border2);
-    }
+    .step-actor-badge:hover { border-color: var(--border2); }
 
-    .step-actor-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-    }
+    .step-actor-dot { width: 7px; height: 7px; border-radius: 50%; }
 
-    .step-actions-row {
-      display: flex;
-      gap: 4px;
-    }
+    .step-actions-row { display: flex; gap: 4px; }
 
     .step-action-input {
       background: transparent;
@@ -811,9 +694,7 @@
       letter-spacing: -0.2px;
     }
 
-    .step-action-input::placeholder {
-      color: var(--text3);
-    }
+    .step-action-input::placeholder { color: var(--text3); }
 
     .step-desc-input {
       background: transparent;
@@ -828,9 +709,7 @@
       overflow: hidden;
     }
 
-    .step-desc-input::placeholder {
-      color: var(--text3);
-    }
+    .step-desc-input::placeholder { color: var(--text3); }
 
     .step-bottom {
       display: flex;
@@ -852,33 +731,13 @@
       transition: all .15s;
     }
 
-    .step-result-badge.linked {
-      border-style: solid;
-      border-color: transparent;
-    }
+    .step-result-badge.linked { border-style: solid; border-color: transparent; }
 
-    .step-result-badge:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    .step-result-badge:hover { border-color: var(--accent); color: var(--accent); }
 
-    .step-status {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-    }
-
-    .status-label {
-      font-size: 10px;
-      font-family: var(--mono);
-      color: var(--text3);
-    }
+    .step-status { display: flex; gap: 6px; align-items: center; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .status-label { font-size: 10px; font-family: var(--mono); color: var(--text3); }
 
     /* ADD STEP */
     .add-step-btn {
@@ -934,7 +793,9 @@
       justify-content: center;
     }
 
-    /* TIMELINE VIEW */
+    /* ═══════════════════════════════════════
+       TIMELINE / SWIM LANE
+    ═══════════════════════════════════════ */
     .timeline-view {
       padding: 0px 28px 28px 28px;
       overflow-y: auto;
@@ -942,15 +803,8 @@
       flex: 1;
     }
 
-    .timeline-view::-webkit-scrollbar {
-      width: 4px;
-      height: 4px;
-    }
-
-    .timeline-view::-webkit-scrollbar-thumb {
-      background: var(--surface3);
-      border-radius: 4px;
-    }
+    .timeline-view::-webkit-scrollbar { width: 4px; height: 4px; }
+    .timeline-view::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
 
     .timeline-header {
       display: flex;
@@ -962,9 +816,7 @@
       background: var(--bg);
     }
 
-    .timeline-body {
-      overflow: visible;
-    }
+    .timeline-body { overflow: visible; }
 
     .tl-actor-col {
       min-width: 160px;
@@ -977,15 +829,47 @@
       margin-bottom: 0;
     }
 
+    /* ═══════════════
+       SWIM LANE ROW — process-aware
+    ═══════════════ */
     .tl-row {
       display: flex;
       min-height: 60px;
       border-bottom: 1px solid var(--border);
       position: relative;
+      transition: background .2s;
     }
 
-    .tl-row:last-child {
-      border-bottom: none;
+    .tl-row:last-child { border-bottom: none; }
+
+    /* The process watermark label shown inside the row */
+    .tl-process-label {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .tl-process-label-text {
+      font-size: 11px;
+      font-family: var(--mono);
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.13;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    /* First row of a process block gets a top border accent */
+    .tl-row.process-first {
+      border-top: 2px solid transparent; /* color set inline */
     }
 
     .tl-cell {
@@ -996,11 +880,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      z-index: 1; /* above watermark */
     }
 
-    .tl-cell:last-child {
-      border-right: none;
-    }
+    .tl-cell:last-child { border-right: none; }
 
     .tl-step-bubble {
       background: var(--surface2);
@@ -1014,12 +898,7 @@
       line-height: 1.3;
     }
 
-    .tl-step-num {
-      font-family: var(--mono);
-      font-size: 9px;
-      color: var(--text3);
-      margin-bottom: 3px;
-    }
+    .tl-step-num { font-family: var(--mono); font-size: 9px; color: var(--text3); margin-bottom: 3px; }
 
     /* MODAL */
     .modal-overlay {
@@ -1035,10 +914,7 @@
       transition: opacity .2s;
     }
 
-    .modal-overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
 
     .modal {
       background: var(--surface);
@@ -1051,19 +927,10 @@
       transition: transform .2s;
     }
 
-    .modal-overlay.open .modal {
-      transform: translateY(0);
-    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-title { font-size: 15px; font-weight: 600; margin-bottom: 16px; }
 
-    .modal-title {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
-
-    .modal-field {
-      margin-bottom: 14px;
-    }
+    .modal-field { margin-bottom: 14px; }
 
     .modal-field label {
       display: block;
@@ -1091,9 +958,7 @@
 
     .modal-field input:focus,
     .modal-field textarea:focus,
-    .modal-field select:focus {
-      border-color: var(--accent);
-    }
+    .modal-field select:focus { border-color: var(--accent); }
 
     .modal-actions {
       display: flex;
@@ -1102,10 +967,7 @@
       margin-top: 20px;
     }
 
-    .color-row {
-      display: flex;
-      gap: 8px;
-    }
+    .color-row { display: flex; gap: 8px; flex-wrap: wrap; }
 
     .color-swatch {
       width: 24px;
@@ -1116,16 +978,10 @@
       transition: border-color .1s;
     }
 
-    .color-swatch.selected {
-      border-color: white;
-    }
+    .color-swatch.selected { border-color: white; }
 
     /* EXPORT VIEW */
-    .export-view {
-      padding: 28px;
-      overflow-y: auto;
-      flex: 1;
-    }
+    .export-view { padding: 28px; overflow-y: auto; flex: 1; }
 
     .export-pre {
       background: var(--surface);
@@ -1164,8 +1020,41 @@
       transition: background .1s;
     }
 
-    .actor-option:hover {
-      background: var(--surface3);
+    .actor-option:hover { background: var(--surface3); }
+
+    /* ═══════════════════════════════════════
+       PROCESS SELECTOR DROPDOWN (on step card)
+    ═══════════════════════════════════════ */
+    .process-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--r);
+      overflow: hidden;
+      z-index: 50;
+      min-width: 180px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .process-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background .1s;
+    }
+
+    .process-option:hover { background: var(--surface3); }
+
+    .process-option-swatch {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      flex-shrink: 0;
     }
 
     /* Stats bar */
@@ -1180,16 +1069,8 @@
       color: var(--text3);
     }
 
-    .stat-item {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-
-    .stat-val {
-      color: var(--text);
-      font-weight: 500;
-    }
+    .stat-item { display: flex; gap: 6px; align-items: center; }
+    .stat-val { color: var(--text); font-weight: 500; }
 
     /* Empty state */
     .empty-state {
@@ -1203,42 +1084,17 @@
       text-align: center;
     }
 
-    .empty-icon {
-      font-size: 36px;
-      opacity: 0.4;
-    }
-
-    .empty-title {
-      font-size: 15px;
-      color: var(--text2);
-      font-weight: 500;
-    }
-
-    .empty-sub {
-      font-size: 12px;
-      line-height: 1.6;
-      max-width: 280px;
-    }
+    .empty-icon { font-size: 36px; opacity: 0.4; }
+    .empty-title { font-size: 15px; color: var(--text2); font-weight: 500; }
+    .empty-sub { font-size: 12px; line-height: 1.6; max-width: 280px; }
 
     /* Scrollbar */
-    ::-webkit-scrollbar {
-      width: 4px;
-      height: 4px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--surface3);
-      border-radius: 4px;
-    }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
 
     /* Tooltip */
-    [data-tip] {
-      position: relative;
-    }
+    [data-tip] { position: relative; }
 
     [data-tip]:hover::after {
       content: attr(data-tip);
@@ -1256,13 +1112,9 @@
       z-index: 200;
     }
 
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
 
-    .step-card.editing {
-      border-color: var(--accent);
-    }
+    .step-card.editing { border-color: var(--accent); }
 
     /* Result link chips in step */
     .step-results-chips {
@@ -1282,38 +1134,15 @@
       gap: 4px;
     }
 
-    .chip-remove {
-      cursor: pointer;
-      opacity: 0.6;
-      font-size: 12px;
-      line-height: 1;
-    }
-
-    .chip-remove:hover {
-      opacity: 1;
-    }
+    .chip-remove { cursor: pointer; opacity: 0.6; font-size: 12px; line-height: 1; }
+    .chip-remove:hover { opacity: 1; }
 
     /* ACTOR CHIP — editable + draggable */
-    .actor-chip {
-      position: relative;
-    }
+    .actor-chip { position: relative; }
+    .actor-chip.actor-drag-over { border-color: var(--accent); border-style: dashed; }
 
-    .actor-chip.actor-drag-over {
-      border-color: var(--accent);
-      border-style: dashed;
-    }
-
-    .actor-chip .drag-handle {
-      cursor: grab;
-      color: var(--text3);
-      font-size: 11px;
-      padding: 0 2px;
-      flex-shrink: 0;
-    }
-
-    .actor-chip .drag-handle:active {
-      cursor: grabbing;
-    }
+    .actor-chip .drag-handle { cursor: grab; color: var(--text3); font-size: 11px; padding: 0 2px; flex-shrink: 0; }
+    .actor-chip .drag-handle:active { cursor: grabbing; }
 
     .actor-name-input {
       background: transparent;
@@ -1330,25 +1159,13 @@
       transition: border-color .15s;
     }
 
-    .actor-name-input:focus {
-      border-bottom-color: var(--accent);
-    }
+    .actor-name-input:focus { border-bottom-color: var(--accent); }
 
     /* AF VIEW */
-    .af-view {
-      padding: 28px;
-      overflow-y: auto;
-      flex: 1;
-    }
+    .af-view { padding: 28px; overflow-y: auto; flex: 1; }
 
-    .af-view::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .af-view::-webkit-scrollbar-thumb {
-      background: var(--surface3);
-      border-radius: 4px;
-    }
+    .af-view::-webkit-scrollbar { width: 4px; }
+    .af-view::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
 
     .af-toolbar {
       display: flex;
@@ -1358,11 +1175,7 @@
       gap: 12px;
     }
 
-    .af-filters {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
+    .af-filters { display: flex; gap: 6px; flex-wrap: wrap; }
 
     .af-filter-btn {
       padding: 4px 12px;
@@ -1376,40 +1189,13 @@
       transition: all .15s;
     }
 
-    .af-filter-btn.active {
-      background: var(--surface3);
-      color: var(--text);
-    }
+    .af-filter-btn.active { background: var(--surface3); color: var(--text); }
+    .af-filter-btn.sev-critical.active { background: rgba(242, 94, 138, 0.15); color: var(--danger); border-color: rgba(242, 94, 138, 0.3); }
+    .af-filter-btn.sev-high.active { background: rgba(247, 162, 94, 0.15); color: var(--accent3); border-color: rgba(247, 162, 94, 0.3); }
+    .af-filter-btn.sev-medium.active { background: rgba(124, 111, 247, 0.15); color: var(--accent); border-color: rgba(124, 111, 247, 0.3); }
+    .af-filter-btn.sev-low.active { background: rgba(90, 212, 176, 0.15); color: var(--green); border-color: rgba(90, 212, 176, 0.2); }
 
-    .af-filter-btn.sev-critical.active {
-      background: rgba(242, 94, 138, 0.15);
-      color: var(--danger);
-      border-color: rgba(242, 94, 138, 0.3);
-    }
-
-    .af-filter-btn.sev-high.active {
-      background: rgba(247, 162, 94, 0.15);
-      color: var(--accent3);
-      border-color: rgba(247, 162, 94, 0.3);
-    }
-
-    .af-filter-btn.sev-medium.active {
-      background: rgba(124, 111, 247, 0.15);
-      color: var(--accent);
-      border-color: rgba(124, 111, 247, 0.3);
-    }
-
-    .af-filter-btn.sev-low.active {
-      background: rgba(90, 212, 176, 0.15);
-      color: var(--green);
-      border-color: rgba(90, 212, 176, 0.2);
-    }
-
-    .af-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .af-list { display: flex; flex-direction: column; gap: 10px; }
 
     .af-card {
       background: var(--surface);
@@ -1419,13 +1205,8 @@
       transition: border-color .15s;
     }
 
-    .af-card:hover {
-      border-color: var(--border2);
-    }
-
-    .af-card.manual {
-      border-left: 3px solid var(--accent3);
-    }
+    .af-card:hover { border-color: var(--border2); }
+    .af-card.manual { border-left: 3px solid var(--accent3); }
 
     .af-card-top {
       display: flex;
@@ -1435,13 +1216,7 @@
       margin-bottom: 8px;
     }
 
-    .af-title-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      flex: 1;
-    }
+    .af-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; flex: 1; }
 
     .af-id {
       font-size: 9px;
@@ -1453,10 +1228,7 @@
       flex-shrink: 0;
     }
 
-    .af-title {
-      font-size: 13px;
-      font-weight: 500;
-    }
+    .af-title { font-size: 13px; font-weight: 500; }
 
     .sev-badge {
       font-size: 9px;
@@ -1468,25 +1240,10 @@
       letter-spacing: 0.5px;
     }
 
-    .sev-critical {
-      background: rgba(242, 94, 138, 0.15);
-      color: var(--danger);
-    }
-
-    .sev-high {
-      background: rgba(247, 162, 94, 0.15);
-      color: var(--accent3);
-    }
-
-    .sev-medium {
-      background: rgba(124, 111, 247, 0.15);
-      color: var(--accent);
-    }
-
-    .sev-low {
-      background: rgba(90, 212, 176, 0.12);
-      color: var(--green);
-    }
+    .sev-critical { background: rgba(242, 94, 138, 0.15); color: var(--danger); }
+    .sev-high { background: rgba(247, 162, 94, 0.15); color: var(--accent3); }
+    .sev-medium { background: rgba(124, 111, 247, 0.15); color: var(--accent); }
+    .sev-low { background: rgba(90, 212, 176, 0.12); color: var(--green); }
 
     .manual-badge {
       font-size: 9px;
@@ -1498,22 +1255,9 @@
       flex-shrink: 0;
     }
 
-    .af-body {
-      font-size: 12px;
-      color: var(--text2);
-      line-height: 1.5;
-      margin-bottom: 10px;
-    }
-
-    .af-trigger {
-      font-size: 11px;
-      color: var(--text3);
-      margin-bottom: 4px;
-    }
-
-    .af-trigger strong {
-      color: var(--text2);
-    }
+    .af-body { font-size: 12px; color: var(--text2); line-height: 1.5; margin-bottom: 10px; }
+    .af-trigger { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
+    .af-trigger strong { color: var(--text2); }
 
     .af-steps-row {
       display: flex;
@@ -1525,11 +1269,7 @@
       border-top: 1px solid var(--border);
     }
 
-    .af-steps-label {
-      font-size: 10px;
-      font-family: var(--mono);
-      color: var(--text3);
-    }
+    .af-steps-label { font-size: 10px; font-family: var(--mono); color: var(--text3); }
 
     .af-step-chip {
       font-size: 10px;
@@ -1543,15 +1283,8 @@
       transition: border-color .1s;
     }
 
-    .af-step-chip:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .af-step-chip.unlinked {
-      border-style: dashed;
-      color: var(--text3);
-    }
+    .af-step-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .af-step-chip.unlinked { border-style: dashed; color: var(--text3); }
 
     .af-add-btn {
       display: flex;
@@ -1576,9 +1309,7 @@
       background: rgba(247, 162, 94, 0.05);
     }
 
-    .modal.wide {
-      width: 540px;
-    }
+    .modal.wide { width: 540px; }
 
     .step-af-badge {
       font-size: 10px;
@@ -1593,8 +1324,67 @@
       flex-shrink: 0;
     }
 
-    .step-af-badge:hover {
-      background: rgba(247, 162, 94, 0.2);
+    .step-af-badge:hover { background: rgba(247, 162, 94, 0.2); }
+
+    /* ═══════════════════════════════════════
+       PROCESS MODAL — step assignment grid
+    ═══════════════════════════════════════ */
+    .process-step-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 240px;
+      overflow-y: auto;
+      margin-top: 6px;
+    }
+
+    .process-step-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 12px;
+      transition: border-color .15s;
+      user-select: none;
+    }
+
+    .process-step-toggle:hover { border-color: var(--border2); }
+
+    .process-step-toggle.selected {
+      border-color: transparent; /* colored inline */
+    }
+
+    .process-step-toggle input[type=checkbox] {
+      accent-color: var(--accent);
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .process-step-toggle .pst-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      flex-shrink: 0;
+    }
+
+    .process-step-toggle .pst-name {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .process-step-toggle .pst-actor {
+      font-size: 9px;
+      font-family: var(--mono);
+      color: var(--text3);
+      flex-shrink: 0;
     }
   </style>
 </head>
@@ -1677,6 +1467,17 @@
         </div>
       </div>
 
+      <!-- ═══ PROCESSES ═══ -->
+      <div>
+        <div class="section-label">Procesy</div>
+        <div class="processes-list" id="processes-list"></div>
+        <div class="add-process-form">
+          <input type="text" id="new-process-input" placeholder="Nazwa procesu..."
+            onkeydown="if(event.key==='Enter')addProcess()">
+          <button class="btn btn-ghost btn-sm" onclick="addProcess()">+</button>
+        </div>
+      </div>
+
       <!-- Expected Results -->
       <div>
         <div class="section-label">Oczekiwane rezultaty</div>
@@ -1690,6 +1491,7 @@
       <div class="stats-bar" id="stats-bar">
         <div class="stat-item">Kroków: <span class="stat-val" id="stat-steps">0</span></div>
         <div class="stat-item">Aktorów: <span class="stat-val" id="stat-actors">0</span></div>
+        <div class="stat-item">Procesów: <span class="stat-val" id="stat-processes">0</span></div>
         <div class="stat-item">Rezultatów: <span class="stat-val" id="stat-results">0</span></div>
         <div class="stat-item">Alt. Flows: <span class="stat-val" id="stat-af">0</span></div>
       </div>
@@ -1697,8 +1499,7 @@
       <!-- Steps view -->
       <div class="steps-canvas" id="view-steps">
         <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
-          <button class="btn btn-ghost btn-sm" onclick="toggleStepsViewMode()" id="steps-view-mode-btn">Widok:
-            Pełny</button>
+          <button class="btn btn-ghost btn-sm" onclick="toggleStepsViewMode()" id="steps-view-mode-btn">Widok: Pełny</button>
         </div>
         <div class="steps-list" id="steps-list"></div>
         <button class="add-step-btn" onclick="addStep()">
@@ -1717,8 +1518,7 @@
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
           <div>
             <div style="font-size:15px;font-weight:600;">Eksport procesu</div>
-            <div style="font-size:11px;color:var(--text3);font-family:var(--mono);margin-top:2px;">Markdown /
-              Dokumentacja</div>
+            <div style="font-size:11px;color:var(--text3);font-family:var(--mono);margin-top:2px;">Markdown / Dokumentacja</div>
           </div>
           <button class="btn btn-ghost btn-sm" onclick="copyExport()">Kopiuj</button>
         </div>
@@ -1803,1170 +1603,37 @@
   <div class="modal-overlay" id="link-modal">
     <div class="modal">
       <div class="modal-title">Powiąż rezultat z krokiem</div>
-      <div id="link-results-list" style="display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;">
-      </div>
+      <div id="link-results-list" style="display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;"></div>
       <div class="modal-actions">
         <button class="btn btn-ghost" onclick="closeModal('link-modal')">Zamknij</button>
       </div>
     </div>
   </div>
 
-  <script>
-    const COLORS = ['#7c6ff7', '#5ad4b0', '#f7a25e', '#f25e8a', '#4db8f5', '#c77dff', '#ffd166', '#ff6b6b'];
-    const RESULT_TYPE_COLORS = { output: '#5ad4b0', state: '#7c6ff7', action: '#f7a25e', notification: '#4db8f5' };
-    const RESULT_TYPE_LABELS = { output: 'OUTPUT', state: 'STAN', action: 'AKCJA', notification: 'NOTIF' };
-
-    let state = {
-      actors: [
-        { id: 'a1', name: 'Klient', color: '#f25e8a' },
-        { id: 'a2', name: 'Sprzedawca', color: '#7c6ff7' },
-        { id: 'a3', name: 'System', color: '#5ad4b0' },
-      ],
-      results: [
-        { id: 'r1', name: 'Zamówienie złożone', desc: 'Klient potwierdził koszyk i wybrał metodę płatności', type: 'state' },
-        { id: 'r2', name: 'Potwierdzenie email', desc: 'System wysyła email z podsumowaniem zamówienia', type: 'notification' },
-        { id: 'r3', name: 'Płatność zaksięgowana', desc: 'Transakcja zakończona sukcesem po stronie bramki płatniczej', type: 'output' },
-        { id: 'r4', name: 'Zamówienie spakowane', desc: 'Fizyczny pakiet gotowy do wysyłki z etykietą', type: 'output' },
-        { id: 'r5', name: 'Przesyłka nadana', desc: 'Numer trackingowy wygenerowany i przekazany klientowi', type: 'notification' },
-      ],
-      steps: [
-        { id: 's1', actor: 'a1', action: 'Wybiera produkty i składa zamówienie', desc: 'Klient przegląda katalog, dodaje do koszyka i klika "Zamów"', results: ['r1'], status: 'done' },
-        { id: 's2', actor: 'a3', action: 'Generuje potwierdzenie zamówienia', desc: 'System waliduje dostępność produktów i wysyła email z numerem zamówienia', results: ['r2'], status: 'done' },
-        { id: 's3', actor: 'a1', action: 'Realizuje płatność online', desc: 'Klient zostaje przekierowany do bramki płatniczej i finalizuje transakcję', results: ['r3'], status: 'done' },
-        { id: 's4', actor: 'a2', action: 'Kompletuje i pakuje zamówienie', desc: 'Magazynier zbiera produkty z półek, pakuje i drukuje etykietę', results: ['r4'], status: 'in-progress' },
-        { id: 's5', actor: 'a2', action: 'Nadaje przesyłkę do kuriera', desc: 'Przekazanie paczki kurierowi, skanowanie i wygenerowanie numeru trackingowego', results: ['r5'], status: 'todo' },
-      ],
-      dragStepId: null,
-      dragActorId: null,
-      dragResultId: null,
-      stepsViewMode: 'full',
-      afFilter: 'all',
-      editingAfId: null,
-      alternativeFlows: [],
-      currentView: 'steps',
-      linkingStepId: null,
-      editingActorId: null,
-      editingResultId: null,
-      pendingActorColor: COLORS[0],
-    };
-
-    function uid() { return 'id' + Math.random().toString(36).slice(2, 8); }
-    function getActor(id) { return state.actors.find(a => a.id === id); }
-    function getResult(id) { return state.results.find(r => r.id === id); }
-
-    // ——— RENDER ———
-
-    function render() {
-      renderActors();
-      renderResults();
-      renderSteps();
-      renderStats();
-      if (state.currentView === 'af') renderAf();
-      if (state.currentView === 'timeline') renderTimeline();
-      if (state.currentView === 'export') renderExport();
-    }
-
-    function renderActors() {
-      const el = document.getElementById('actors-list');
-      el.innerHTML = state.actors.map(a => `
-    <div class="actor-chip"
-      draggable="true"
-      data-aid="${a.id}"
-      ondragstart="onActorDragStart(event,'${a.id}')"
-      ondragover="onActorDragOver(event,'${a.id}')"
-      ondrop="onActorDrop(event,'${a.id}')"
-      ondragleave="onActorDragLeave(event)"
-      ondragend="onActorDragEnd(event)">
-      <span class="drag-handle" title="Przeciągnij by zmienić kolejność">⠿</span>
-      <div class="actor-dot" style="background:${a.color}"></div>
-      <input class="actor-name-input" value="${a.name}"
-        onchange="renameActor('${a.id}',this.value)"
-        onkeydown="if(event.key==='Enter')this.blur()"
-        title="Kliknij by edytować nazwę">
-      <button class="btn-icon danger" onclick="removeActor('${a.id}')" data-tip="Usuń aktora" style="width:22px;height:22px;font-size:12px">×</button>
-    </div>
-  `).join('');
-    }
-
-    function renderResults() {
-      const el = document.getElementById('results-list');
-      if (!state.results.length) {
-        el.innerHTML = '<div style="font-size:11px;color:var(--text3);text-align:center;padding:12px">Brak rezultatów. Dodaj oczekiwane rezultaty procesu.</div>';
-        return;
-      }
-      const assignedResultIds = new Set(state.steps.flatMap(s => s.results || []));
-      el.innerHTML = state.results.map(r => {
-        const col = RESULT_TYPE_COLORS[r.type] || '#888';
-        const stepsThatUse = state.steps.filter(s => (s.results || []).includes(r.id));
-        const assigned = stepsThatUse.length > 0;
-        const assignedTip = stepsThatUse.map(s => `k.${state.steps.indexOf(s) + 1}: ${s.action.slice(0, 28)}${s.action.length > 28 ? '…' : ''}`).join('\n');
-        const assignedLabels = stepsThatUse.map(s => `k.${state.steps.indexOf(s) + 1}`).join(', ');
-        return `
-    <div class="result-item" style="border-left:3px solid ${col}"
-      draggable="true"
-      data-rid="${r.id}"
-      ondragstart="onResultDragStart(event,'${r.id}')"
-      ondragover="onResultDragOver(event,'${r.id}')"
-      ondrop="onResultDrop(event,'${r.id}')"
-      ondragleave="onResultDragLeave(event)"
-      ondragend="onResultDragEnd(event)">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;gap:4px">
-        <div style="display:flex;align-items:center;gap:4px">
-          <span class="drag-handle" title="Przeciągnij by zmienić kolejność">⠿</span>
-          <span style="display:inline-block;font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:4px;background:${col}22;color:${col}">${RESULT_TYPE_LABELS[r.type]}</span>
-        </div>
-        ${assigned
-            ? `<span title="${assignedTip}" style="font-size:9px;font-family:var(--mono);padding:2px 7px;border-radius:4px;background:rgba(90,212,176,0.1);color:var(--green);border:1px solid rgba(90,212,176,0.25);cursor:default">✓ ${assignedLabels}</span>`
-            : `<span style="font-size:9px;font-family:var(--mono);padding:2px 7px;border-radius:4px;background:rgba(90,90,120,0.1);color:var(--text3);border:1px dashed var(--border2);cursor:default">nieprzypisany</span>`
-          }
+  <!-- ═══════════════════════════════════════
+       PROCESS MODAL
+  ═══════════════════════════════════════ -->
+  <div class="modal-overlay" id="process-modal">
+    <div class="modal">
+      <div class="modal-title" id="process-modal-title">Nowy Proces</div>
+      <div class="modal-field">
+        <label>Nazwa procesu</label>
+        <input type="text" id="process-name-input" placeholder="np. Obsługa płatności">
       </div>
-      <div class="ri-title">${r.name}</div>
-      <div class="ri-desc">${r.desc}</div>
-      <div style="display:flex;justify-content:flex-end;gap:4px;margin-top:6px">
-        <button class="btn-icon" onclick="duplicateResult('${r.id}')" data-tip="Duplikuj rezultat" style="width:22px;height:22px;font-size:11px">⎘</button>
-        <button class="btn-icon" onclick="editResult('${r.id}')" data-tip="Edytuj rezultat" style="width:22px;height:22px;font-size:11px">✎</button>
-        <button class="btn-icon danger" onclick="removeResult('${r.id}')" data-tip="Usuń rezultat" style="width:22px;height:22px;font-size:12px">×</button>
+      <div class="modal-field">
+        <label>Kolor</label>
+        <div class="color-row" id="process-color-row"></div>
+      </div>
+      <div class="modal-field">
+        <label>Przypisz kroki do tego procesu</label>
+        <div class="process-step-grid" id="process-step-grid"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal('process-modal')">Anuluj</button>
+        <button class="btn btn-primary" id="process-modal-save-btn" onclick="saveProcess()">Dodaj proces</button>
       </div>
     </div>
-  `}).join('');
-    }
-
-    function toggleStepsViewMode() {
-      state.stepsViewMode = state.stepsViewMode === 'full' ? 'compact' : 'full';
-      renderSteps(); autoSave();
-    }
-
-    function renderSteps() {
-      const el = document.getElementById('steps-list');
-      const viewModeBtn = document.getElementById('steps-view-mode-btn');
-      if (viewModeBtn) {
-        viewModeBtn.innerText = state.stepsViewMode === 'compact' ? 'Widok: Kompaktowy' : 'Widok: Pełny';
-      }
-
-      if (state.stepsViewMode === 'compact') {
-        el.classList.add('compact');
-      } else {
-        el.classList.remove('compact');
-      }
-
-      if (!state.steps.length) {
-        el.innerHTML = `<div class="empty-state">
-      <div class="empty-icon">⟶</div>
-      <div class="empty-title">Brak kroków</div>
-      <div class="empty-sub">Dodaj pierwszy krok klikając "Dodaj krok" lub przycisk poniżej.</div>
-    </div>`;
-        return;
-      }
-
-      el.innerHTML = state.steps.map((step, i) => {
-        const actor = getActor(step.actor);
-        const actorColor = actor ? actor.color : '#888';
-        const actorName = actor ? actor.name : 'Nieprzypisany';
-        const statusColors = { done: '#5ad4b0', 'in-progress': '#f7a25e', todo: '#5a5a78' };
-        const statusLabels = { done: 'gotowe', 'in-progress': 'w toku', todo: 'do zrobienia' };
-        const stepResults = (step.results || []).map(rid => {
-          const r = getResult(rid);
-          if (!r) return '';
-          const col = RESULT_TYPE_COLORS[r.type] || '#888';
-          return `<span class="chip" style="background:${col}22;color:${col}">${r.name} <span class="chip-remove" onclick="unlinkResult('${step.id}','${rid}')">×</span></span>`;
-        }).join('');
-
-        return `
-    <div class="step-row">
-      <div class="step-connector">
-        <div class="step-num" style="background:${actorColor}22;color:${actorColor};border:2px solid ${actorColor}44">${i + 1}</div>
-        <div class="step-line"></div>
-      </div>
-      <div class="step-card"
-        draggable="true"
-        data-id="${step.id}"
-        ondragstart="onDragStart(event,'${step.id}')"
-        ondragover="onDragOver(event,'${step.id}')"
-        ondrop="onDrop(event,'${step.id}')"
-        ondragleave="onDragLeave(event)"
-        ondragend="onDragEnd(event)">
-        <div class="step-top">
-          <div style="position:relative">
-            <div class="step-actor-badge" onclick="toggleActorDropdown(event,'${step.id}')" style="border-color:${actorColor}44">
-              <div class="step-actor-dot" style="background:${actorColor}"></div>
-              ${actorName}
-              <span style="font-size:10px;color:var(--text3)">▾</span>
-            </div>
-            <div class="actor-dropdown hidden" id="dd-${step.id}">
-              ${state.actors.map(a => `
-                <div class="actor-option" onclick="setStepActor('${step.id}','${a.id}')">
-                  <div class="actor-dot" style="background:${a.color}"></div>
-                  ${a.name}
-                </div>
-              `).join('')}
-            </div>
-          </div>
-          <div class="step-actions-row">
-            <button class="btn-icon" onclick="moveStep('${step.id}',-1)" data-tip="Przesuń wyżej" ${i === 0 ? 'disabled' : ''}>↑</button>
-            <button class="btn-icon" onclick="moveStep('${step.id}',1)" data-tip="Przesuń niżej" ${i === state.steps.length - 1 ? 'disabled' : ''}>↓</button>
-            <button class="btn-icon" onclick="duplicateStep('${step.id}')" data-tip="Duplikuj">⎘</button>
-            <button class="btn-icon danger" onclick="removeStep('${step.id}')" data-tip="Usuń krok">×</button>
-          </div>
-        </div>
-
-        <input class="step-action-input" value="${escHtml(step.action)}"
-          placeholder="Opisz akcję aktora..."
-          onchange="updateStep('${step.id}','action',this.value)">
-        <textarea class="step-desc-input" rows="2"
-          placeholder="Szczegóły, kontekst, ograniczenia..."
-          onchange="updateStep('${step.id}','desc',this.value)"
-          oninput="autoResize(this)">${escHtml(step.desc)}</textarea>
-
-        <div class="step-results-chips">
-          ${stepResults}
-          ${(!step.results || !step.results.length) ? `<button class="compact-link-btn" onclick="openLinkModal('${step.id}')" title="Powiąż rezultat">+</button>` : ''}
-          ${getStepAfBadge(step.id)}
-        </div>
-
-        <div class="step-bottom">
-          <button class="step-result-badge ${(step.results && step.results.length) ? 'linked' : ''}"
-            onclick="openLinkModal('${step.id}')"
-            style="${(step.results && step.results.length) ? `background:${RESULT_TYPE_COLORS['state']}11;border-color:${RESULT_TYPE_COLORS['state']}44;color:var(--text2)` : ''}">
-            ${(step.results && step.results.length) ? '+ Powiąż kolejny rezultat' : '+ Powiąż rezultat'}
-          </button>
-          <div class="step-status">
-            <div class="status-dot" style="background:${statusColors[step.status]}"></div>
-            <select style="background:transparent;border:none;color:var(--text3);font-size:10px;font-family:var(--mono);outline:none;cursor:pointer;"
-              onchange="updateStep('${step.id}','status',this.value)">
-              <option value="todo" ${step.status === 'todo' ? 'selected' : ''}>do zrobienia</option>
-              <option value="in-progress" ${step.status === 'in-progress' ? 'selected' : ''}>w toku</option>
-              <option value="done" ${step.status === 'done' ? 'selected' : ''}>gotowe</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-    `;
-      }).join('');
-    }
-
-    function renderTimeline() {
-      const el = document.getElementById('timeline-content');
-      if (!state.actors.length) { el.innerHTML = '<div class="empty-state"><div class="empty-title">Dodaj aktorów by zobaczyć Swim Lane</div></div>'; return; }
-      if (!state.steps.length) { el.innerHTML = '<div class="empty-state"><div class="empty-title">Dodaj kroki</div></div>'; return; }
-
-      const minW = state.actors.length * 160;
-      const headerCols = state.actors.map(a => `
-    <div class="tl-actor-col" style="color:${a.color};border-bottom-color:${a.color}">
-      <div style="width:8px;height:8px;border-radius:50%;background:${a.color};display:inline-block;margin-right:6px"></div>${a.name}
-    </div>`).join('');
-      const rows = state.steps.map((step, i) => {
-        const stepActor = step.actor;
-        return `<div class="tl-row">
-      ${state.actors.map(a => {
-          if (a.id === stepActor) {
-            return `<div class="tl-cell">
-            <div class="tl-step-bubble" style="border-color:${a.color}44;border-left:3px solid ${a.color}">
-              <div class="tl-step-num">krok ${i + 1}</div>
-              ${step.action}
-            </div>
-          </div>`;
-          }
-          return `<div class="tl-cell"></div>`;
-        }).join('')}
-    </div>`;
-      }).join('');
-      el.innerHTML = `
-    <div style="display:inline-block;min-width:${minW}px;width:100%">
-      <div class="timeline-header" style="min-width:${minW}px">${headerCols}</div>
-      <div style="min-width:${minW}px">${rows}</div>
-    </div>`;
-    }
-
-    function renderExport() {
-      const el = document.getElementById('export-content');
-      if (!el) return;
-      const name = (document.getElementById('proc-name') || {}).value || 'Proces';
-      const goal = (document.getElementById('proc-goal') || {}).value || '';
-      const trigger = (document.getElementById('proc-trigger') || {}).value || '';
-
-      let md = `# Happy Path: ${name}\n\n`;
-      md += `**Cel procesu:** ${goal}\n\n`;
-      md += `**Warunki wejścia:** ${trigger}\n\n`;
-      md += `---\n\n`;
-      md += `## Sekwencja kroków\n\n`;
-
-      state.steps.forEach((step, i) => {
-        const actor = getActor(step.actor);
-        md += `### Krok ${i + 1}: ${step.action}\n\n`;
-        md += `**Aktor:** ${actor ? actor.name : '—'}\n\n`;
-        if (step.desc) md += `**Opis:** ${step.desc}\n\n`;
-        if (step.results && step.results.length) {
-          md += `**Rezultaty:**\n`;
-          step.results.forEach(rid => {
-            const r = getResult(rid);
-            if (r) md += `  - [${RESULT_TYPE_LABELS[r.type]}] ${r.name}: ${r.desc}\n`;
-          });
-        }
-        md += `\n`;
-      });
-
-      md += `---\n\n## Oczekiwane rezultaty\n\n`;
-      state.results.forEach(r => {
-        md += `- **[${RESULT_TYPE_LABELS[r.type]}] ${r.name}** — ${r.desc}\n`;
-      });
-
-      if (state.alternativeFlows && state.alternativeFlows.length) {
-        md += `\n---\n\n## Alternate Flows\n\n`;
-        state.alternativeFlows.forEach(af => {
-          const steps = (af.relatedSteps || []).map(sid => {
-            const s = state.steps.find(x => x.id === sid);
-            const actor = getActor(s.actor);
-            const idx = state.steps.indexOf(s);
-            return s.action ? `*(${actor.name})* ${s.action}` : `krok ${idx + 1}`;
-          }).join(', ');
-          md += `### ${af.title} \n\n`;
-//          md += `**Severity:** ${af.severity.toUpperCase()}${af.requiresManualReview ? ' · MANUAL REVIEW' : ''}\n\n`;
-          md += `**Trigger:** ${af.trigger}\n\n`;
-          md += `**Outcome:** ${af.outcome}\n\n`;
-          if (steps) md += `**Powiązane kroki:** ${steps}\n`;
-          md += `\n`;
-        });
-      }
-
-      el.textContent = md;
-    }
-
-    function setText(id, val) {
-      const el = document.getElementById(id);
-      if (el) el.textContent = val;
-    }
-
-    function renderStats() {
-      setText('stat-steps', state.steps.length);
-      setText('stat-actors', state.actors.length);
-      setText('stat-results', state.results.length);
-      const withResults = state.steps.filter(s => s.results && s.results.length > 0).length;
-      const pct = state.steps.length ? Math.round(withResults / state.steps.length * 100) : 0;
-      setText('stat-complete', pct + '%');
-      setText('stat-af', (state.alternativeFlows || []).length);
-    }
-
-    // ——— DRAG & DROP ———
-
-    function onDragStart(e, id) {
-      state.dragStepId = id;
-      e.currentTarget.classList.add('dragging');
-      e.dataTransfer.effectAllowed = 'move';
-    }
-
-    function onDragOver(e, id) {
-      e.preventDefault();
-      if (state.dragStepId === id) return;
-      e.currentTarget.classList.add('drag-over');
-    }
-
-    function onDragLeave(e) {
-      e.currentTarget.classList.remove('drag-over');
-    }
-
-    function onDrop(e, id) {
-      e.preventDefault();
-      e.currentTarget.classList.remove('drag-over');
-      if (state.dragStepId === id) return;
-      const from = state.steps.findIndex(s => s.id === state.dragStepId);
-      const to = state.steps.findIndex(s => s.id === id);
-      if (from === -1 || to === -1) return;
-      const [removed] = state.steps.splice(from, 1);
-      state.steps.splice(to, 0, removed);
-      state.dragStepId = null;
-      render(); autoSave();
-    }
-
-    function onDragEnd(e) {
-      e.currentTarget.classList.remove('dragging', 'drag-over');
-      state.dragStepId = null;
-    }
-
-    // ——— ACTIONS ———
-
-    function addStep() {
-      const actorId = state.actors.length ? state.actors[0].id : null;
-      state.steps.push({
-        id: uid(),
-        actor: actorId,
-        action: '',
-        desc: '',
-        results: [],
-        status: 'todo'
-      });
-      render();
-      autoSave();
-      setTimeout(() => {
-        const inputs = document.querySelectorAll('.step-action-input');
-        if (inputs.length) inputs[inputs.length - 1].focus();
-      }, 50);
-    }
-
-    function removeStep(id) {
-      state.steps = state.steps.filter(s => s.id !== id);
-      render(); autoSave();
-    }
-
-    function duplicateStep(id) {
-      const step = state.steps.find(s => s.id === id);
-      if (!step) return;
-      const idx = state.steps.indexOf(step);
-      const copy = { ...step, id: uid(), results: [...(step.results || [])] };
-      state.steps.splice(idx + 1, 0, copy);
-      render(); autoSave();
-    }
-
-    function moveStep(id, dir) {
-      const idx = state.steps.findIndex(s => s.id === id);
-      const newIdx = idx + dir;
-      if (newIdx < 0 || newIdx >= state.steps.length) return;
-      [state.steps[idx], state.steps[newIdx]] = [state.steps[newIdx], state.steps[idx]];
-      render(); autoSave();
-    }
-
-    function updateStep(id, field, val) {
-      const step = state.steps.find(s => s.id === id);
-      if (step) step[field] = val;
-      renderStats();
-      autoSave();
-      if (state.currentView === 'timeline') renderTimeline();
-      if (state.currentView === 'export') renderExport();
-    }
-
-    function unlinkResult(stepId, resultId) {
-      const step = state.steps.find(s => s.id === stepId);
-      if (step) step.results = step.results.filter(r => r !== resultId);
-      render(); autoSave();
-    }
-
-    function setStepActor(stepId, actorId) {
-      const step = state.steps.find(s => s.id === stepId);
-      if (step) step.actor = actorId;
-      closeAllDropdowns();
-      render(); autoSave();
-    }
-
-    function toggleActorDropdown(e, stepId) {
-      e.stopPropagation();
-      closeAllDropdowns();
-      const dd = document.getElementById('dd-' + stepId);
-      if (dd) dd.classList.remove('hidden');
-    }
-
-    function closeAllDropdowns() {
-      document.querySelectorAll('.actor-dropdown').forEach(d => d.classList.add('hidden'));
-    }
-    document.addEventListener('click', closeAllDropdowns);
-
-    function addActor() {
-      const input = document.getElementById('new-actor-input');
-      const name = input.value.trim();
-      if (!name) return;
-      const color = COLORS[state.actors.length % COLORS.length];
-      state.actors.push({ id: uid(), name, color });
-      input.value = '';
-      render(); autoSave();
-    }
-
-    function removeActor(id) {
-      state.actors = state.actors.filter(a => a.id !== id);
-      state.steps.forEach(s => { if (s.actor === id) s.actor = state.actors[0]?.id || null; });
-      render(); autoSave();
-    }
-
-    function addResult() {
-      state.editingResultId = null;
-      document.getElementById('result-modal-title').textContent = 'Nowy rezultat';
-      document.getElementById('result-modal-save-btn').textContent = 'Dodaj rezultat';
-      document.getElementById('result-name-input').value = '';
-      document.getElementById('result-desc-input').value = '';
-      document.getElementById('result-type-input').value = 'output';
-      openModal('result-modal');
-      setTimeout(() => document.getElementById('result-name-input').focus(), 100);
-    }
-
-    function editResult(id) {
-      const r = state.results.find(x => x.id === id);
-      if (!r) return;
-      state.editingResultId = id;
-      document.getElementById('result-modal-title').textContent = 'Edytuj rezultat';
-      document.getElementById('result-modal-save-btn').textContent = 'Zapisz zmiany';
-      document.getElementById('result-name-input').value = r.name;
-      document.getElementById('result-desc-input').value = r.desc;
-      document.getElementById('result-type-input').value = r.type;
-      openModal('result-modal');
-      setTimeout(() => document.getElementById('result-name-input').focus(), 100);
-    }
-
-    function saveResult() {
-      const name = document.getElementById('result-name-input').value.trim();
-      if (!name) return;
-      const desc = document.getElementById('result-desc-input').value.trim();
-      const type = document.getElementById('result-type-input').value;
-
-      if (state.editingResultId) {
-        const r = state.results.find(x => x.id === state.editingResultId);
-        if (r) { r.name = name; r.desc = desc; r.type = type; }
-        state.editingResultId = null;
-        closeModal('result-modal');
-        render(); autoSave();
-        showToast('Rezultat zaktualizowany', 'var(--accent)');
-      } else {
-        state.results.push({ id: uid(), name, desc, type });
-        closeModal('result-modal');
-        render(); autoSave();
-      }
-    }
-
-    function removeResult(id) {
-      state.results = state.results.filter(r => r.id !== id);
-      state.steps.forEach(s => { s.results = (s.results || []).filter(r => r !== id); });
-      render(); autoSave();
-    }
-
-    function duplicateResult(id) {
-      const result = state.results.find(r => r.id === id);
-      if (!result) return;
-      const idx = state.results.indexOf(result);
-      const copy = { ...result, id: uid(), name: result.name + ' (Kopia)' };
-      state.results.splice(idx + 1, 0, copy);
-      renderResults(); renderStats(); autoSave();
-      showToast('Rezultat zduplikowany', 'var(--accent)');
-    }
-
-    function onResultDragStart(e, id) {
-      state.dragResultId = id;
-      e.dataTransfer.effectAllowed = 'move';
-    }
-    function onResultDragOver(e, id) {
-      e.preventDefault();
-      if (state.dragResultId === id) return;
-      e.currentTarget.classList.add('result-drag-over');
-    }
-    function onResultDragLeave(e) {
-      e.currentTarget.classList.remove('result-drag-over');
-    }
-    function onResultDragEnd(e) {
-      e.currentTarget.classList.remove('result-drag-over');
-      state.dragResultId = null;
-    }
-    function onResultDrop(e, id) {
-      e.preventDefault();
-      e.currentTarget.classList.remove('result-drag-over');
-      if (!state.dragResultId || state.dragResultId === id) return;
-      const from = state.results.findIndex(r => r.id === state.dragResultId);
-      const to = state.results.findIndex(r => r.id === id);
-      if (from === -1 || to === -1) return;
-      const [removed] = state.results.splice(from, 1);
-      state.results.splice(to, 0, removed);
-      state.dragResultId = null;
-      renderResults(); autoSave();
-    }
-
-    function openLinkModal(stepId) {
-      state.linkingStepId = stepId;
-      const step = state.steps.find(s => s.id === stepId);
-      const linked = step ? (step.results || []) : [];
-      const el = document.getElementById('link-results-list');
-      if (!state.results.length) {
-        el.innerHTML = '<div style="font-size:12px;color:var(--text3);text-align:center;padding:16px">Brak rezultatów. Dodaj rezultaty w panelu bocznym.</div>';
-      } else {
-        el.innerHTML = state.results.map(r => {
-          const col = RESULT_TYPE_COLORS[r.type];
-          const isLinked = linked.includes(r.id);
-          return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface2);border:1px solid ${isLinked ? col : ' var(--border)'};border-radius:var(--r);gap:10px">
-        <div>
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
-            <span style="font-size:9px;background:${col}22;color:${col};padding:2px 6px;border-radius:4px;font-family:var(--mono)">${RESULT_TYPE_LABELS[r.type]}</span>
-            <span style="font-size:12px;font-weight:500">${r.name}</span>
-          </div>
-          <div style="font-size:11px;color:var(--text3)">${r.desc}</div>
-        </div>
-        <button class="btn btn-sm ${isLinked ? 'btn-ghost' : 'btn-success'}" onclick="${isLinked ? `unlinkResultFromModal('${r.id}')` : `linkResult('${r.id}')`}">
-          ${isLinked ? 'Odepnij' : 'Powiąż'}
-        </button>
-      </div>`;
-        }).join('');
-      }
-      openModal('link-modal');
-    }
-
-    function linkResult(resultId) {
-      const step = state.steps.find(s => s.id === state.linkingStepId);
-      if (step && !step.results.includes(resultId)) {
-        step.results.push(resultId);
-        openLinkModal(state.linkingStepId);
-        renderSteps(); renderStats(); autoSave();
-      }
-    }
-
-    function unlinkResultFromModal(resultId) {
-      const step = state.steps.find(s => s.id === state.linkingStepId);
-      if (step) step.results = step.results.filter(r => r !== resultId);
-      openLinkModal(state.linkingStepId);
-      renderSteps(); renderStats(); autoSave();
-    }
-
-    function saveActor() {
-      const name = document.getElementById('actor-name-input').value.trim();
-      if (!name) return;
-      state.actors.push({ id: uid(), name, color: state.pendingActorColor });
-      closeModal('actor-modal');
-      render(); autoSave();
-    }
-
-    // ——— VIEW ———
-
-    function setView(view) {
-      state.currentView = view;
-      document.querySelectorAll('.view-btn').forEach((b, i) => {
-        b.classList.toggle('active', ['steps', 'timeline', 'af', 'export'][i] === view);
-      });
-      const vSteps = document.getElementById('view-steps');
-      const vTimeline = document.getElementById('view-timeline');
-      const vAf = document.getElementById('view-af');
-      const vExport = document.getElementById('view-export');
-      if (vSteps) vSteps.classList.toggle('hidden', view !== 'steps');
-      if (vTimeline) vTimeline.classList.toggle('hidden', view !== 'timeline');
-      if (vAf) vAf.classList.toggle('hidden', view !== 'af');
-      if (vExport) vExport.classList.toggle('hidden', view !== 'export');
-      if (view === 'timeline') renderTimeline();
-      if (view === 'af') renderAf();
-      if (view === 'export') renderExport();
-    }
-
-    // ——— MODALS ———
-
-    function openModal(id) {
-      const el = document.getElementById(id);
-      if (el) el.classList.add('open');
-    }
-    function closeModal(id) {
-      const el = document.getElementById(id);
-      if (el) el.classList.remove('open');
-    }
-    document.querySelectorAll('.modal-overlay').forEach(m => {
-      m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
-    });
-
-    // ——— STORAGE & PROJECTS ———
-
-    const LS_KEY = 'hpb_projects';
-    const LS_CURRENT = 'hpb_current_project';
-    let saveTimeout = null;
-    let currentProjectId = null;
-
-    function getAllProjects() {
-      try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch { return {}; }
-    }
-
-    function saveAllProjects(projects) {
-      localStorage.setItem(LS_KEY, JSON.stringify(projects));
-    }
-
-    function getProjectData() {
-      return {
-        meta: {
-          name: document.getElementById('proc-name').value,
-          goal: document.getElementById('proc-goal').value,
-          trigger: document.getElementById('proc-trigger').value,
-        },
-        actors: state.actors,
-        results: state.results,
-        steps: state.steps,
-        alternativeFlows: state.alternativeFlows || [],
-      };
-    }
-
-    function loadProjectData(data) {
-      if (!data) return;
-      if (data.meta) {
-        document.getElementById('proc-name').value = data.meta.name || '';
-        document.getElementById('proc-goal').value = data.meta.goal || '';
-        document.getElementById('proc-trigger').value = data.meta.trigger || '';
-      }
-      state.actors = data.actors || [];
-      state.results = data.results || [];
-      state.steps = data.steps || [];
-      state.alternativeFlows = data.alternativeFlows || [];
-    }
-
-    function autoSave() {
-      setSaveState('unsaved');
-      clearTimeout(saveTimeout);
-      saveTimeout = setTimeout(() => {
-        saveCurrentProject(true);
-      }, 1200);
-    }
-
-    function saveCurrentProject(silent = false) {
-      const projects = getAllProjects();
-      if (!currentProjectId) {
-        currentProjectId = uid();
-      }
-      const procName = document.getElementById('proc-name').value || 'Bez nazwy';
-      projects[currentProjectId] = {
-        id: currentProjectId,
-        name: procName,
-        updatedAt: new Date().toISOString(),
-        data: getProjectData(),
-      };
-      saveAllProjects(projects);
-      localStorage.setItem(LS_CURRENT, currentProjectId);
-      setSaveState('saved');
-      if (!silent) {
-        showToast('Projekt zapisany', 'var(--green)');
-        renderProjectsMenu();
-      } else {
-        renderProjectsMenu();
-      }
-    }
-
-    function loadProject(id) {
-      const projects = getAllProjects();
-      const project = projects[id];
-      if (!project) return;
-      currentProjectId = id;
-      localStorage.setItem(LS_CURRENT, id);
-      loadProjectData(project.data);
-      afStepFilter = 'all';
-      afFilter = 'all';
-      render();
-      setSaveState('saved');
-      closeProjectsMenu();
-      showToast(`Załadowano: ${project.name}`, 'var(--accent)');
-    }
-
-    function newProject() {
-      if (state.steps.length > 0 || state.results.length > 0) {
-        saveCurrentProject(true);
-      }
-      currentProjectId = uid();
-      state.actors = [{ id: uid(), name: 'Klient', color: '#f25e8a' }];
-      state.results = [];
-      state.steps = [];
-      document.getElementById('proc-name').value = 'Nowy proces';
-      document.getElementById('proc-goal').value = '';
-      document.getElementById('proc-trigger').value = '';
-      render();
-      setSaveState('unsaved');
-      closeProjectsMenu();
-      showToast('Nowy projekt utworzony', 'var(--accent)');
-      setTimeout(() => document.getElementById('proc-name').select(), 100);
-    }
-
-    function deleteCurrentProject() {
-      if (!currentProjectId) return;
-      const projects = getAllProjects();
-      const name = projects[currentProjectId]?.name || 'projekt';
-      delete projects[currentProjectId];
-      saveAllProjects(projects);
-      const ids = Object.keys(projects);
-      if (ids.length > 0) {
-        loadProject(ids[ids.length - 1]);
-      } else {
-        newProject();
-      }
-      showToast(`Usunięto: ${name}`, 'var(--danger)');
-    }
-
-    function initStorage() {
-      const projects = getAllProjects();
-      const savedId = localStorage.getItem(LS_CURRENT);
-      if (savedId && projects[savedId]) {
-        currentProjectId = savedId;
-        loadProjectData(projects[savedId].data);
-        setSaveState('saved');
-      } else {
-        const ids = Object.keys(projects);
-        if (ids.length > 0) {
-          const lastId = ids[ids.length - 1];
-          currentProjectId = lastId;
-          loadProjectData(projects[lastId].data);
-          setSaveState('saved');
-        } else {
-          currentProjectId = uid();
-          setSaveState('unsaved');
-        }
-      }
-    }
-
-    function setSaveState(s) {
-      const el = document.getElementById('save-indicator');
-      const label = document.getElementById('save-label');
-      if (!el || !label) return;
-      el.className = 'save-indicator ' + s;
-      if (s === 'saved') label.textContent = 'zapisano';
-      else if (s === 'unsaved') label.textContent = 'niezapisane';
-      else label.textContent = '–';
-    }
-
-    // hook meta inputs
-    function hookMetaInputs() {
-      ['proc-name', 'proc-goal', 'proc-trigger'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener('input', autoSave);
-      });
-    }
-
-    // ——— PROJECTS MENU ———
-
-    function toggleProjectsMenu(e) {
-      e.stopPropagation();
-      const menu = document.getElementById('projects-menu');
-      if (menu.classList.contains('hidden')) {
-        renderProjectsMenu();
-        menu.classList.remove('hidden');
-      } else {
-        menu.classList.add('hidden');
-      }
-    }
-
-    function closeProjectsMenu() {
-      document.getElementById('projects-menu').classList.add('hidden');
-    }
-
-    document.addEventListener('click', e => {
-      if (!e.target.closest('#projects-btn') && !e.target.closest('#projects-menu')) {
-        closeProjectsMenu();
-      }
-    });
-
-    function renderProjectsMenu() {
-      const projects = getAllProjects();
-      const ids = Object.keys(projects).sort((a, b) =>
-        (projects[b].updatedAt || '').localeCompare(projects[a].updatedAt || '')
-      );
-      const el = document.getElementById('pm-list');
-      if (!ids.length) {
-        el.innerHTML = '<div style="padding:16px;font-size:12px;color:var(--text3);text-align:center">Brak zapisanych projektów</div>';
-        return;
-      }
-      el.innerHTML = ids.map(id => {
-        const p = projects[id];
-        const isActive = id === currentProjectId;
-        const date = p.updatedAt ? new Date(p.updatedAt).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '—';
-        const steps = p.data?.steps?.length || 0;
-        return `<div class="pm-item" onclick="loadProject('${id}')">
-      <div>
-        <div class="pm-item-name" style="${isActive ? 'color:var(--accent)' : ''}">${p.name || 'Bez nazwy'}</div>
-        <div class="pm-item-meta">${date} · ${steps} kroków</div>
-      </div>
-      ${isActive ? '<span class="pm-item-active">aktywny</span>' : ''}
-    </div>`;
-      }).join('');
-    }
-
-    // ——— JSON IMPORT / EXPORT ———
-
-    function exportJSON() {
-      const data = {
-        version: '1.1',
-        exportedAt: new Date().toISOString(),
-        meta: {
-          name: document.getElementById('proc-name').value,
-          goal: document.getElementById('proc-goal').value,
-          trigger: document.getElementById('proc-trigger').value,
-        },
-        actors: state.actors,
-        results: state.results,
-        steps: state.steps,
-        alternativeFlows: state.alternativeFlows || [],
-      };
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      const safeName = (data.meta.name || 'happy-path').replace(/[^a-z0-9]/gi, '_').toLowerCase();
-      a.href = url;
-      a.download = `${safeName}_${new Date().toISOString().slice(0, 10)}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('Plik JSON pobrany', 'var(--green)');
-    }
-
-    function importJSON() {
-      document.getElementById('json-file-input').value = '';
-      document.getElementById('json-file-input').click();
-    }
-
-    function handleJSONImport(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = e => {
-        try {
-          const data = JSON.parse(e.target.result);
-          if (!data.actors || !data.steps) throw new Error('Nieprawidłowy format pliku');
-          // alternativeFlows is optional — normalise to array
-          if (!Array.isArray(data.alternativeFlows)) data.alternativeFlows = [];
-          if (state.steps.length > 0) saveCurrentProject(true);
-          currentProjectId = uid();
-          loadProjectData(data);
-          render();
-          saveCurrentProject(true);
-          const afCount = data.alternativeFlows.length;
-          const afNote = afCount ? ` · ${afCount} alt. flows` : '';
-          showToast(`Zaimportowano: ${data.meta?.name || file.name}${afNote}`, 'var(--accent)');
-        } catch (err) {
-          showToast('Błąd importu: ' + err.message, 'var(--danger)');
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    // ——— TOAST ———
-
-    let toastTimeout = null;
-    function showToast(msg, color = 'var(--green)') {
-      const toast = document.getElementById('toast');
-      const toastMsg = document.getElementById('toast-msg');
-      const toastDot = document.getElementById('toast-dot');
-      if (!toast || !toastMsg || !toastDot) return;
-      toastMsg.textContent = msg;
-      toastDot.style.background = color;
-      toast.classList.add('show');
-      clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
-    }
-
-
-
-    // ——— UTILS ———
-
-    function escHtml(str) {
-      return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-    function autoResize(el) {
-      el.style.height = 'auto';
-      el.style.height = el.scrollHeight + 'px';
-    }
-    function copyExport() {
-      const text = document.getElementById('export-content').textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        const btn = event.target;
-        btn.textContent = 'Skopiowano!';
-        setTimeout(() => btn.textContent = 'Kopiuj', 1500);
-      });
-    }
-
-    // Init color swatches
-    function initColorSwatches() {
-      const el = document.getElementById('actor-color-row');
-      el.innerHTML = COLORS.map(c => `
-    <div class="color-swatch ${c === state.pendingActorColor ? 'selected' : ''}"
-      style="background:${c}"
-      onclick="selectColor('${c}',this)"></div>
-  `).join('');
-    }
-    function selectColor(c, el) {
-      state.pendingActorColor = c;
-      document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
-      el.classList.add('selected');
-    }
-
-
-    // ——— ACTOR DRAG & DROP ———
-
-    function onActorDragStart(e, id) {
-      state.dragActorId = id;
-      e.dataTransfer.effectAllowed = 'move';
-    }
-    function onActorDragOver(e, id) {
-      e.preventDefault();
-      if (state.dragActorId === id) return;
-      e.currentTarget.classList.add('actor-drag-over');
-    }
-    function onActorDragLeave(e) { e.currentTarget.classList.remove('actor-drag-over'); }
-    function onActorDragEnd(e) { e.currentTarget.classList.remove('actor-drag-over'); state.dragActorId = null; }
-    function onActorDrop(e, id) {
-      e.preventDefault();
-      e.currentTarget.classList.remove('actor-drag-over');
-      if (!state.dragActorId || state.dragActorId === id) return;
-      const from = state.actors.findIndex(a => a.id === state.dragActorId);
-      const to = state.actors.findIndex(a => a.id === id);
-      if (from === -1 || to === -1) return;
-      const [removed] = state.actors.splice(from, 1);
-      state.actors.splice(to, 0, removed);
-      state.dragActorId = null;
-      renderActors(); autoSave();
-    }
-    function renameActor(id, name) {
-      const a = state.actors.find(x => x.id === id);
-      if (a && name.trim()) { a.name = name.trim(); renderSteps(); autoSave(); }
-    }
-
-    // ——— ALTERNATE FLOWS ———
-
-    const SEV_COLORS = { critical: 'var(--danger)', high: 'var(--accent3)', medium: 'var(--accent)', low: 'var(--green)' };
-    const SEV_LABELS = { critical: 'CRITICAL', high: 'HIGH', medium: 'MEDIUM', low: 'LOW' };
-
-    let afFilter = 'all';
-    let afStepFilter = 'all';
-
-    function setAfSeverity(f, btn) {
-      afFilter = f;
-      document.querySelectorAll('#af-filters .af-filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      renderAf();
-    }
-
-    function setAfStep(sid, btn) {
-      afStepFilter = afStepFilter === sid ? 'all' : sid;
-      document.querySelectorAll('#af-step-filters .af-step-filter-btn').forEach(b => b.classList.remove('active'));
-      if (afStepFilter !== 'all') btn.classList.add('active');
-      renderAf();
-    }
-
-    function renderAfStepFilters() {
-      const el = document.getElementById('af-step-filters');
-      if (!el) return;
-      if (!state.steps.length) { el.innerHTML = '<span style="font-size:11px;color:var(--text3)">brak kroków</span>'; return; }
-      el.innerHTML = state.steps.map((s, i) => {
-        const actor = state.actors.find(a => a.id === s.actor);
-        const col = actor ? actor.color : '#888';
-        const isActive = afStepFilter === s.id;
-        const afCount = (state.alternativeFlows || []).filter(af => (af.relatedSteps || []).includes(s.id)).length;
-        if (!afCount) return '';
-        return `<button class="af-step-filter-btn af-filter-btn${isActive ? ' active' : ''}"
-      onclick="setAfStep('${s.id}', this)"
-      style="${isActive ? `background:${col}22;color:${col};border-color:${col}66` : `border-color:${col}44;color:var(--text3)`}"
-      title="${s.action}">
-      <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${col};margin-right:4px;vertical-align:middle"></span>k.${i + 1} <span style="opacity:.6">${afCount}</span>
-    </button>`;
-      }).join('');
-      if (!el.innerHTML.trim()) el.innerHTML = '<span style="font-size:11px;color:var(--text3)">żaden krok nie ma AF</span>';
-    }
-
-    function renderAf() {
-      renderAfStepFilters();
-      const afs = state.alternativeFlows || [];
-      const el = document.getElementById('af-list');
-      if (!el) return;
-      const filtered = afs.filter(af => {
-        const sevOk = afFilter === 'all' ? true : afFilter === 'manual' ? af.requiresManualReview : af.severity === afFilter;
-        const stepOk = afStepFilter === 'all' ? true : (af.relatedSteps || []).includes(afStepFilter);
-        return sevOk && stepOk;
-      });
-      if (!filtered.length) {
-        el.innerHTML = `<div class="empty-state"><div class="empty-icon">↝</div><div class="empty-title">${afs.length ? 'Brak wyników dla tego filtra' : 'Brak Alternate Flows'}</div><div class="empty-sub">Dodaj alternate flows lub zmień filtr.</div></div>`;
-        return;
-      }
-      el.innerHTML = filtered.map(af => {
-        const sevCol = SEV_COLORS[af.severity] || 'var(--text3)';
-        const stepChips = (af.relatedSteps || []).map(sid => {
-          const s = state.steps.find(x => x.id === sid);
-          const idx = state.steps.indexOf(s);
-          return s
-            ? `<span class="af-step-chip" onclick="setView('steps')" title="krok ${idx + 1}: ${s.action}">k.${idx + 1} ${s.action.slice(0, 20)}${s.action.length > 20 ? '…' : ''}</span>`
-            : `<span class="af-step-chip unlinked">${sid} (nieznany)</span>`;
-        }).join('');
-        return `<div class="af-card ${af.requiresManualReview ? 'manual' : ''}">
-      <div class="af-card-top">
-        <div class="af-title-row">
-          <span class="af-id">${af.id}</span>
-          <span class="af-title">${af.title}</span>
-          <span class="sev-badge sev-${af.severity}">${SEV_LABELS[af.severity] || af.severity}</span>
-          ${af.requiresManualReview ? '<span class="manual-badge">MANUAL</span>' : ''}
-        </div>
-        <div style="display:flex;gap:4px;flex-shrink:0">
-          <button class="btn-icon" onclick="editAf('${af.id}')" data-tip="Edytuj" style="width:22px;height:22px;font-size:11px">✎</button>
-          <button class="btn-icon danger" onclick="removeAf('${af.id}')" data-tip="Usuń" style="width:22px;height:22px;font-size:12px">×</button>
-        </div>
-      </div>
-      <div class="af-trigger"><strong>Trigger:</strong> ${af.trigger}</div>
-      <div class="af-body">${af.outcome}</div>
-      ${(af.relatedSteps || []).length ? `<div class="af-steps-row"><span class="af-steps-label">Powiązane kroki:</span>${stepChips}</div>` : ''}
-    </div>`;
-      }).join('');
-    }
-
-    function openAfModal(editId) {
-      state.editingAfId = editId || null;
-      const af = editId ? (state.alternativeFlows || []).find(x => x.id === editId) : null;
-      document.getElementById('af-modal-title').textContent = af ? 'Edytuj Alternate Flow' : 'Nowy Alternate Flow';
-      document.getElementById('af-modal-save-btn').textContent = af ? 'Zapisz zmiany' : 'Dodaj';
-      document.getElementById('af-title-input').value = af ? af.title : '';
-      document.getElementById('af-trigger-input').value = af ? af.trigger : '';
-      document.getElementById('af-outcome-input').value = af ? af.outcome : '';
-      document.getElementById('af-severity-input').value = af ? af.severity : 'medium';
-      document.getElementById('af-manual-input').checked = af ? !!af.requiresManualReview : false;
-      // steps selector
-      const sel = document.getElementById('af-steps-selector');
-      if (!sel) return;
-      const linked = af ? (af.relatedSteps || []) : [];
-      sel.innerHTML = state.steps.map((s, i) => {
-        const on = linked.includes(s.id);
-        return `<span class="af-step-chip ${on ? '' : 'unlinked'}" style="${on ? 'border-color:var(--accent);color:var(--accent)' : ''}"
-      onclick="toggleAfStep('${s.id}',this)">k.${i + 1} ${s.action.slice(0, 22)}${s.action.length > 22 ? '…' : ''}</span>`;
-      }).join('');
-      openModal('af-modal');
-    }
-
-    function toggleAfStep(sid, el) {
-      el.classList.toggle('unlinked');
-      if (el.classList.contains('unlinked')) {
-        el.style.borderColor = ''; el.style.color = '';
-      } else {
-        el.style.borderColor = 'var(--accent)'; el.style.color = 'var(--accent)';
-      }
-    }
-
-    function saveAf() {
-      const title = document.getElementById('af-title-input').value.trim();
-      if (!title) return;
-      const relatedSteps = [...document.querySelectorAll('#af-steps-selector .af-step-chip:not(.unlinked)')].map(el => {
-        const txt = el.getAttribute('onclick').match(/'([^']+)'/)?.[1];
-        return txt;
-      }).filter(Boolean);
-      const data = {
-        id: state.editingAfId || ('af' + uid()),
-        title,
-        trigger: document.getElementById('af-trigger-input').value.trim(),
-        outcome: document.getElementById('af-outcome-input').value.trim(),
-        severity: document.getElementById('af-severity-input').value,
-        requiresManualReview: document.getElementById('af-manual-input').checked,
-        relatedSteps,
-      };
-      if (!state.alternativeFlows) state.alternativeFlows = [];
-      if (state.editingAfId) {
-        const idx = state.alternativeFlows.findIndex(x => x.id === state.editingAfId);
-        if (idx !== -1) state.alternativeFlows[idx] = data;
-        showToast('Alternate Flow zaktualizowany', 'var(--accent)');
-      } else {
-        state.alternativeFlows.push(data);
-        showToast('Alternate Flow dodany', 'var(--accent3)');
-      }
-      closeModal('af-modal');
-      renderAf(); renderStats(); autoSave();
-    }
-
-    function editAf(id) { openAfModal(id); }
-
-    function removeAf(id) {
-      state.alternativeFlows = (state.alternativeFlows || []).filter(x => x.id !== id);
-      renderAf(); renderStats(); autoSave();
-    }
-
-    // Badge on step cards showing AF count — called from renderSteps chip area
-    function getStepAfBadge(stepId) {
-      const count = (state.alternativeFlows || []).filter(af => (af.relatedSteps || []).includes(stepId)).length;
-      if (!count) return '';
-      return `<span class="step-af-badge" onclick="goToStepAfs('${stepId}')" title="Ten krok ma ${count} alternate flow(s)">${count} alt</span>`;
-    }
-    function goToStepAfs(stepId) {
-      afFilter = 'all';
-      afStepFilter = stepId;
-      setView('af');
-      document.querySelectorAll('#af-filters .af-filter-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
-    }
-
-    // ——— BOOT ———
-    initColorSwatches();
-    initStorage();
-    hookMetaInputs();
-    render();
-  </script>
+  </div>
 
   <!-- AF MODAL -->
   <div class="modal-overlay" id="af-modal">
@@ -2995,8 +1662,7 @@
           </select>
         </div>
         <div class="modal-field" style="margin-bottom:0;display:flex;align-items:flex-end;gap:8px">
-          <label
-            style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;color:var(--text3);font-family:var(--mono)">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;color:var(--text3);font-family:var(--mono)">
             <input type="checkbox" id="af-manual-input" style="width:14px;height:14px;accent-color:var(--accent3)">
             Wymaga manual review
           </label>
@@ -3012,6 +1678,7 @@
       </div>
     </div>
   </div>
+
   <!-- hidden file input for JSON import -->
   <input type="file" id="json-file-input" accept=".json" style="display:none" onchange="handleJSONImport(event)">
 
@@ -3021,6 +1688,1465 @@
     <span id="toast-msg"></span>
   </div>
 
-</body>
+  <script>
+    // ═══════════════════════════════════════════════════════
+    //  CONSTANTS
+    // ═══════════════════════════════════════════════════════
+    const COLORS = ['#7c6ff7', '#5ad4b0', '#f7a25e', '#f25e8a', '#4db8f5', '#c77dff', '#ffd166', '#ff6b6b'];
+    const RESULT_TYPE_COLORS = { output: '#5ad4b0', state: '#7c6ff7', action: '#f7a25e', notification: '#4db8f5' };
+    const RESULT_TYPE_LABELS = { output: 'OUTPUT', state: 'STAN', action: 'AKCJA', notification: 'NOTIF' };
 
+    // ═══════════════════════════════════════════════════════
+    //  STATE
+    // ═══════════════════════════════════════════════════════
+    let state = {
+      actors: [
+        { id: 'a1', name: 'Klient',     color: '#f25e8a' },
+        { id: 'a2', name: 'Sprzedawca', color: '#7c6ff7' },
+        { id: 'a3', name: 'System',     color: '#5ad4b0' },
+      ],
+      // NEW: processes array
+      // Each process: { id, name, color, stepIds: [] }
+      processes: [
+        { id: 'p1', name: 'Zamawianie',  color: '#7c6ff7', stepIds: ['s1', 's2', 's3'] },
+        { id: 'p2', name: 'Fulfillment', color: '#f7a25e', stepIds: ['s4', 's5'] },
+      ],
+      results: [
+        { id: 'r1', name: 'Zamówienie złożone',   desc: 'Klient potwierdził koszyk i wybrał metodę płatności', type: 'state' },
+        { id: 'r2', name: 'Potwierdzenie email',  desc: 'System wysyła email z podsumowaniem zamówienia',       type: 'notification' },
+        { id: 'r3', name: 'Płatność zaksięgowana',desc: 'Transakcja zakończona sukcesem po stronie bramki',     type: 'output' },
+        { id: 'r4', name: 'Zamówienie spakowane', desc: 'Fizyczny pakiet gotowy do wysyłki z etykietą',         type: 'output' },
+        { id: 'r5', name: 'Przesyłka nadana',     desc: 'Numer trackingowy wygenerowany i przekazany klientowi',type: 'notification' },
+      ],
+      steps: [
+        { id: 's1', actor: 'a1', action: 'Wybiera produkty i składa zamówienie',    desc: 'Klient przegląda katalog, dodaje do koszyka i klika "Zamów"',                                  results: ['r1'], status: 'done' },
+        { id: 's2', actor: 'a3', action: 'Generuje potwierdzenie zamówienia',        desc: 'System waliduje dostępność produktów i wysyła email z numerem zamówienia',                    results: ['r2'], status: 'done' },
+        { id: 's3', actor: 'a1', action: 'Realizuje płatność online',               desc: 'Klient zostaje przekierowany do bramki płatniczej i finalizuje transakcję',                   results: ['r3'], status: 'done' },
+        { id: 's4', actor: 'a2', action: 'Kompletuje i pakuje zamówienie',           desc: 'Magazynier zbiera produkty z półek, pakuje i drukuje etykietę',                               results: ['r4'], status: 'in-progress' },
+        { id: 's5', actor: 'a2', action: 'Nadaje przesyłkę do kuriera',             desc: 'Przekazanie paczki kurierowi, skanowanie i wygenerowanie numeru trackingowego',               results: ['r5'], status: 'todo' },
+      ],
+      dragStepId:    null,
+      dragActorId:   null,
+      dragResultId:  null,
+      stepsViewMode: 'full',
+      afFilter:      'all',
+      editingAfId:   null,
+      alternativeFlows: [],
+      currentView:   'steps',
+      linkingStepId: null,
+      editingActorId:  null,
+      editingResultId: null,
+      editingProcessId: null,
+      pendingActorColor:   COLORS[0],
+      pendingProcessColor: COLORS[0],
+    };
+
+    // ═══════════════════════════════════════════════════════
+    //  HELPERS
+    // ═══════════════════════════════════════════════════════
+    function uid()        { return 'id' + Math.random().toString(36).slice(2, 8); }
+    function getActor(id) { return state.actors.find(a => a.id === id); }
+    function getResult(id){ return state.results.find(r => r.id === id); }
+
+    /** Returns the process that owns this step, or null */
+    function getProcessForStep(stepId) {
+      return state.processes.find(p => p.stepIds.includes(stepId)) || null;
+    }
+
+    /** hex → rgba with given alpha */
+    function hexAlpha(hex, alpha) {
+      const r = parseInt(hex.slice(1,3),16);
+      const g = parseInt(hex.slice(3,5),16);
+      const b = parseInt(hex.slice(5,7),16);
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  RENDER ORCHESTRATOR
+    // ═══════════════════════════════════════════════════════
+    function render() {
+      renderActors();
+      renderProcesses();
+      renderResults();
+      renderSteps();
+      renderStats();
+      if (state.currentView === 'af')       renderAf();
+      if (state.currentView === 'timeline') renderTimeline();
+      if (state.currentView === 'export')   renderExport();
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  RENDER — ACTORS
+    // ═══════════════════════════════════════════════════════
+    function renderActors() {
+      const el = document.getElementById('actors-list');
+      el.innerHTML = state.actors.map(a => `
+        <div class="actor-chip"
+          draggable="true"
+          data-aid="${a.id}"
+          ondragstart="onActorDragStart(event,'${a.id}')"
+          ondragover="onActorDragOver(event,'${a.id}')"
+          ondrop="onActorDrop(event,'${a.id}')"
+          ondragleave="onActorDragLeave(event)"
+          ondragend="onActorDragEnd(event)">
+          <span class="drag-handle" title="Przeciągnij by zmienić kolejność">⠿</span>
+          <div class="actor-dot" style="background:${a.color}"></div>
+          <input class="actor-name-input" value="${a.name}"
+            onchange="renameActor('${a.id}',this.value)"
+            onkeydown="if(event.key==='Enter')this.blur()"
+            title="Kliknij by edytować nazwę">
+          <button class="btn-icon danger" onclick="removeActor('${a.id}')" data-tip="Usuń aktora" style="width:22px;height:22px;font-size:12px">×</button>
+        </div>
+      `).join('');
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  RENDER — PROCESSES (panel)
+    // ═══════════════════════════════════════════════════════
+    function renderProcesses() {
+      const el = document.getElementById('processes-list');
+      if (!state.processes.length) {
+        el.innerHTML = '<div style="font-size:11px;color:var(--text3);text-align:center;padding:10px 0">Brak procesów. Dodaj grupę kroków.</div>';
+        return;
+      }
+      el.innerHTML = state.processes.map(p => {
+        const count = p.stepIds.filter(sid => state.steps.find(s => s.id === sid)).length;
+        return `
+          <div class="process-chip" style="border-left:3px solid ${p.color}">
+            <div class="process-swatch" style="background:${p.color}"></div>
+            <input class="process-name-input" value="${escHtml(p.name)}"
+              onchange="renameProcess('${p.id}',this.value)"
+              onkeydown="if(event.key==='Enter')this.blur()"
+              title="Kliknij by edytować nazwę">
+            <span class="process-step-count">${count}k</span>
+            <button class="btn-icon" onclick="editProcess('${p.id}')" data-tip="Edytuj proces" style="width:22px;height:22px;font-size:11px">✎</button>
+            <button class="btn-icon danger" onclick="removeProcess('${p.id}')" data-tip="Usuń proces" style="width:22px;height:22px;font-size:12px">×</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  RENDER — RESULTS (panel)
+    // ═══════════════════════════════════════════════════════
+    function renderResults() {
+      const el = document.getElementById('results-list');
+      if (!state.results.length) {
+        el.innerHTML = '<div style="font-size:11px;color:var(--text3);text-align:center;padding:12px">Brak rezultatów. Dodaj oczekiwane rezultaty procesu.</div>';
+        return;
+      }
+      el.innerHTML = state.results.map(r => {
+        const col = RESULT_TYPE_COLORS[r.type] || '#888';
+        const stepsThatUse = state.steps.filter(s => (s.results || []).includes(r.id));
+        const assigned = stepsThatUse.length > 0;
+        const assignedTip = stepsThatUse.map(s => `k.${state.steps.indexOf(s)+1}: ${s.action.slice(0,28)}${s.action.length>28?'…':''}`).join('\n');
+        const assignedLabels = stepsThatUse.map(s => `k.${state.steps.indexOf(s)+1}`).join(', ');
+        return `
+          <div class="result-item" style="border-left:3px solid ${col}"
+            draggable="true"
+            data-rid="${r.id}"
+            ondragstart="onResultDragStart(event,'${r.id}')"
+            ondragover="onResultDragOver(event,'${r.id}')"
+            ondrop="onResultDrop(event,'${r.id}')"
+            ondragleave="onResultDragLeave(event)"
+            ondragend="onResultDragEnd(event)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;gap:4px">
+              <div style="display:flex;align-items:center;gap:4px">
+                <span class="drag-handle" title="Przeciągnij by zmienić kolejność">⠿</span>
+                <span style="display:inline-block;font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:4px;background:${col}22;color:${col}">${RESULT_TYPE_LABELS[r.type]}</span>
+              </div>
+              ${assigned
+                ? `<span title="${assignedTip}" style="font-size:9px;font-family:var(--mono);padding:2px 7px;border-radius:4px;background:rgba(90,212,176,0.1);color:var(--green);border:1px solid rgba(90,212,176,0.25);cursor:default">✓ ${assignedLabels}</span>`
+                : `<span style="font-size:9px;font-family:var(--mono);padding:2px 7px;border-radius:4px;background:rgba(90,90,120,0.1);color:var(--text3);border:1px dashed var(--border2);cursor:default">nieprzypisany</span>`
+              }
+            </div>
+            <div class="ri-title">${r.name}</div>
+            <div class="ri-desc">${r.desc}</div>
+            <div style="display:flex;justify-content:flex-end;gap:4px;margin-top:6px">
+              <button class="btn-icon" onclick="duplicateResult('${r.id}')" data-tip="Duplikuj rezultat" style="width:22px;height:22px;font-size:11px">⎘</button>
+              <button class="btn-icon" onclick="editResult('${r.id}')" data-tip="Edytuj rezultat" style="width:22px;height:22px;font-size:11px">✎</button>
+              <button class="btn-icon danger" onclick="removeResult('${r.id}')" data-tip="Usuń rezultat" style="width:22px;height:22px;font-size:12px">×</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  RENDER — STEPS (sequence view)
+    // ═══════════════════════════════════════════════════════
+    function toggleStepsViewMode() {
+      state.stepsViewMode = state.stepsViewMode === 'full' ? 'compact' : 'full';
+      renderSteps(); autoSave();
+    }
+
+    function renderSteps() {
+      const el = document.getElementById('steps-list');
+      const viewModeBtn = document.getElementById('steps-view-mode-btn');
+      if (viewModeBtn) {
+        viewModeBtn.innerText = state.stepsViewMode === 'compact' ? 'Widok: Kompaktowy' : 'Widok: Pełny';
+      }
+      if (state.stepsViewMode === 'compact') {
+        el.classList.add('compact');
+      } else {
+        el.classList.remove('compact');
+      }
+
+      if (!state.steps.length) {
+        el.innerHTML = `<div class="empty-state">
+          <div class="empty-icon">⟶</div>
+          <div class="empty-title">Brak kroków</div>
+          <div class="empty-sub">Dodaj pierwszy krok klikając "Dodaj krok" lub przycisk poniżej.</div>
+        </div>`;
+        return;
+      }
+
+      el.innerHTML = state.steps.map((step, i) => {
+        const actor = getActor(step.actor);
+        const actorColor = actor ? actor.color : '#888';
+        const actorName  = actor ? actor.name  : 'Nieprzypisany';
+        const statusColors = { done: '#5ad4b0', 'in-progress': '#f7a25e', todo: '#5a5a78' };
+        const stepResults = (step.results || []).map(rid => {
+          const r = getResult(rid);
+          if (!r) return '';
+          const col = RESULT_TYPE_COLORS[r.type] || '#888';
+          return `<span class="chip" style="background:${col}22;color:${col}">${r.name} <span class="chip-remove" onclick="unlinkResult('${step.id}','${rid}')">×</span></span>`;
+        }).join('');
+
+        // Process tag
+        const proc = getProcessForStep(step.id);
+        const procTag = proc
+          ? `<div class="step-process-tag"
+               style="background:${hexAlpha(proc.color, 0.12)};color:${proc.color};border-color:${hexAlpha(proc.color, 0.25)}"
+               onclick="editProcess('${proc.id}')" title="Kliknij by edytować proces">
+               <span style="display:inline-block;width:6px;height:6px;border-radius:2px;background:${proc.color};flex-shrink:0"></span>
+               ${escHtml(proc.name)}
+             </div>`
+          : `<div class="step-process-tag"
+               style="background:var(--surface2);color:var(--text3);border-color:var(--border);border-style:dashed"
+               onclick="openProcessAssignForStep('${step.id}')" title="Przypisz do procesu">
+               + Proces
+             </div>`;
+
+        // Card background tint from process
+        const cardBg = proc ? hexAlpha(proc.color, 0.04) : 'var(--surface)';
+
+        return `
+          <div class="step-row">
+            <div class="step-connector">
+              <div class="step-num" style="background:${actorColor}22;color:${actorColor};border:2px solid ${actorColor}44">${i + 1}</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-card"
+              draggable="true"
+              data-id="${step.id}"
+              style="background:${cardBg}"
+              ondragstart="onDragStart(event,'${step.id}')"
+              ondragover="onDragOver(event,'${step.id}')"
+              ondrop="onDrop(event,'${step.id}')"
+              ondragleave="onDragLeave(event)"
+              ondragend="onDragEnd(event)">
+
+              ${procTag}
+
+              <div class="step-top">
+                <div style="position:relative">
+                  <div class="step-actor-badge" onclick="toggleActorDropdown(event,'${step.id}')" style="border-color:${actorColor}44">
+                    <div class="step-actor-dot" style="background:${actorColor}"></div>
+                    ${actorName}
+                    <span style="font-size:10px;color:var(--text3)">▾</span>
+                  </div>
+                  <div class="actor-dropdown hidden" id="dd-${step.id}">
+                    ${state.actors.map(a => `
+                      <div class="actor-option" onclick="setStepActor('${step.id}','${a.id}')">
+                        <div class="actor-dot" style="background:${a.color}"></div>
+                        ${a.name}
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+                <div class="step-actions-row">
+                  <button class="btn-icon" onclick="moveStep('${step.id}',-1)" data-tip="Przesuń wyżej" ${i===0?'disabled':''}>↑</button>
+                  <button class="btn-icon" onclick="moveStep('${step.id}',1)"  data-tip="Przesuń niżej" ${i===state.steps.length-1?'disabled':''}>↓</button>
+                  <button class="btn-icon" onclick="duplicateStep('${step.id}')" data-tip="Duplikuj">⎘</button>
+                  <button class="btn-icon danger" onclick="removeStep('${step.id}')" data-tip="Usuń krok">×</button>
+                </div>
+              </div>
+
+              <input class="step-action-input" value="${escHtml(step.action)}"
+                placeholder="Opisz akcję aktora..."
+                onchange="updateStep('${step.id}','action',this.value)">
+              <textarea class="step-desc-input" rows="2"
+                placeholder="Szczegóły, kontekst, ograniczenia..."
+                onchange="updateStep('${step.id}','desc',this.value)"
+                oninput="autoResize(this)">${escHtml(step.desc)}</textarea>
+
+              <div class="step-results-chips">
+                ${stepResults}
+                ${(!step.results || !step.results.length) ? `<button class="compact-link-btn" onclick="openLinkModal('${step.id}')" title="Powiąż rezultat">+</button>` : ''}
+                ${getStepAfBadge(step.id)}
+              </div>
+
+              <div class="step-bottom">
+                <button class="step-result-badge ${(step.results && step.results.length) ? 'linked' : ''}"
+                  onclick="openLinkModal('${step.id}')"
+                  style="${(step.results && step.results.length) ? `background:${RESULT_TYPE_COLORS['state']}11;border-color:${RESULT_TYPE_COLORS['state']}44;color:var(--text2)` : ''}">
+                  ${(step.results && step.results.length) ? '+ Powiąż kolejny rezultat' : '+ Powiąż rezultat'}
+                </button>
+                <div class="step-status">
+                  <div class="status-dot" style="background:${statusColors[step.status]}"></div>
+                  <select style="background:transparent;border:none;color:var(--text3);font-size:10px;font-family:var(--mono);outline:none;cursor:pointer;"
+                    onchange="updateStep('${step.id}','status',this.value)">
+                    <option value="todo"        ${step.status==='todo'?'selected':''}>do zrobienia</option>
+                    <option value="in-progress" ${step.status==='in-progress'?'selected':''}>w toku</option>
+                    <option value="done"        ${step.status==='done'?'selected':''}>gotowe</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  RENDER — SWIM LANE (timeline)
+    // ═══════════════════════════════════════════════════════
+    function renderTimeline() {
+      const el = document.getElementById('timeline-content');
+      if (!state.actors.length) {
+        el.innerHTML = '<div class="empty-state"><div class="empty-title">Dodaj aktorów by zobaczyć Swim Lane</div></div>';
+        return;
+      }
+      if (!state.steps.length) {
+        el.innerHTML = '<div class="empty-state"><div class="empty-title">Dodaj kroki</div></div>';
+        return;
+      }
+
+      const minW = state.actors.length * 160;
+
+      // Header row — actor columns
+      const headerCols = state.actors.map(a => `
+        <div class="tl-actor-col" style="color:${a.color};border-bottom-color:${a.color}">
+          <div style="width:8px;height:8px;border-radius:50%;background:${a.color};display:inline-block;margin-right:6px"></div>${a.name}
+        </div>
+      `).join('');
+
+      // Build rows with process-awareness
+      // Track which processes we've already started (for border-top on first row)
+      const seenProcessIds = new Set();
+
+      const rows = state.steps.map((step, i) => {
+        const proc = getProcessForStep(step.id);
+        const procColor = proc ? proc.color : null;
+
+        // Row background: very subtle tint of process color
+        const rowBg = procColor ? hexAlpha(procColor, 0.07) : 'transparent';
+
+        // First row of this process block gets a top border
+        const isFirstInProc = proc && !seenProcessIds.has(proc.id);
+        if (proc) seenProcessIds.add(proc.id);
+
+        const borderTopStyle = isFirstInProc
+          ? `border-top:2px solid ${hexAlpha(procColor, 0.5)};`
+          : '';
+
+        // Watermark label — only show on the middle row of the process block,
+        // but for simplicity we show it on every row (it's very transparent)
+        const watermark = proc
+          ? `<div class="tl-process-label">
+               <span class="tl-process-label-text" style="color:${procColor}">${escHtml(proc.name)}</span>
+             </div>`
+          : '';
+
+        const cells = state.actors.map(a => {
+          if (a.id === step.actor) {
+            return `<div class="tl-cell">
+              <div class="tl-step-bubble" style="border-color:${a.color}55;border-left:3px solid ${a.color}">
+                <div class="tl-step-num">krok ${i + 1}</div>
+                ${escHtml(step.action)}
+              </div>
+            </div>`;
+          }
+          return `<div class="tl-cell"></div>`;
+        }).join('');
+
+        return `
+          <div class="tl-row ${isFirstInProc ? 'process-first' : ''}"
+            style="background:${rowBg};${borderTopStyle}">
+            ${watermark}
+            ${cells}
+          </div>
+        `;
+      }).join('');
+
+      el.innerHTML = `
+        <div style="display:inline-block;min-width:${minW}px;width:100%">
+          <div class="timeline-header" style="min-width:${minW}px">${headerCols}</div>
+          <div style="min-width:${minW}px">${rows}</div>
+        </div>
+      `;
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  RENDER — EXPORT
+    // ═══════════════════════════════════════════════════════
+    function renderExport() {
+      const el = document.getElementById('export-content');
+      if (!el) return;
+      const name    = (document.getElementById('proc-name')    || {}).value || 'Proces';
+      const goal    = (document.getElementById('proc-goal')    || {}).value || '';
+      const trigger = (document.getElementById('proc-trigger') || {}).value || '';
+
+      let md = `# Happy Path: ${name}\n\n`;
+      md += `**Cel procesu:** ${goal}\n\n`;
+      md += `**Warunki wejścia:** ${trigger}\n\n`;
+      md += `---\n\n`;
+
+      // Group steps by process
+      if (state.processes && state.processes.length) {
+        md += `## Procesy\n\n`;
+        // Steps that belong to at least one process
+        const assignedStepIds = new Set(state.processes.flatMap(p => p.stepIds));
+        state.processes.forEach(proc => {
+          const procSteps = proc.stepIds
+            .map(sid => state.steps.find(s => s.id === sid))
+            .filter(Boolean);
+          md += `### 📦 Proces: ${proc.name}\n\n`;
+          procSteps.forEach(step => {
+            const idx   = state.steps.indexOf(step);
+            const actor = getActor(step.actor);
+            md += `#### Krok ${idx + 1}: ${step.action}\n\n`;
+            md += `**Aktor:** ${actor ? actor.name : '—'}\n\n`;
+            if (step.desc) md += `**Opis:** ${step.desc}\n\n`;
+            if (step.results && step.results.length) {
+              md += `**Rezultaty:**\n`;
+              step.results.forEach(rid => {
+                const r = getResult(rid);
+                if (r) md += `  - [${RESULT_TYPE_LABELS[r.type]}] ${r.name}: ${r.desc}\n`;
+              });
+            }
+            md += `\n`;
+          });
+        });
+        // Unassigned steps
+        const unassigned = state.steps.filter(s => !assignedStepIds.has(s.id));
+        if (unassigned.length) {
+          md += `### Kroki bez przypisanego procesu\n\n`;
+          unassigned.forEach(step => {
+            const idx   = state.steps.indexOf(step);
+            const actor = getActor(step.actor);
+            md += `#### Krok ${idx + 1}: ${step.action}\n`;
+            md += `**Aktor:** ${actor ? actor.name : '—'}\n\n`;
+          });
+        }
+      } else {
+        md += `## Sekwencja kroków\n\n`;
+        state.steps.forEach((step, i) => {
+          const actor = getActor(step.actor);
+          md += `### Krok ${i + 1}: ${step.action}\n\n`;
+          md += `**Aktor:** ${actor ? actor.name : '—'}\n\n`;
+          if (step.desc) md += `**Opis:** ${step.desc}\n\n`;
+          if (step.results && step.results.length) {
+            md += `**Rezultaty:**\n`;
+            step.results.forEach(rid => {
+              const r = getResult(rid);
+              if (r) md += `  - [${RESULT_TYPE_LABELS[r.type]}] ${r.name}: ${r.desc}\n`;
+            });
+          }
+          md += `\n`;
+        });
+      }
+
+      md += `---\n\n## Oczekiwane rezultaty\n\n`;
+      state.results.forEach(r => {
+        md += `- **[${RESULT_TYPE_LABELS[r.type]}] ${r.name}** — ${r.desc}\n`;
+      });
+
+      if (state.alternativeFlows && state.alternativeFlows.length) {
+        md += `\n---\n\n## Alternate Flows\n\n`;
+        state.alternativeFlows.forEach(af => {
+          md += `### ${af.title}\n\n`;
+          md += `**Trigger:** ${af.trigger}\n\n`;
+          md += `**Outcome:** ${af.outcome}\n\n`;
+        });
+      }
+
+      el.textContent = md;
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  RENDER — STATS
+    // ═══════════════════════════════════════════════════════
+    function setText(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    }
+
+    function renderStats() {
+      setText('stat-steps',     state.steps.length);
+      setText('stat-actors',    state.actors.length);
+      setText('stat-processes', state.processes.length);
+      setText('stat-results',   state.results.length);
+      setText('stat-af',        (state.alternativeFlows || []).length);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  DRAG & DROP — STEPS
+    // ═══════════════════════════════════════════════════════
+    function onDragStart(e, id) {
+      state.dragStepId = id;
+      e.currentTarget.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function onDragOver(e, id) {
+      e.preventDefault();
+      if (state.dragStepId === id) return;
+      e.currentTarget.classList.add('drag-over');
+    }
+
+    function onDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+
+    function onDrop(e, id) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drag-over');
+      if (state.dragStepId === id) return;
+      const from = state.steps.findIndex(s => s.id === state.dragStepId);
+      const to   = state.steps.findIndex(s => s.id === id);
+      if (from === -1 || to === -1) return;
+      const [removed] = state.steps.splice(from, 1);
+      state.steps.splice(to, 0, removed);
+      state.dragStepId = null;
+      render(); autoSave();
+    }
+
+    function onDragEnd(e) {
+      e.currentTarget.classList.remove('dragging', 'drag-over');
+      state.dragStepId = null;
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  STEPS CRUD
+    // ═══════════════════════════════════════════════════════
+    function addStep() {
+      const actorId = state.actors.length ? state.actors[0].id : null;
+      state.steps.push({ id: uid(), actor: actorId, action: '', desc: '', results: [], status: 'todo' });
+      render(); autoSave();
+      setTimeout(() => {
+        const inputs = document.querySelectorAll('.step-action-input');
+        if (inputs.length) inputs[inputs.length - 1].focus();
+      }, 50);
+    }
+
+    function removeStep(id) {
+      // Also remove from processes
+      state.processes.forEach(p => { p.stepIds = p.stepIds.filter(sid => sid !== id); });
+      state.steps = state.steps.filter(s => s.id !== id);
+      render(); autoSave();
+    }
+
+    function duplicateStep(id) {
+      const step = state.steps.find(s => s.id === id);
+      if (!step) return;
+      const idx  = state.steps.indexOf(step);
+      const copy = { ...step, id: uid(), results: [...(step.results || [])] };
+      state.steps.splice(idx + 1, 0, copy);
+      // Don't auto-assign to process — let user decide
+      render(); autoSave();
+    }
+
+    function moveStep(id, dir) {
+      const idx    = state.steps.findIndex(s => s.id === id);
+      const newIdx = idx + dir;
+      if (newIdx < 0 || newIdx >= state.steps.length) return;
+      [state.steps[idx], state.steps[newIdx]] = [state.steps[newIdx], state.steps[idx]];
+      render(); autoSave();
+    }
+
+    function updateStep(id, field, val) {
+      const step = state.steps.find(s => s.id === id);
+      if (step) step[field] = val;
+      renderStats(); autoSave();
+      if (state.currentView === 'timeline') renderTimeline();
+      if (state.currentView === 'export')   renderExport();
+    }
+
+    function unlinkResult(stepId, resultId) {
+      const step = state.steps.find(s => s.id === stepId);
+      if (step) step.results = step.results.filter(r => r !== resultId);
+      render(); autoSave();
+    }
+
+    function setStepActor(stepId, actorId) {
+      const step = state.steps.find(s => s.id === stepId);
+      if (step) step.actor = actorId;
+      closeAllDropdowns();
+      render(); autoSave();
+    }
+
+    function toggleActorDropdown(e, stepId) {
+      e.stopPropagation();
+      closeAllDropdowns();
+      const dd = document.getElementById('dd-' + stepId);
+      if (dd) dd.classList.remove('hidden');
+    }
+
+    function closeAllDropdowns() {
+      document.querySelectorAll('.actor-dropdown').forEach(d => d.classList.add('hidden'));
+    }
+    document.addEventListener('click', closeAllDropdowns);
+
+    // ═══════════════════════════════════════════════════════
+    //  ACTORS CRUD
+    // ═══════════════════════════════════════════════════════
+    function addActor() {
+      const input = document.getElementById('new-actor-input');
+      const name  = input.value.trim();
+      if (!name) return;
+      const color = COLORS[state.actors.length % COLORS.length];
+      state.actors.push({ id: uid(), name, color });
+      input.value = '';
+      render(); autoSave();
+    }
+
+    function removeActor(id) {
+      state.actors = state.actors.filter(a => a.id !== id);
+      state.steps.forEach(s => { if (s.actor === id) s.actor = state.actors[0]?.id || null; });
+      render(); autoSave();
+    }
+
+    function renameActor(id, name) {
+      const a = state.actors.find(x => x.id === id);
+      if (a && name.trim()) { a.name = name.trim(); renderSteps(); autoSave(); }
+    }
+
+    // ACTOR DRAG
+    function onActorDragStart(e, id) { state.dragActorId = id; e.dataTransfer.effectAllowed = 'move'; }
+    function onActorDragOver(e, id)  { e.preventDefault(); if (state.dragActorId === id) return; e.currentTarget.classList.add('actor-drag-over'); }
+    function onActorDragLeave(e)     { e.currentTarget.classList.remove('actor-drag-over'); }
+    function onActorDragEnd(e)       { e.currentTarget.classList.remove('actor-drag-over'); state.dragActorId = null; }
+    function onActorDrop(e, id) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('actor-drag-over');
+      if (!state.dragActorId || state.dragActorId === id) return;
+      const from = state.actors.findIndex(a => a.id === state.dragActorId);
+      const to   = state.actors.findIndex(a => a.id === id);
+      if (from === -1 || to === -1) return;
+      const [removed] = state.actors.splice(from, 1);
+      state.actors.splice(to, 0, removed);
+      state.dragActorId = null;
+      renderActors(); autoSave();
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  PROCESSES CRUD
+    // ═══════════════════════════════════════════════════════
+    function addProcess() {
+      const input = document.getElementById('new-process-input');
+      const name  = input.value.trim();
+      if (!name) return;
+      const color = COLORS[state.processes.length % COLORS.length];
+      state.processes.push({ id: uid(), name, color, stepIds: [] });
+      input.value = '';
+      render(); autoSave();
+      showToast('Proces dodany — przypisz kroki przez ✎', 'var(--accent)');
+    }
+
+    function removeProcess(id) {
+      state.processes = state.processes.filter(p => p.id !== id);
+      render(); autoSave();
+    }
+
+    function renameProcess(id, name) {
+      const p = state.processes.find(x => x.id === id);
+      if (p && name.trim()) { p.name = name.trim(); render(); autoSave(); }
+    }
+
+    function editProcess(id) {
+      const p = state.processes.find(x => x.id === id);
+      if (!p) return;
+      state.editingProcessId = id;
+      document.getElementById('process-modal-title').textContent   = 'Edytuj Proces';
+      document.getElementById('process-modal-save-btn').textContent = 'Zapisz zmiany';
+      document.getElementById('process-name-input').value = p.name;
+      state.pendingProcessColor = p.color;
+      renderProcessColorSwatches();
+      renderProcessStepGrid(p.stepIds);
+      openModal('process-modal');
+    }
+
+    /** Called from the "+ Proces" tag on a step card */
+    function openProcessAssignForStep(stepId) {
+      // Open process modal in "assign" mode
+      // If no processes yet, create one first
+      if (!state.processes.length) {
+        showToast('Najpierw dodaj proces w panelu bocznym', 'var(--accent3)');
+        return;
+      }
+      // Just open edit for the first unassigned process, or let user pick via the panel
+      // Simpler: open a mini dropdown — but we'll reuse the modal for now
+      state.editingProcessId = null;
+      document.getElementById('process-modal-title').textContent    = 'Nowy Proces';
+      document.getElementById('process-modal-save-btn').textContent = 'Dodaj proces';
+      document.getElementById('process-name-input').value = '';
+      state.pendingProcessColor = COLORS[state.processes.length % COLORS.length];
+      renderProcessColorSwatches();
+      renderProcessStepGrid([stepId]); // pre-select this step
+      openModal('process-modal');
+    }
+
+    function saveProcess() {
+      const name = document.getElementById('process-name-input').value.trim();
+      if (!name) return;
+      // Collect selected step IDs from grid
+      const checked = [...document.querySelectorAll('#process-step-grid .process-step-toggle input[type=checkbox]:checked')];
+      const stepIds = checked.map(cb => cb.dataset.stepid);
+
+      if (state.editingProcessId) {
+        const p = state.processes.find(x => x.id === state.editingProcessId);
+        if (p) {
+          p.name     = name;
+          p.color    = state.pendingProcessColor;
+          p.stepIds  = stepIds;
+        }
+        // Remove this step from all OTHER processes where it now belongs to this one
+        stepIds.forEach(sid => {
+          state.processes.forEach(op => {
+            if (op.id !== state.editingProcessId) {
+              op.stepIds = op.stepIds.filter(s => s !== sid);
+            }
+          });
+        });
+        showToast('Proces zaktualizowany', 'var(--accent)');
+      } else {
+        const newProc = { id: uid(), name, color: state.pendingProcessColor, stepIds };
+        state.processes.push(newProc);
+        // Remove assigned steps from other processes
+        stepIds.forEach(sid => {
+          state.processes.forEach(op => {
+            if (op.id !== newProc.id) op.stepIds = op.stepIds.filter(s => s !== sid);
+          });
+        });
+        showToast('Proces dodany', 'var(--accent)');
+      }
+      state.editingProcessId = null;
+      closeModal('process-modal');
+      render(); autoSave();
+    }
+
+    function renderProcessColorSwatches() {
+      const el = document.getElementById('process-color-row');
+      el.innerHTML = COLORS.map(c => `
+        <div class="color-swatch ${c === state.pendingProcessColor ? 'selected' : ''}"
+          style="background:${c}"
+          onclick="selectProcessColor('${c}',this)"></div>
+      `).join('');
+    }
+
+    function selectProcessColor(c, el) {
+      state.pendingProcessColor = c;
+      document.querySelectorAll('#process-color-row .color-swatch').forEach(s => s.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    function renderProcessStepGrid(selectedIds = []) {
+      const el = document.getElementById('process-step-grid');
+      if (!state.steps.length) {
+        el.innerHTML = '<div style="font-size:11px;color:var(--text3);padding:8px 0">Brak kroków — dodaj kroki do procesu.</div>';
+        return;
+      }
+      const col = state.pendingProcessColor;
+      el.innerHTML = state.steps.map((s, i) => {
+        const actor    = getActor(s.actor);
+        const actorCol = actor ? actor.color : '#888';
+        const isOn     = selectedIds.includes(s.id);
+        // Who else owns this step?
+        const ownerProc = state.processes.find(p => p.id !== state.editingProcessId && p.stepIds.includes(s.id));
+        const ownerNote = ownerProc
+          ? `<span style="font-size:9px;font-family:var(--mono);color:${ownerProc.color};margin-left:4px">[${escHtml(ownerProc.name)}]</span>`
+          : '';
+        return `
+          <label class="process-step-toggle ${isOn ? 'selected' : ''}"
+            style="${isOn ? `border-color:${hexAlpha(col,0.4)};background:${hexAlpha(col,0.08)}` : ''}">
+            <input type="checkbox" data-stepid="${s.id}" ${isOn ? 'checked' : ''}
+              onchange="onProcessStepToggle(this)">
+            <span class="pst-num">${i + 1}</span>
+            <span class="pst-name">${escHtml(s.action) || '(brak tytułu)'}</span>
+            ${ownerNote}
+            <span class="pst-actor" style="color:${actorCol}">${actor ? actor.name : '—'}</span>
+          </label>
+        `;
+      }).join('');
+    }
+
+    function onProcessStepToggle(cb) {
+      // Re-color the label
+      const label = cb.closest('.process-step-toggle');
+      const col   = state.pendingProcessColor;
+      if (cb.checked) {
+        label.classList.add('selected');
+        label.style.borderColor = hexAlpha(col, 0.4);
+        label.style.background  = hexAlpha(col, 0.08);
+      } else {
+        label.classList.remove('selected');
+        label.style.borderColor = '';
+        label.style.background  = '';
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  RESULTS CRUD
+    // ═══════════════════════════════════════════════════════
+    function addResult() {
+      state.editingResultId = null;
+      document.getElementById('result-modal-title').textContent     = 'Nowy rezultat';
+      document.getElementById('result-modal-save-btn').textContent  = 'Dodaj rezultat';
+      document.getElementById('result-name-input').value  = '';
+      document.getElementById('result-desc-input').value  = '';
+      document.getElementById('result-type-input').value  = 'output';
+      openModal('result-modal');
+      setTimeout(() => document.getElementById('result-name-input').focus(), 100);
+    }
+
+    function editResult(id) {
+      const r = state.results.find(x => x.id === id);
+      if (!r) return;
+      state.editingResultId = id;
+      document.getElementById('result-modal-title').textContent    = 'Edytuj rezultat';
+      document.getElementById('result-modal-save-btn').textContent = 'Zapisz zmiany';
+      document.getElementById('result-name-input').value = r.name;
+      document.getElementById('result-desc-input').value = r.desc;
+      document.getElementById('result-type-input').value = r.type;
+      openModal('result-modal');
+      setTimeout(() => document.getElementById('result-name-input').focus(), 100);
+    }
+
+    function saveResult() {
+      const name = document.getElementById('result-name-input').value.trim();
+      if (!name) return;
+      const desc = document.getElementById('result-desc-input').value.trim();
+      const type = document.getElementById('result-type-input').value;
+      if (state.editingResultId) {
+        const r = state.results.find(x => x.id === state.editingResultId);
+        if (r) { r.name = name; r.desc = desc; r.type = type; }
+        state.editingResultId = null;
+        closeModal('result-modal');
+        render(); autoSave();
+        showToast('Rezultat zaktualizowany', 'var(--accent)');
+      } else {
+        state.results.push({ id: uid(), name, desc, type });
+        closeModal('result-modal');
+        render(); autoSave();
+      }
+    }
+
+    function removeResult(id) {
+      state.results = state.results.filter(r => r.id !== id);
+      state.steps.forEach(s => { s.results = (s.results || []).filter(r => r !== id); });
+      render(); autoSave();
+    }
+
+    function duplicateResult(id) {
+      const result = state.results.find(r => r.id === id);
+      if (!result) return;
+      const idx  = state.results.indexOf(result);
+      const copy = { ...result, id: uid(), name: result.name + ' (Kopia)' };
+      state.results.splice(idx + 1, 0, copy);
+      renderResults(); renderStats(); autoSave();
+      showToast('Rezultat zduplikowany', 'var(--accent)');
+    }
+
+    // Result drag
+    function onResultDragStart(e, id) { state.dragResultId = id; e.dataTransfer.effectAllowed = 'move'; }
+    function onResultDragOver(e, id)  { e.preventDefault(); if (state.dragResultId === id) return; e.currentTarget.classList.add('result-drag-over'); }
+    function onResultDragLeave(e)     { e.currentTarget.classList.remove('result-drag-over'); }
+    function onResultDragEnd(e)       { e.currentTarget.classList.remove('result-drag-over'); state.dragResultId = null; }
+    function onResultDrop(e, id) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('result-drag-over');
+      if (!state.dragResultId || state.dragResultId === id) return;
+      const from = state.results.findIndex(r => r.id === state.dragResultId);
+      const to   = state.results.findIndex(r => r.id === id);
+      if (from === -1 || to === -1) return;
+      const [removed] = state.results.splice(from, 1);
+      state.results.splice(to, 0, removed);
+      state.dragResultId = null;
+      renderResults(); autoSave();
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  LINK RESULT MODAL
+    // ═══════════════════════════════════════════════════════
+    function openLinkModal(stepId) {
+      state.linkingStepId = stepId;
+      const step   = state.steps.find(s => s.id === stepId);
+      const linked = step ? (step.results || []) : [];
+      const el     = document.getElementById('link-results-list');
+      if (!state.results.length) {
+        el.innerHTML = '<div style="font-size:12px;color:var(--text3);text-align:center;padding:16px">Brak rezultatów. Dodaj rezultaty w panelu bocznym.</div>';
+      } else {
+        el.innerHTML = state.results.map(r => {
+          const col      = RESULT_TYPE_COLORS[r.type];
+          const isLinked = linked.includes(r.id);
+          return `
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface2);border:1px solid ${isLinked ? col : 'var(--border)'};border-radius:var(--r);gap:10px">
+              <div>
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+                  <span style="font-size:9px;background:${col}22;color:${col};padding:2px 6px;border-radius:4px;font-family:var(--mono)">${RESULT_TYPE_LABELS[r.type]}</span>
+                  <span style="font-size:12px;font-weight:500">${r.name}</span>
+                </div>
+                <div style="font-size:11px;color:var(--text3)">${r.desc}</div>
+              </div>
+              <button class="btn btn-sm ${isLinked ? 'btn-ghost' : 'btn-success'}" onclick="${isLinked ? `unlinkResultFromModal('${r.id}')` : `linkResult('${r.id}')`}">
+                ${isLinked ? 'Odepnij' : 'Powiąż'}
+              </button>
+            </div>`;
+        }).join('');
+      }
+      openModal('link-modal');
+    }
+
+    function linkResult(resultId) {
+      const step = state.steps.find(s => s.id === state.linkingStepId);
+      if (step && !step.results.includes(resultId)) {
+        step.results.push(resultId);
+        openLinkModal(state.linkingStepId);
+        renderSteps(); renderStats(); autoSave();
+      }
+    }
+
+    function unlinkResultFromModal(resultId) {
+      const step = state.steps.find(s => s.id === state.linkingStepId);
+      if (step) step.results = step.results.filter(r => r !== resultId);
+      openLinkModal(state.linkingStepId);
+      renderSteps(); renderStats(); autoSave();
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  ACTOR MODAL (color picker)
+    // ═══════════════════════════════════════════════════════
+    function saveActor() {
+      const name = document.getElementById('actor-name-input').value.trim();
+      if (!name) return;
+      state.actors.push({ id: uid(), name, color: state.pendingActorColor });
+      closeModal('actor-modal');
+      render(); autoSave();
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  VIEW SWITCHER
+    // ═══════════════════════════════════════════════════════
+    function setView(view) {
+      state.currentView = view;
+      document.querySelectorAll('.view-btn').forEach((b, i) => {
+        b.classList.toggle('active', ['steps', 'timeline', 'af', 'export'][i] === view);
+      });
+      const vSteps    = document.getElementById('view-steps');
+      const vTimeline = document.getElementById('view-timeline');
+      const vAf       = document.getElementById('view-af');
+      const vExport   = document.getElementById('view-export');
+      if (vSteps)    vSteps.classList.toggle('hidden',    view !== 'steps');
+      if (vTimeline) vTimeline.classList.toggle('hidden', view !== 'timeline');
+      if (vAf)       vAf.classList.toggle('hidden',       view !== 'af');
+      if (vExport)   vExport.classList.toggle('hidden',   view !== 'export');
+      if (view === 'timeline') renderTimeline();
+      if (view === 'af')       renderAf();
+      if (view === 'export')   renderExport();
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  MODALS
+    // ═══════════════════════════════════════════════════════
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('open');
+    }
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('open');
+    }
+    document.querySelectorAll('.modal-overlay').forEach(m => {
+      m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+    });
+
+    // ═══════════════════════════════════════════════════════
+    //  STORAGE & PROJECTS
+    // ═══════════════════════════════════════════════════════
+    const LS_KEY     = 'hpb_projects';
+    const LS_CURRENT = 'hpb_current_project';
+    let saveTimeout      = null;
+    let currentProjectId = null;
+
+    function getAllProjects() {
+      try { return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch { return {}; }
+    }
+
+    function saveAllProjects(projects) { localStorage.setItem(LS_KEY, JSON.stringify(projects)); }
+
+    function getProjectData() {
+      return {
+        meta: {
+          name:    document.getElementById('proc-name').value,
+          goal:    document.getElementById('proc-goal').value,
+          trigger: document.getElementById('proc-trigger').value,
+        },
+        actors:           state.actors,
+        processes:        state.processes,
+        results:          state.results,
+        steps:            state.steps,
+        alternativeFlows: state.alternativeFlows || [],
+      };
+    }
+
+    function loadProjectData(data) {
+      if (!data) return;
+      if (data.meta) {
+        document.getElementById('proc-name').value    = data.meta.name    || '';
+        document.getElementById('proc-goal').value    = data.meta.goal    || '';
+        document.getElementById('proc-trigger').value = data.meta.trigger || '';
+      }
+      state.actors           = data.actors    || [];
+      state.processes        = data.processes || [];
+      state.results          = data.results   || [];
+      state.steps            = data.steps     || [];
+      state.alternativeFlows = data.alternativeFlows || [];
+    }
+
+    function autoSave() {
+      setSaveState('unsaved');
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => saveCurrentProject(true), 1200);
+    }
+
+    function saveCurrentProject(silent = false) {
+      const projects  = getAllProjects();
+      if (!currentProjectId) currentProjectId = uid();
+      const procName  = document.getElementById('proc-name').value || 'Bez nazwy';
+      projects[currentProjectId] = {
+        id:        currentProjectId,
+        name:      procName,
+        updatedAt: new Date().toISOString(),
+        data:      getProjectData(),
+      };
+      saveAllProjects(projects);
+      localStorage.setItem(LS_CURRENT, currentProjectId);
+      setSaveState('saved');
+      if (!silent) {
+        showToast('Projekt zapisany', 'var(--green)');
+        renderProjectsMenu();
+      } else {
+        renderProjectsMenu();
+      }
+    }
+
+    function loadProject(id) {
+      const projects = getAllProjects();
+      const project  = projects[id];
+      if (!project) return;
+      currentProjectId = id;
+      localStorage.setItem(LS_CURRENT, id);
+      loadProjectData(project.data);
+      afStepFilter = 'all';
+      afFilter     = 'all';
+      render();
+      setSaveState('saved');
+      closeProjectsMenu();
+      showToast(`Załadowano: ${project.name}`, 'var(--accent)');
+    }
+
+    function newProject() {
+      if (state.steps.length > 0 || state.results.length > 0) saveCurrentProject(true);
+      currentProjectId = uid();
+      state.actors    = [{ id: uid(), name: 'Klient', color: '#f25e8a' }];
+      state.processes = [];
+      state.results   = [];
+      state.steps     = [];
+      state.alternativeFlows = [];
+      document.getElementById('proc-name').value    = 'Nowy proces';
+      document.getElementById('proc-goal').value    = '';
+      document.getElementById('proc-trigger').value = '';
+      render();
+      setSaveState('unsaved');
+      closeProjectsMenu();
+      showToast('Nowy projekt utworzony', 'var(--accent)');
+      setTimeout(() => document.getElementById('proc-name').select(), 100);
+    }
+
+    function deleteCurrentProject() {
+      if (!currentProjectId) return;
+      const projects = getAllProjects();
+      const name     = projects[currentProjectId]?.name || 'projekt';
+      delete projects[currentProjectId];
+      saveAllProjects(projects);
+      const ids = Object.keys(projects);
+      if (ids.length > 0) {
+        loadProject(ids[ids.length - 1]);
+      } else {
+        newProject();
+      }
+      showToast(`Usunięto: ${name}`, 'var(--danger)');
+    }
+
+    function initStorage() {
+      const projects = getAllProjects();
+      const savedId  = localStorage.getItem(LS_CURRENT);
+      if (savedId && projects[savedId]) {
+        currentProjectId = savedId;
+        loadProjectData(projects[savedId].data);
+        setSaveState('saved');
+      } else {
+        const ids = Object.keys(projects);
+        if (ids.length > 0) {
+          const lastId = ids[ids.length - 1];
+          currentProjectId = lastId;
+          loadProjectData(projects[lastId].data);
+          setSaveState('saved');
+        } else {
+          currentProjectId = uid();
+          setSaveState('unsaved');
+        }
+      }
+    }
+
+    function setSaveState(s) {
+      const el    = document.getElementById('save-indicator');
+      const label = document.getElementById('save-label');
+      if (!el || !label) return;
+      el.className = 'save-indicator ' + s;
+      if (s === 'saved')   label.textContent = 'zapisano';
+      else if (s === 'unsaved') label.textContent = 'niezapisane';
+      else label.textContent = '–';
+    }
+
+    function hookMetaInputs() {
+      ['proc-name', 'proc-goal', 'proc-trigger'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', autoSave);
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  PROJECTS MENU
+    // ═══════════════════════════════════════════════════════
+    function toggleProjectsMenu(e) {
+      e.stopPropagation();
+      const menu = document.getElementById('projects-menu');
+      if (menu.classList.contains('hidden')) {
+        renderProjectsMenu();
+        menu.classList.remove('hidden');
+      } else {
+        menu.classList.add('hidden');
+      }
+    }
+
+    function closeProjectsMenu() { document.getElementById('projects-menu').classList.add('hidden'); }
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('#projects-btn') && !e.target.closest('#projects-menu')) closeProjectsMenu();
+    });
+
+    function renderProjectsMenu() {
+      const projects = getAllProjects();
+      const ids = Object.keys(projects).sort((a, b) =>
+        (projects[b].updatedAt || '').localeCompare(projects[a].updatedAt || '')
+      );
+      const el = document.getElementById('pm-list');
+      if (!ids.length) {
+        el.innerHTML = '<div style="padding:16px;font-size:12px;color:var(--text3);text-align:center">Brak zapisanych projektów</div>';
+        return;
+      }
+      el.innerHTML = ids.map(id => {
+        const p        = projects[id];
+        const isActive = id === currentProjectId;
+        const date     = p.updatedAt ? new Date(p.updatedAt).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '—';
+        const steps    = p.data?.steps?.length || 0;
+        return `
+          <div class="pm-item" onclick="loadProject('${id}')">
+            <div>
+              <div class="pm-item-name" style="${isActive ? 'color:var(--accent)' : ''}">${p.name || 'Bez nazwy'}</div>
+              <div class="pm-item-meta">${date} · ${steps} kroków</div>
+            </div>
+            ${isActive ? '<span class="pm-item-active">aktywny</span>' : ''}
+          </div>`;
+      }).join('');
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  JSON IMPORT / EXPORT
+    // ═══════════════════════════════════════════════════════
+    function exportJSON() {
+      const data = {
+        version:    '1.2',
+        exportedAt: new Date().toISOString(),
+        meta: {
+          name:    document.getElementById('proc-name').value,
+          goal:    document.getElementById('proc-goal').value,
+          trigger: document.getElementById('proc-trigger').value,
+        },
+        actors:           state.actors,
+        processes:        state.processes,
+        results:          state.results,
+        steps:            state.steps,
+        alternativeFlows: state.alternativeFlows || [],
+      };
+      const blob     = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url      = URL.createObjectURL(blob);
+      const a        = document.createElement('a');
+      const safeName = (data.meta.name || 'happy-path').replace(/[^a-z0-9]/gi, '_').toLowerCase();
+      a.href     = url;
+      a.download = `${safeName}_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Plik JSON pobrany', 'var(--green)');
+    }
+
+    function importJSON() {
+      document.getElementById('json-file-input').value = '';
+      document.getElementById('json-file-input').click();
+    }
+
+    function handleJSONImport(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!data.actors || !data.steps) throw new Error('Nieprawidłowy format pliku');
+          if (!Array.isArray(data.alternativeFlows)) data.alternativeFlows = [];
+          if (!Array.isArray(data.processes))        data.processes        = [];
+          if (state.steps.length > 0) saveCurrentProject(true);
+          currentProjectId = uid();
+          loadProjectData(data);
+          render();
+          saveCurrentProject(true);
+          showToast(`Zaimportowano: ${data.meta?.name || file.name}`, 'var(--accent)');
+        } catch (err) {
+          showToast('Błąd importu: ' + err.message, 'var(--danger)');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  TOAST
+    // ═══════════════════════════════════════════════════════
+    let toastTimeout = null;
+    function showToast(msg, color = 'var(--green)') {
+      const toast    = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+      const toastDot = document.getElementById('toast-dot');
+      if (!toast || !toastMsg || !toastDot) return;
+      toastMsg.textContent     = msg;
+      toastDot.style.background = color;
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  ALTERNATE FLOWS
+    // ═══════════════════════════════════════════════════════
+    const SEV_COLORS = { critical: 'var(--danger)', high: 'var(--accent3)', medium: 'var(--accent)', low: 'var(--green)' };
+    const SEV_LABELS = { critical: 'CRITICAL', high: 'HIGH', medium: 'MEDIUM', low: 'LOW' };
+
+    let afFilter     = 'all';
+    let afStepFilter = 'all';
+
+    function setAfSeverity(f, btn) {
+      afFilter = f;
+      document.querySelectorAll('#af-filters .af-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderAf();
+    }
+
+    function setAfStep(sid, btn) {
+      afStepFilter = afStepFilter === sid ? 'all' : sid;
+      document.querySelectorAll('#af-step-filters .af-step-filter-btn').forEach(b => b.classList.remove('active'));
+      if (afStepFilter !== 'all') btn.classList.add('active');
+      renderAf();
+    }
+
+    function renderAfStepFilters() {
+      const el = document.getElementById('af-step-filters');
+      if (!el) return;
+      if (!state.steps.length) { el.innerHTML = '<span style="font-size:11px;color:var(--text3)">brak kroków</span>'; return; }
+      el.innerHTML = state.steps.map((s, i) => {
+        const actor   = state.actors.find(a => a.id === s.actor);
+        const col     = actor ? actor.color : '#888';
+        const isActive = afStepFilter === s.id;
+        const afCount = (state.alternativeFlows || []).filter(af => (af.relatedSteps || []).includes(s.id)).length;
+        if (!afCount) return '';
+        return `<button class="af-step-filter-btn af-filter-btn${isActive ? ' active' : ''}"
+          onclick="setAfStep('${s.id}', this)"
+          style="${isActive ? `background:${col}22;color:${col};border-color:${col}66` : `border-color:${col}44;color:var(--text3)`}"
+          title="${s.action}">
+          <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${col};margin-right:4px;vertical-align:middle"></span>k.${i+1} <span style="opacity:.6">${afCount}</span>
+        </button>`;
+      }).join('');
+      if (!el.innerHTML.trim()) el.innerHTML = '<span style="font-size:11px;color:var(--text3)">żaden krok nie ma AF</span>';
+    }
+
+    function renderAf() {
+      renderAfStepFilters();
+      const afs    = state.alternativeFlows || [];
+      const el     = document.getElementById('af-list');
+      if (!el) return;
+      const filtered = afs.filter(af => {
+        const sevOk  = afFilter === 'all' ? true : afFilter === 'manual' ? af.requiresManualReview : af.severity === afFilter;
+        const stepOk = afStepFilter === 'all' ? true : (af.relatedSteps || []).includes(afStepFilter);
+        return sevOk && stepOk;
+      });
+      if (!filtered.length) {
+        el.innerHTML = `<div class="empty-state"><div class="empty-icon">↝</div><div class="empty-title">${afs.length ? 'Brak wyników dla tego filtra' : 'Brak Alternate Flows'}</div><div class="empty-sub">Dodaj alternate flows lub zmień filtr.</div></div>`;
+        return;
+      }
+      el.innerHTML = filtered.map(af => {
+        const stepChips = (af.relatedSteps || []).map(sid => {
+          const s   = state.steps.find(x => x.id === sid);
+          const idx = state.steps.indexOf(s);
+          return s
+            ? `<span class="af-step-chip" onclick="setView('steps')" title="krok ${idx+1}: ${s.action}">k.${idx+1} ${s.action.slice(0,20)}${s.action.length>20?'…':''}</span>`
+            : `<span class="af-step-chip unlinked">${sid} (nieznany)</span>`;
+        }).join('');
+        return `
+          <div class="af-card ${af.requiresManualReview ? 'manual' : ''}">
+            <div class="af-card-top">
+              <div class="af-title-row">
+                <span class="af-id">${af.id}</span>
+                <span class="af-title">${af.title}</span>
+                <span class="sev-badge sev-${af.severity}">${SEV_LABELS[af.severity] || af.severity}</span>
+                ${af.requiresManualReview ? '<span class="manual-badge">MANUAL</span>' : ''}
+              </div>
+              <div style="display:flex;gap:4px;flex-shrink:0">
+                <button class="btn-icon" onclick="editAf('${af.id}')" data-tip="Edytuj" style="width:22px;height:22px;font-size:11px">✎</button>
+                <button class="btn-icon danger" onclick="removeAf('${af.id}')" data-tip="Usuń" style="width:22px;height:22px;font-size:12px">×</button>
+              </div>
+            </div>
+            <div class="af-trigger"><strong>Trigger:</strong> ${af.trigger}</div>
+            <div class="af-body">${af.outcome}</div>
+            ${(af.relatedSteps||[]).length ? `<div class="af-steps-row"><span class="af-steps-label">Powiązane kroki:</span>${stepChips}</div>` : ''}
+          </div>`;
+      }).join('');
+    }
+
+    function openAfModal(editId) {
+      state.editingAfId = editId || null;
+      const af = editId ? (state.alternativeFlows || []).find(x => x.id === editId) : null;
+      document.getElementById('af-modal-title').textContent    = af ? 'Edytuj Alternate Flow' : 'Nowy Alternate Flow';
+      document.getElementById('af-modal-save-btn').textContent = af ? 'Zapisz zmiany' : 'Dodaj';
+      document.getElementById('af-title-input').value    = af ? af.title   : '';
+      document.getElementById('af-trigger-input').value  = af ? af.trigger : '';
+      document.getElementById('af-outcome-input').value  = af ? af.outcome : '';
+      document.getElementById('af-severity-input').value = af ? af.severity : 'medium';
+      document.getElementById('af-manual-input').checked = af ? !!af.requiresManualReview : false;
+      const sel    = document.getElementById('af-steps-selector');
+      if (!sel) return;
+      const linked = af ? (af.relatedSteps || []) : [];
+      sel.innerHTML = state.steps.map((s, i) => {
+        const on = linked.includes(s.id);
+        return `<span class="af-step-chip ${on ? '' : 'unlinked'}"
+          style="${on ? 'border-color:var(--accent);color:var(--accent)' : ''}"
+          onclick="toggleAfStep('${s.id}',this)">k.${i+1} ${s.action.slice(0,22)}${s.action.length>22?'…':''}</span>`;
+      }).join('');
+      openModal('af-modal');
+    }
+
+    function toggleAfStep(sid, el) {
+      el.classList.toggle('unlinked');
+      if (el.classList.contains('unlinked')) { el.style.borderColor=''; el.style.color=''; }
+      else { el.style.borderColor='var(--accent)'; el.style.color='var(--accent)'; }
+    }
+
+    function saveAf() {
+      const title = document.getElementById('af-title-input').value.trim();
+      if (!title) return;
+      const relatedSteps = [...document.querySelectorAll('#af-steps-selector .af-step-chip:not(.unlinked)')].map(el => {
+        return el.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+      }).filter(Boolean);
+      const data = {
+        id:                  state.editingAfId || ('af' + uid()),
+        title,
+        trigger:             document.getElementById('af-trigger-input').value.trim(),
+        outcome:             document.getElementById('af-outcome-input').value.trim(),
+        severity:            document.getElementById('af-severity-input').value,
+        requiresManualReview:document.getElementById('af-manual-input').checked,
+        relatedSteps,
+      };
+      if (!state.alternativeFlows) state.alternativeFlows = [];
+      if (state.editingAfId) {
+        const idx = state.alternativeFlows.findIndex(x => x.id === state.editingAfId);
+        if (idx !== -1) state.alternativeFlows[idx] = data;
+        showToast('Alternate Flow zaktualizowany', 'var(--accent)');
+      } else {
+        state.alternativeFlows.push(data);
+        showToast('Alternate Flow dodany', 'var(--accent3)');
+      }
+      closeModal('af-modal');
+      renderAf(); renderStats(); autoSave();
+    }
+
+    function editAf(id)   { openAfModal(id); }
+
+    function removeAf(id) {
+      state.alternativeFlows = (state.alternativeFlows || []).filter(x => x.id !== id);
+      renderAf(); renderStats(); autoSave();
+    }
+
+    function getStepAfBadge(stepId) {
+      const count = (state.alternativeFlows || []).filter(af => (af.relatedSteps || []).includes(stepId)).length;
+      if (!count) return '';
+      return `<span class="step-af-badge" onclick="goToStepAfs('${stepId}')" title="Ten krok ma ${count} alternate flow(s)">${count} alt</span>`;
+    }
+
+    function goToStepAfs(stepId) {
+      afFilter     = 'all';
+      afStepFilter = stepId;
+      setView('af');
+      document.querySelectorAll('#af-filters .af-filter-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  UTILS
+    // ═══════════════════════════════════════════════════════
+    function escHtml(str) {
+      return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function autoResize(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+    function copyExport() {
+      const text = document.getElementById('export-content').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.target;
+        btn.textContent = 'Skopiowano!';
+        setTimeout(() => btn.textContent = 'Kopiuj', 1500);
+      });
+    }
+
+    // Init color swatches (actor modal)
+    function initColorSwatches() {
+      const el = document.getElementById('actor-color-row');
+      el.innerHTML = COLORS.map(c => `
+        <div class="color-swatch ${c === state.pendingActorColor ? 'selected' : ''}"
+          style="background:${c}"
+          onclick="selectColor('${c}',this)"></div>
+      `).join('');
+    }
+
+    function selectColor(c, el) {
+      state.pendingActorColor = c;
+      document.querySelectorAll('#actor-color-row .color-swatch').forEach(s => s.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  BOOT
+    // ═══════════════════════════════════════════════════════
+    initColorSwatches();
+    initStorage();
+    hookMetaInputs();
+    render();
+  </script>
+
+</body>
 </html>
