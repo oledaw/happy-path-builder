@@ -1,0 +1,68 @@
+/* ─────────────────────────────────────────────
+   BASE — reset, custom properties, typography
+───────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Backgrounds */
+  --bg:       #0f0f13;
+  --surface:  #17171f;
+  --surface2: #1e1e28;
+  --surface3: #26263a;
+
+  /* Borders */
+  --border:  rgba(255, 255, 255, 0.07);
+  --border2: rgba(255, 255, 255, 0.14);
+
+  /* Text */
+  --text:  #eeeef5;
+  --text2: #9898b8;
+  --text3: #5a5a78;
+
+  /* Accent palette */
+  --accent:  #7c6ff7;
+  --accent2: #5ad4b0;
+  --accent3: #f7a25e;
+  --accent4: #f25e8a;
+
+  /* Semantic */
+  --danger: #f25e8a;
+  --green:  #5ad4b0;
+
+  /* Typography */
+  --font: 'Sora', sans-serif;
+  --mono: 'DM Mono', monospace;
+
+  /* Radii */
+  --r:  10px;
+  --r2: 16px;
+
+  /* Panel */
+  --panel-w:          300px;
+  --toggle-w:         16px;
+  --panel-transition: 320ms cubic-bezier(.4, 0, .2, 1);
+}
+
+body {
+  background:  var(--bg);
+  color:       var(--text);
+  font-family: var(--font);
+  font-size:   14px;
+  height:      100vh;
+  overflow:    hidden;
+  display:     flex;
+  flex-direction: column;
+}
+
+/* ── Global scrollbar ── */
+::-webkit-scrollbar       { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
+
+/* ── Utility ── */
+.hidden { display: none !important; }

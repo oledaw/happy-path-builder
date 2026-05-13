@@ -1,0 +1,526 @@
+/* ─────────────────────────────────────────────
+   STEPS — step-row, step-card, step variants,
+            add button, actor dropdown,
+            timeline (inline)
+───────────────────────────────────────────── */
+
+/* ══ CANVAS ═══════════════════════════════════ */
+
+/*
+  ✅ FIX: steps-canvas musi mieć flex:1 + min-height:0
+  oraz overflow-y:auto. Bez min-height:0 flexbox nie
+  respektuje overflow — element rośnie zamiast scrollować.
+*/
+.steps-canvas {
+  flex:       1;
+  /* ✅ min-height:0 — kluczowe dla scroll w flex container */
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding:    28px;
+}
+.steps-canvas::-webkit-scrollbar       { width: 4px; }
+.steps-canvas::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
+
+.steps-canvas__toolbar {
+  display:         flex;
+  justify-content: flex-end;
+  margin-bottom:   12px;
+}
+
+/* ══ STEPS LIST ═══════════════════════════════ */
+
+.steps-list {
+  display:        flex;
+  flex-direction: column;
+  gap:            0;
+  position:       relative;
+}
+
+/* ══ STEP ROW ══════════════════════════════════ */
+
+.step-row {
+  display:     flex;
+  align-items: stretch;
+  gap:         0;
+  position:    relative;
+}
+
+.step-connector {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  width:          48px;
+  flex-shrink:    0;
+  position:       relative;
+}
+
+.step-num {
+  width:           32px;
+  height:          32px;
+  border-radius:   50%;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  font-size:       12px;
+  font-family:     var(--mono);
+  font-weight:     500;
+  flex-shrink:     0;
+  position:        relative;
+  z-index:         2;
+  margin-top:      16px;
+}
+
+.step-line {
+  flex:       1;
+  width:      2px;
+  margin:     4px 0;
+  background: var(--border);
+  position:   relative;
+}
+
+.step-line::after {
+  content:       '';
+  position:      absolute;
+  bottom:        -6px;
+  left:          -3px;
+  width:         8px;
+  height:        8px;
+  border-right:  2px solid var(--border2);
+  border-bottom: 2px solid var(--border2);
+  transform:     rotate(45deg);
+}
+
+.step-row:last-child .step-line { display: none; }
+
+/* ══ STEP CARD ════════════════════════════════ */
+
+.step-card {
+  flex:          1;
+  background:    var(--surface);
+  border:        1px solid var(--border);
+  border-radius: var(--r2);
+  padding:       16px 18px;
+  margin:        8px 0 8px 4px;
+  cursor:        grab;
+  transition:    border-color .15s, transform .15s;
+  position:      relative;
+  /* ✅ min-width:0 — zapobiega rozszerzaniu poza flex container */
+  min-width:     0;
+}
+.step-card:hover    { border-color: var(--border2); }
+.step-card.dragging { opacity: .4; transform: scale(.98); }
+.step-card.drag-over { border-color: var(--accent); border-style: dashed; }
+.step-card:active   { cursor: grabbing; }
+
+/* ── Process tag ── */
+
+.step-process-tag {
+  display:        inline-flex;
+  align-items:    center;
+  gap:            5px;
+  font-size:      9px;
+  font-family:    var(--mono);
+  padding:        2px 7px;
+  border-radius:  4px;
+  margin-bottom:  8px;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  cursor:         pointer;
+  border:         1px solid transparent;
+  transition:     opacity .15s;
+}
+.step-process-tag:hover { opacity: .8; }
+
+.step-process-tag--unassigned {
+  background:   var(--surface2);
+  color:        var(--text3);
+  border-color: var(--border);
+  border-style: dashed;
+}
+
+/* ── Top row ── */
+
+.step-top {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  gap:             12px;
+  margin-bottom:   12px;
+}
+
+/* ── Actor badge ── */
+
+.step-actor-badge {
+  display:       flex;
+  align-items:   center;
+  gap:           6px;
+  padding:       4px 10px;
+  background:    var(--surface2);
+  border-radius: 20px;
+  font-size:     11px;
+  font-weight:   500;
+  cursor:        pointer;
+  border:        1px solid var(--border);
+  transition:    border-color .15s;
+}
+.step-actor-badge:hover { border-color: var(--border2); }
+
+.step-actor-dot {
+  width:         7px;
+  height:        7px;
+  border-radius: 50%;
+}
+
+.step-actor-badge__caret {
+  font-size: 10px;
+  color:     var(--text3);
+}
+
+/* ── Actions row ── */
+
+.step-actions-row { display: flex; gap: 4px; }
+
+/* ── Inputs ── */
+
+.step-action-input {
+  background:     transparent;
+  border:         none;
+  color:          var(--text);
+  font-family:    var(--font);
+  font-size:      15px;
+  font-weight:    500;
+  width:          100%;
+  outline:        none;
+  margin-bottom:  6px;
+  letter-spacing: -.2px;
+}
+.step-action-input::placeholder { color: var(--text3); }
+
+.step-desc-input {
+  background:  transparent;
+  border:      none;
+  color:       var(--text2);
+  font-family: var(--font);
+  font-size:   12px;
+  width:       100%;
+  outline:     none;
+  line-height: 1.5;
+  resize:      none;
+  overflow:    hidden;
+}
+.step-desc-input::placeholder { color: var(--text3); }
+
+/* ── Results chips row ── */
+
+.step-results-chips {
+  display:    flex;
+  gap:        6px;
+  flex-wrap:  wrap;
+  margin-top: 6px;
+  /* ✅ min-width:0 zapobiega przepełnieniu */
+  min-width:  0;
+}
+
+/* ── AF badge ── */
+
+.step-af-badge {
+  font-size:     10px;
+  font-family:   var(--mono);
+  padding:       2px 7px;
+  border-radius: 5px;
+  background:    rgba(247, 162, 94, .12);
+  color:         var(--accent3);
+  border:        1px solid rgba(247, 162, 94, .2);
+  cursor:        pointer;
+  transition:    all .15s;
+  flex-shrink:   0;
+}
+.step-af-badge:hover { background: rgba(247, 162, 94, .2); }
+
+/* ── Bottom row ── */
+
+.step-bottom {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  margin-top:      10px;
+  padding-top:     10px;
+  border-top:      1px solid var(--border);
+}
+
+.step-result-badge {
+  font-size:     11px;
+  font-family:   var(--mono);
+  padding:       3px 9px;
+  border-radius: 6px;
+  cursor:        pointer;
+  border:        1px dashed var(--border2);
+  color:         var(--text3);
+  transition:    all .15s;
+  background:    transparent;
+}
+.step-result-badge.linked { border-style: solid; border-color: transparent; }
+.step-result-badge:hover  { border-color: var(--accent); color: var(--accent); }
+
+.step-status { display: flex; gap: 6px; align-items: center; }
+
+.status-dot {
+  width:         7px;
+  height:        7px;
+  border-radius: 50%;
+}
+
+.step-status-select {
+  background:  transparent;
+  border:      none;
+  color:       var(--text3);
+  font-size:   10px;
+  font-family: var(--mono);
+  outline:     none;
+  cursor:      pointer;
+}
+
+/* ══ ADD STEP BUTTON ══════════════════════════ */
+
+.add-step-btn {
+  display:       flex;
+  align-items:   center;
+  gap:           10px;
+  padding:       14px 18px;
+  margin:        4px 0 4px 52px;
+  border:        2px dashed var(--border);
+  border-radius: var(--r2);
+  color:         var(--text3);
+  font-size:     13px;
+  cursor:        pointer;
+  background:    transparent;
+  font-family:   var(--font);
+  transition:    all .15s;
+  text-align:    left;
+}
+.add-step-btn:hover {
+  border-color: var(--accent);
+  color:        var(--accent);
+  background:   rgba(124, 111, 247, .05);
+}
+
+.add-icon {
+  width:           22px;
+  height:          22px;
+  border-radius:   50%;
+  border:          2px dashed currentColor;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  font-size:       14px;
+  flex-shrink:     0;
+}
+
+/* ══ ACTOR DROPDOWN ═══════════════════════════ */
+
+.actor-dropdown {
+  position:      absolute;
+  top:           44px;
+  left:          0;
+  background:    var(--surface2);
+  border:        1px solid var(--border2);
+  border-radius: var(--r);
+  overflow:      hidden;
+  z-index:       50;
+  min-width:     160px;
+  box-shadow:    0 8px 24px rgba(0, 0, 0, .4);
+}
+
+.actor-option {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+  padding:     8px 12px;
+  cursor:      pointer;
+  font-size:   12px;
+  transition:  background .1s;
+}
+.actor-option:hover { background: var(--surface3); }
+
+/* ══ COMPACT MODE ══════════════════════════════ */
+
+.steps-list.compact .step-card {
+  padding:     6px 14px;
+  margin:      4px 0 4px 4px;
+  display:     flex;
+  align-items: center;
+  gap:         12px;
+}
+
+.steps-list.compact .step-top { display: contents; }
+
+.steps-list.compact .step-top > div:first-child { order: 1; flex-shrink: 0; }
+
+.steps-list.compact .step-action-input {
+  order:     2;
+  flex:      1;
+  margin:    0;
+  font-size: 13px;
+  min-width: 100px;
+}
+
+.steps-list.compact .step-results-chips {
+  order:       3;
+  margin:      0;
+  flex-shrink: 0;
+  display:     flex;
+  align-items: center;
+  flex-wrap:   nowrap;
+  overflow:    hidden;
+  max-width:   250px;
+}
+
+.steps-list.compact .step-actions-row {
+  order:       4;
+  flex-shrink: 0;
+  opacity:     .3;
+  transition:  opacity .2s;
+}
+.steps-list.compact .step-card:hover .step-actions-row { opacity: 1; }
+
+.steps-list.compact .step-desc-input,
+.steps-list.compact .step-bottom,
+.steps-list.compact .step-process-tag { display: none; }
+
+.steps-list.compact .step-num { margin-top: 8px; }
+
+/* ── Compact link button ── */
+
+.compact-link-btn { display: none; }
+
+.steps-list.compact .compact-link-btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           22px;
+  height:          22px;
+  border-radius:   50%;
+  border:          1px dashed var(--border2);
+  background:      transparent;
+  color:           var(--text3);
+  font-size:       14px;
+  cursor:          pointer;
+  padding:         0;
+  margin-left:     4px;
+  transition:      all .15s;
+}
+.steps-list.compact .compact-link-btn:hover {
+  border-color: var(--text2);
+  color:        var(--text2);
+  background:   var(--surface3);
+}
+
+/* ══ INLINE SWIM LANE ══════════════════════════ */
+
+.timeline-view {
+  flex:       1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: auto;
+  padding:    0 28px 28px;
+}
+.timeline-view::-webkit-scrollbar       { width: 4px; height: 4px; }
+.timeline-view::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
+
+.tl-toolbar {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         12px 0 14px;
+  gap:             12px;
+}
+
+.tl-toolbar__title {
+  font-size:   12px;
+  font-weight: 500;
+  color:       var(--text2);
+}
+
+.tl-toolbar__sub {
+  font-size:   10px;
+  font-family: var(--mono);
+  color:       var(--text3);
+  margin-left: 8px;
+}
+
+.tl-actor-col {
+  min-width:     160px;
+  flex:          1;
+  text-align:    center;
+  padding:       10px;
+  font-size:     11px;
+  font-family:   var(--mono);
+  border-bottom: 2px solid;
+}
+
+.tl-row {
+  display:       flex;
+  min-height:    60px;
+  border-bottom: 1px solid var(--border);
+  position:      relative;
+  transition:    background .2s;
+}
+.tl-row:last-child    { border-bottom: none; }
+.tl-row.process-first { border-top: 2px solid transparent; }
+
+.tl-process-label {
+  position:        absolute;
+  left:            0;
+  top:             50%;
+  transform:       translateY(-50%);
+  width:           100%;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  pointer-events:  none;
+  z-index:         0;
+}
+
+.tl-process-label-text {
+  font-size:      11px;
+  font-family:    var(--mono);
+  font-weight:    500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity:        .13;
+  white-space:    nowrap;
+  user-select:    none;
+}
+
+.tl-cell {
+  min-width:       160px;
+  flex:            1;
+  padding:         8px;
+  border-right:    1px solid var(--border);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  position:        relative;
+  z-index:         1;
+}
+.tl-cell:last-child { border-right: none; }
+
+.tl-step-bubble {
+  background:    var(--surface2);
+  border:        1px solid var(--border2);
+  border-radius: var(--r);
+  padding:       8px 12px;
+  font-size:     11px;
+  font-weight:   500;
+  text-align:    center;
+  max-width:     130px;
+  line-height:   1.3;
+}
+
+.tl-step-num {
+  font-family:   var(--mono);
+  font-size:     9px;
+  color:         var(--text3);
+  margin-bottom: 3px;
+}

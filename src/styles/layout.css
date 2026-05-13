@@ -1,0 +1,338 @@
+/* ─────────────────────────────────────────────
+   LAYOUT — header, workspace, panel, main
+───────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         18px 32px;
+  border-bottom:   1px solid var(--border);
+  position:        sticky;
+  top:             0;
+  background:      rgba(15, 15, 19, 0.95);
+  backdrop-filter: blur(12px);
+  z-index:         100;
+  /* ✅ FIX: flex-shrink:0 zapobiega ściskaniu headera */
+  flex-shrink:     0;
+  height:          65px;
+}
+
+.logo {
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+}
+
+.logo-icon {
+  width:           32px;
+  height:          32px;
+  background:      linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius:   8px;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  font-size:       16px;
+  flex-shrink:     0;
+}
+
+.logo-name {
+  font-weight:    600;
+  font-size:      15px;
+  letter-spacing: -.3px;
+}
+
+.logo-tag {
+  font-size:      10px;
+  font-family:    var(--mono);
+  color:          var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top:     1px;
+}
+
+.header-actions {
+  display:     flex;
+  gap:         10px;
+  align-items: center;
+}
+
+/* ── Save indicator ── */
+
+.save-indicator {
+  display:     flex;
+  align-items: center;
+  gap:         6px;
+  font-size:   11px;
+  font-family: var(--mono);
+  color:       var(--text3);
+  transition:  all .3s;
+}
+
+.save-dot {
+  width:         6px;
+  height:        6px;
+  border-radius: 50%;
+  background:    var(--text3);
+  transition:    background .3s;
+}
+
+.save-indicator.saved   { color: var(--green); }
+.save-indicator.saved   .save-dot { background: var(--green); }
+.save-indicator.unsaved { color: var(--accent3); }
+.save-indicator.unsaved .save-dot { background: var(--accent3); }
+
+/* ══ WORKSPACE ═══════════════════════════════ */
+
+/*
+  ✅ FIX: workspace musi być ograniczony do pozostałej wysokości
+  po headerze, NIE może używać 100vh (powoduje przekroczenie).
+  Używamy flex:1 + overflow:hidden — workspace wypełnia resztę body.
+*/
+.workspace {
+  display:               grid;
+  grid-template-columns: var(--panel-w) var(--toggle-w) 1fr;
+  /* ✅ flex:1 zamiast height:calc(100vh - 65px) */
+  flex:                  1;
+  /* ✅ overflow:hidden na workspace blokuje rozrastanie poza viewport */
+  overflow:              hidden;
+  /* ✅ min-height:0 wymagane by flex-child nie ignorował overflow */
+  min-height:            0;
+  transition:            grid-template-columns var(--panel-transition);
+}
+
+.workspace.panel-collapsed {
+  grid-template-columns: 0px var(--toggle-w) 1fr;
+}
+
+/* ══ PANEL ═══════════════════════════════════ */
+
+.panel {
+  /* ✅ overflow:hidden clips content during collapse animation */
+  overflow:   hidden;
+  transition: opacity   var(--panel-transition),
+              transform var(--panel-transition);
+  /* ✅ min-height:0 — konieczne dla grid-child z overflow */
+  min-height: 0;
+}
+
+.workspace.panel-collapsed .panel {
+  opacity:        0;
+  transform:      translateX(-12px);
+  pointer-events: none;
+}
+
+.panel-inner {
+  width:          300px;
+  height:         100%;
+  overflow-y:     auto;
+  overflow-x:     hidden;
+  padding:        24px 20px;
+  display:        flex;
+  flex-direction: column;
+  gap:            24px;
+  border-right:   1px solid var(--border);
+  transition:     border-color var(--panel-transition);
+}
+
+.workspace.panel-collapsed .panel-inner {
+  border-right-color: transparent;
+}
+
+.panel-inner::-webkit-scrollbar       { width: 4px; }
+.panel-inner::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
+
+.panel-section { display: flex; flex-direction: column; }
+
+/* ══ PANEL TOGGLE COLUMN ══════════════════════
+   ✅ FIX: toggle musi być NIEZALEŻNY od panelu i
+   zawsze wyśrodkowany w swojej kolumnie.
+   position:sticky centruje go niezależnie od
+   ilości treści w sąsiednich kolumnach.
+═════════════════════════════════════════════ */
+
+.panel-toggle-col {
+  display:         flex;
+  /* ✅ align-items:flex-start + position:sticky na buttonie
+     zamiast center — button pozostaje na górze przy scrollu */
+  align-items:     flex-start;
+  justify-content: center;
+  /* ✅ position:sticky trzyma kolumnę toggle w miejscu */
+  position:        sticky;
+  top:             0;
+  /* ✅ wysokość równa viewport minus header */
+  height:          100%;
+  border-right:    1px solid var(--border);
+  background:      var(--bg);
+  z-index:         10;
+}
+
+.panel-toggle {
+  /* ✅ position:sticky na samym buttonie — zawsze widoczny */
+  position:        sticky;
+  top:             50%;
+  transform:       translateY(-50%);
+  width:           20px;
+  height:          52px;
+  background:      var(--surface2);
+  border:          1px solid var(--border2);
+  border-radius:   0 8px 8px 0;
+  cursor:          pointer;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  color:           var(--text3);
+  font-size:       12px;
+  transition:      background .15s, color .15s, border-color .15s;
+  margin-left:     -1px;
+  /* ✅ flex-shrink:0 — button nie zmienia rozmiaru */
+  flex-shrink:     0;
+}
+
+.panel-toggle:hover {
+  background:   var(--surface3);
+  color:        var(--text);
+  border-color: var(--accent);
+}
+
+.workspace.panel-collapsed .panel-toggle {
+  background:   var(--surface3);
+  border-color: var(--accent);
+  color:        var(--accent);
+}
+
+.panel-toggle-arrow {
+  display:        inline-block;
+  transition:     transform var(--panel-transition);
+  line-height:    1;
+  font-style:     normal;
+  pointer-events: none;
+}
+
+.workspace.panel-collapsed .panel-toggle-arrow {
+  transform: rotate(180deg);
+}
+
+/* Tooltip */
+.panel-toggle::after {
+  content:        attr(data-tip);
+  position:       absolute;
+  left:           calc(100% + 10px);
+  top:            50%;
+  transform:      translateY(-50%);
+  background:     var(--surface3);
+  color:          var(--text);
+  font-size:      11px;
+  font-family:    var(--mono);
+  padding:        4px 9px;
+  border-radius:  6px;
+  white-space:    nowrap;
+  pointer-events: none;
+  z-index:        200;
+  border:         1px solid var(--border2);
+  box-shadow:     0 4px 12px rgba(0, 0, 0, .4);
+  opacity:        0;
+  transition:     opacity .15s;
+}
+.panel-toggle:hover::after { opacity: 1; }
+
+/* ══ MAIN ════════════════════════════════════ */
+
+.main {
+  display:        flex;
+  flex-direction: column;
+  /* ✅ overflow:hidden — main nie wychodzi poza workspace */
+  overflow:       hidden;
+  /* ✅ oba min wymagane by flex respektował overflow children */
+  min-height:     0;
+  min-width:      0;
+}
+
+/* ── Stats bar ── */
+
+/*
+  ✅ FIX: stats-bar musi mieć flex-shrink:0 żeby nie był
+  ściskany gdy lista kroków jest długa. Bez tego flexbox
+  próbuje zmniejszyć stats-bar razem ze steps-canvas.
+*/
+.stats-bar {
+  display:      flex;
+  align-items:  center;
+  gap:          20px;
+  padding:      0 28px;
+  /* ✅ stała wysokość zamiast padding top/bottom — stabilny layout */
+  height:       40px;
+  background:   var(--surface);
+  border-bottom: 1px solid var(--border);
+  font-size:    11px;
+  font-family:  var(--mono);
+  color:        var(--text3);
+  /* ✅ flex-shrink:0 — stats bar zawsze ma stały rozmiar */
+  flex-shrink:  0;
+  flex-wrap:    nowrap;
+  overflow-x:   auto;
+  /* ukryj scrollbar stats-bara — nie potrzebny wizualnie */
+  scrollbar-width: none;
+}
+.stats-bar::-webkit-scrollbar { display: none; }
+
+.stat-item {
+  display:      flex;
+  gap:          6px;
+  align-items:  center;
+  white-space:  nowrap;
+  flex-shrink:  0;
+}
+
+.stat-val {
+  color:       var(--text);
+  font-weight: 500;
+}
+
+/* ── Panel meta fields ── */
+
+.section-label {
+  font-size:      10px;
+  font-family:    var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color:          var(--text3);
+  margin-bottom:  10px;
+}
+
+.meta-field         { margin-bottom: 12px; }
+.meta-field label   {
+  display:     block;
+  font-size:   11px;
+  color:       var(--text3);
+  margin-bottom: 5px;
+  font-family: var(--mono);
+}
+
+.meta-field input,
+.meta-field textarea,
+.meta-field select {
+  width:         100%;
+  background:    var(--surface2);
+  border:        1px solid var(--border);
+  border-radius: var(--r);
+  padding:       8px 12px;
+  color:         var(--text);
+  font-family:   var(--font);
+  font-size:     13px;
+  outline:       none;
+  transition:    border-color .15s;
+  resize:        none;
+}
+
+.meta-field input:focus,
+.meta-field textarea:focus,
+.meta-field select:focus { border-color: var(--accent); }
+
+.meta-field textarea { line-height: 1.5; }

@@ -1,0 +1,247 @@
+/* ─────────────────────────────────────────────
+   VIEWS — alternate flows, export
+───────────────────────────────────────────── */
+
+/* ══ ALTERNATE FLOWS ══════════════════════════ */
+
+.af-view {
+  padding:    28px;
+  overflow-y: auto;
+  flex:       1;
+}
+.af-view::-webkit-scrollbar       { width: 4px; }
+.af-view::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
+
+/* ── Toolbar ── */
+
+.af-toolbar {
+  display:        flex;
+  flex-direction: column;
+  align-items:    stretch;
+  gap:            8px;
+  margin-bottom:  20px;
+}
+
+.af-toolbar__top {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             12px;
+}
+
+.af-toolbar__step-filters {
+  display:     flex;
+  align-items: center;
+  gap:         6px;
+  flex-wrap:   wrap;
+}
+
+.af-step-filters-label {
+  font-size:   10px;
+  font-family: var(--mono);
+  color:       var(--text3);
+  flex-shrink: 0;
+}
+
+/* ── Filters ── */
+
+.af-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.af-filter-btn {
+  padding:       4px 12px;
+  border-radius: 20px;
+  font-size:     11px;
+  font-family:   var(--mono);
+  border:        1px solid var(--border2);
+  background:    transparent;
+  color:         var(--text3);
+  cursor:        pointer;
+  transition:    all .15s;
+}
+.af-filter-btn.active {
+  background: var(--surface3);
+  color:      var(--text);
+}
+
+.af-filter-btn--manual {
+  border-color: rgba(247, 162, 94, 0.3);
+  color:        var(--accent3);
+}
+
+/* Severity active states */
+.af-filter-btn.sev-critical.active {
+  background:   rgba(242, 94, 138, .15);
+  color:        var(--danger);
+  border-color: rgba(242, 94, 138, .3);
+}
+.af-filter-btn.sev-high.active {
+  background:   rgba(247, 162, 94, .15);
+  color:        var(--accent3);
+  border-color: rgba(247, 162, 94, .3);
+}
+.af-filter-btn.sev-medium.active {
+  background:   rgba(124, 111, 247, .15);
+  color:        var(--accent);
+  border-color: rgba(124, 111, 247, .3);
+}
+.af-filter-btn.sev-low.active {
+  background:   rgba(90, 212, 176, .15);
+  color:        var(--green);
+  border-color: rgba(90, 212, 176, .2);
+}
+
+.af-filters__empty {
+  font-size: 11px;
+  color:     var(--text3);
+}
+
+/* ── Cards ── */
+
+.af-list { display: flex; flex-direction: column; gap: 10px; }
+
+.af-card {
+  background:    var(--surface);
+  border:        1px solid var(--border);
+  border-radius: var(--r2);
+  padding:       16px 18px;
+  transition:    border-color .15s;
+}
+.af-card:hover       { border-color: var(--border2); }
+.af-card.manual      { border-left: 3px solid var(--accent3); }
+
+.af-card-top {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  gap:             10px;
+  margin-bottom:   8px;
+}
+
+.af-title-row {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+  flex-wrap:   wrap;
+  flex:        1;
+}
+
+.af-card__actions { display: flex; gap: 4px; flex-shrink: 0; }
+
+.af-id {
+  font-size:     9px;
+  font-family:   var(--mono);
+  color:         var(--text3);
+  background:    var(--surface2);
+  padding:       2px 6px;
+  border-radius: 4px;
+  flex-shrink:   0;
+}
+
+.af-title  { font-size: 13px; font-weight: 500; }
+.af-body   { font-size: 12px; color: var(--text2); line-height: 1.5; margin-bottom: 10px; }
+.af-trigger { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
+.af-trigger strong { color: var(--text2); }
+
+/* ── Severity badges ── */
+
+.sev-badge {
+  font-size:      9px;
+  font-family:    var(--mono);
+  padding:        2px 7px;
+  border-radius:  4px;
+  flex-shrink:    0;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.sev-critical { background: rgba(242, 94, 138, .15); color: var(--danger); }
+.sev-high     { background: rgba(247, 162, 94, .15); color: var(--accent3); }
+.sev-medium   { background: rgba(124, 111, 247, .15); color: var(--accent); }
+.sev-low      { background: rgba(90, 212, 176, .12);  color: var(--green); }
+
+.manual-badge {
+  font-size:     9px;
+  font-family:   var(--mono);
+  padding:       2px 7px;
+  border-radius: 4px;
+  background:    rgba(247, 162, 94, .12);
+  color:         var(--accent3);
+  flex-shrink:   0;
+}
+
+/* ── Step chips in AF card ── */
+
+.af-steps-row {
+  display:     flex;
+  align-items: center;
+  gap:         6px;
+  flex-wrap:   wrap;
+  margin-top:  8px;
+  padding-top: 8px;
+  border-top:  1px solid var(--border);
+}
+
+.af-steps-label {
+  font-size:   10px;
+  font-family: var(--mono);
+  color:       var(--text3);
+}
+
+.af-step-chip {
+  font-size:     10px;
+  font-family:   var(--mono);
+  padding:       2px 8px;
+  border-radius: 5px;
+  background:    var(--surface2);
+  border:        1px solid var(--border2);
+  color:         var(--text2);
+  cursor:        pointer;
+  transition:    border-color .1s;
+}
+.af-step-chip:hover          { border-color: var(--accent); color: var(--accent); }
+.af-step-chip.unlinked       { border-style: dashed; color: var(--text3); }
+
+/* ── Steps selector (inside AF modal) ── */
+
+.af-steps-selector {
+  display:    flex;
+  gap:        6px;
+  flex-wrap:  wrap;
+  margin-top: 6px;
+}
+
+/* ══ EXPORT VIEW ══════════════════════════════ */
+
+.export-view {
+  padding:    28px;
+  overflow-y: auto;
+  flex:       1;
+}
+
+.export-view__header {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  margin-bottom:   16px;
+}
+
+.export-view__title    { font-size: 15px; font-weight: 600; }
+.export-view__subtitle {
+  font-size:   11px;
+  color:       var(--text3);
+  font-family: var(--mono);
+  margin-top:  2px;
+}
+
+.export-pre {
+  background:    var(--surface);
+  border:        1px solid var(--border);
+  border-radius: var(--r2);
+  padding:       20px;
+  font-family:   var(--mono);
+  font-size:     12px;
+  color:         var(--text2);
+  line-height:   1.8;
+  white-space:   pre;
+  overflow-x:    auto;
+}
