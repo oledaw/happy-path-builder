@@ -295,6 +295,17 @@
   font-weight: 500;
 }
 
+.stats-bar__spacer {
+  flex: 1;
+}
+
+.stats-bar__controls {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+  flex-shrink: 0;
+}
+
 /* ── Panel meta fields ── */
 
 .section-label {

@@ -8,6 +8,7 @@
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <script defer src="https://cloud.umami.is/script.js" data-website-id="b3f1f00b-bb9b-4eea-be0a-107d88032ca5"></script>
   <script data-goatcounter="https://oledaw.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <link rel="stylesheet" href="src/styles/base.css">
   <link rel="stylesheet" href="src/styles/layout.css">
@@ -172,15 +173,12 @@
         <div class="stat-item">Procesów: <span class="stat-val" id="stat-processes">0</span></div>
         <div class="stat-item">Rezultatów: <span class="stat-val" id="stat-results">0</span></div>
         <div class="stat-item">Alt. Flows: <span class="stat-val" id="stat-af">0</span></div>
+        <div class="stats-bar__spacer"></div>
+        <div class="stats-bar__controls" id="stats-bar-controls"></div>
       </div>
 
       <!-- VIEW: STEPS -->
       <div class="steps-canvas" id="view-steps">
-        <div class="steps-canvas__toolbar">
-          <button class="btn btn-ghost btn-sm" onclick="toggleStepsViewMode()" id="steps-view-mode-btn">
-            Widok: Pełny
-          </button>
-        </div>
         <div class="steps-list" id="steps-list"></div>
         <button class="add-step-btn" onclick="addStep()">
           <div class="add-icon">+</div>
@@ -195,23 +193,16 @@
             Swim Lane
             <span id="tl-toolbar-sub" class="tl-toolbar__sub"></span>
           </div>
-          <button class="btn btn-ghost btn-sm btn--icon-left" onclick="openFullscreen()">
-            <span>⛶</span> Pełny ekran
-          </button>
         </div>
         <div id="timeline-content"></div>
       </div>
 
       <!-- VIEW: EXPORT -->
       <div class="export-view hidden" id="view-export">
-        <div class="export-view__header">
-          <div>
-            <div class="export-view__title">Eksport procesu</div>
-            <div class="export-view__subtitle">Markdown / Dokumentacja</div>
-          </div>
-          <button class="btn btn-ghost btn-sm" onclick="copyExport()">Kopiuj</button>
+        <div class="export-content-wrapper">
+          <pre class="export-pre" id="export-content"></pre>
+          <div class="export-rendered hidden" id="export-rendered"></div>
         </div>
-        <pre class="export-pre" id="export-content"></pre>
       </div>
 
       <!-- VIEW: ALTERNATE FLOWS -->

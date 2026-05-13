@@ -22,7 +22,7 @@ import { renderResults }                                        from './renderer
 import { renderSteps, toggleStepsViewMode }                     from './renderers/steps.js';
 import { renderTimeline }                                       from './renderers/timeline.js';
 import { renderAf, setAfSeverity, setAfStep, goToStepAfs }      from './renderers/alternativeFlows.js';
-import { renderExport, copyExport }                             from './renderers/export.js';
+import { renderExport, copyExport, toggleExportFormat }         from './renderers/export.js';
 
 // ── Fullscreen ────────────────────────────────────────────────────────────────
 import {
@@ -111,6 +111,7 @@ Object.assign(window, {
   renderAf,
   renderExport,
   copyExport,
+  toggleExportFormat,
   toggleStepsViewMode,
   setAfSeverity,
   setAfStep,

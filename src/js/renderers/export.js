@@ -1,14 +1,52 @@
 import { state, getActor, getResult } from '../state.js';
 import { RESULT_TYPE_LABELS } from '../constants.js';
 
+let _exportFormatMode = 'raw'; // 'raw' or 'formatted'
+
 export function renderExport() {
-  const el = document.getElementById('export-content');
-  if (!el) return;
-  el.textContent = _buildMarkdown();
+  const markdown = _buildMarkdown();
+  const preEl = document.getElementById('export-content');
+  const renderedEl = document.getElementById('export-rendered');
+  
+  if (!preEl || !renderedEl) return;
+  
+  preEl.textContent = markdown;
+  
+  // Render HTML version using marked
+  if (window.marked) {
+    renderedEl.innerHTML = marked.parse(markdown);
+  }
+  
+  // Show correct format
+  _updateExportView();
+}
+
+export function toggleExportFormat() {
+  _exportFormatMode = _exportFormatMode === 'raw' ? 'formatted' : 'raw';
+  _updateExportView();
+}
+
+function _updateExportView() {
+  const preEl = document.getElementById('export-content');
+  const renderedEl = document.getElementById('export-rendered');
+  const toggleBtn = document.getElementById('export-format-toggle');
+  
+  if (!preEl || !renderedEl || !toggleBtn) return;
+  
+  if (_exportFormatMode === 'raw') {
+    preEl.classList.remove('hidden');
+    renderedEl.classList.add('hidden');
+    toggleBtn.textContent = 'Sformatowany';
+  } else {
+    preEl.classList.add('hidden');
+    renderedEl.classList.remove('hidden');
+    toggleBtn.textContent = 'Kod źródłowy';
+  }
 }
 
 export function copyExport() {
-  const text = document.getElementById('export-content').textContent;
+  const preEl = document.getElementById('export-content');
+  const text = preEl.textContent;
   navigator.clipboard.writeText(text).then(() => {
     const btn = event.target;
     btn.textContent = 'Skopiowano!';

@@ -233,6 +233,16 @@
   margin-top:  2px;
 }
 
+.export-view__controls {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+}
+
+.export-content-wrapper {
+  position: relative;
+}
+
 .export-pre {
   background:    var(--surface);
   border:        1px solid var(--border);
@@ -244,4 +254,79 @@
   line-height:   1.8;
   white-space:   pre;
   overflow-x:    auto;
+}
+
+.export-rendered {
+  background:    var(--surface);
+  border:        1px solid var(--border);
+  border-radius: var(--r2);
+  padding:       20px;
+  font-size:     14px;
+  color:         var(--text2);
+  line-height:   1.8;
+  overflow-x:    auto;
+  max-height:    calc(100vh - 180px);
+}
+
+.export-rendered h1,
+.export-rendered h2,
+.export-rendered h3,
+.export-rendered h4,
+.export-rendered h5,
+.export-rendered h6 {
+  margin-top:    16px;
+  margin-bottom: 12px;
+  font-weight:   600;
+  color:         var(--text);
+}
+
+.export-rendered h1 { font-size: 24px; margin-top: 20px; }
+.export-rendered h2 { font-size: 20px; margin-top: 18px; }
+.export-rendered h3 { font-size: 18px; margin-top: 16px; }
+.export-rendered h4 { font-size: 16px; }
+
+.export-rendered p {
+  margin-bottom: 12px;
+}
+
+.export-rendered ul,
+.export-rendered ol {
+  margin-left:   20px;
+  margin-bottom: 12px;
+}
+
+.export-rendered li {
+  margin-bottom: 6px;
+}
+
+.export-rendered strong {
+  font-weight: 600;
+  color:       var(--text);
+}
+
+.export-rendered code {
+  background:    var(--surface2);
+  padding:       2px 6px;
+  border-radius: 4px;
+  font-family:   var(--mono);
+  font-size:     12px;
+  color:         var(--accent);
+}
+
+.export-rendered hr {
+  border:        none;
+  border-top:    1px solid var(--border);
+  margin:        16px 0;
+}
+
+.export-rendered pre {
+  background:    var(--surface2);
+  padding:       12px;
+  border-radius: 4px;
+  overflow-x:    auto;
+  margin:        12px 0;
+}
+
+.hidden {
+  display: none !important;
 }
