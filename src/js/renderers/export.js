@@ -1,7 +1,7 @@
 import { state, getActor, getResult } from '../state.js';
 import { RESULT_TYPE_LABELS } from '../constants.js';
 
-let _exportFormatMode = 'raw'; // 'raw' or 'formatted'
+let _exportFormatMode = 'formatted'; // 'raw' or 'formatted'
 
 export function renderExport() {
   const markdown = _buildMarkdown();

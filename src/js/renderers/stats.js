@@ -35,7 +35,7 @@ function _renderStatsBarControls() {
   }
 
   if (state.currentView === 'export') {
-    html += `<button class="btn btn-ghost btn-sm" id="export-format-toggle" onclick="toggleExportFormat()">Sformatowany</button>`;
+    html += `<button class="btn btn-ghost btn-sm" id="export-format-toggle" onclick="toggleExportFormat()">Kod źródłowy</button>`;
     html += `<button class="btn btn-ghost btn-sm" onclick="copyExport()">Kopiuj</button>`;
   }
 

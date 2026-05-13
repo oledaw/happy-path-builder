@@ -5,7 +5,7 @@
 /* ══ ALTERNATE FLOWS ══════════════════════════ */
 
 .af-view {
-  padding:    28px;
+  padding:    0 28px 28px 28px;
   overflow-y: auto;
   flex:       1;
 }
@@ -19,6 +19,12 @@
   flex-direction: column;
   align-items:    stretch;
   gap:            8px;
+  padding:        20px 0 20px 0;
+  position:       sticky;
+  top:            0;
+  z-index:        2;
+  background:     var(--bg);
+  box-shadow:     0 4px 12px rgba(0,0,0,.35);
   margin-bottom:  20px;
 }
 
